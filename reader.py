@@ -38,6 +38,8 @@ def search_preamble2(data):
 def search_preamble(data):
     logging.info('x')
     readbyte = SER.read()
+    if not readbyte:
+        return data, search_preamble
     readdata = struct.unpack("<B", readbyte)[0]
     logging.info(readdata)
     if readdata == 0x55:
