@@ -24,6 +24,9 @@ def search_length(data):
     z = zehnder.Packet(data)
     if z.checkcrc():
         print('OK')
+        if z.hassensordata():
+            print(z.temperature())
+            print(z.humidity())
     return data, search_preamble
 
 def search_preamble2(data):

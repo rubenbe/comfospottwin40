@@ -17,6 +17,12 @@ class Packet:
                 acc-=x
         acc%=0xff
         return acc
+    def hassensordata(self):
+        return self.data[3] == 0x98
+    def humidity(self):
+        return self.data[7]
+    def temperature(self):
+        return (self.data[8] * 256 + self.data[9]) / 10
 
     def checkcrc(self):
         return self.calculatecrc(self.data) == 0
