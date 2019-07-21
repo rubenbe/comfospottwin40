@@ -1,4 +1,4 @@
-packets=["555300980501022F0119C4", "5553009805010211020CEE", "555300980501024400E1E8", "555300980501023e00F0DF"] # Sensor
+packets=["555300980501022F0119C4", "5553009805010211020CEE", "555300980501024400E1E8", "555300980501023e00F0DF", "55530098050101370109CD", "5553009805010137010ACC"] # Sensor
 
 packets+=["554D00960301020017", "554D00960300010019",
         "554D00970301020016", "554D00970300010018"] # Niveau 0 out?
@@ -13,8 +13,17 @@ packets+=["554D00960301023CDB", "554D00960300014ECB",
 
 def function1(data, offset):
     acc = offset
-    for x in data:
-        acc-=x
+    for i, x in enumerate(data):
+        #Some zeros seem to adjust the checksum,
+        #Use the simplest theory based on the index.
+        #It's currently unclear why other zeros don't adjust the checksum.
+        if x==0:
+            if i==7:
+                acc-=1
+            if i==8:
+                acc+=1
+        else:
+            acc-=x
     acc%=0xff
     return acc
 
