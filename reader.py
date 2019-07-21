@@ -2,7 +2,7 @@ from sys import argv
 import logging
 import struct
 import serial
-import zehnder
+import comfospot40
 
 assert argv[1], "Please provide a serial device e.g. /dev/ttyUSB0"
 SER = serial.Serial(argv[1], 2400, parity=serial.PARITY_NONE, timeout=1)
@@ -21,7 +21,7 @@ def search_length(data):
     data.extend(readints)
     logging.info(readints)
     print(data)
-    z = zehnder.Packet(data)
+    z = comfospot40.Packet(data)
     if z.checkcrc():
         print('OK')
         if z.hassensordata():
