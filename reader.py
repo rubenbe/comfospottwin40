@@ -20,18 +20,21 @@ def search_length(data):
     readints = struct.unpack("<"+"B"*(size), readbytes)
     data.extend(readints)
     logging.info(readints)
-    print(data)
     z = comfospot40.Packet(data)
     if z.checkcrc():
-        print('OK')
         if z.hassensordata():
-            print(z.temperature())
-            print(z.humidity())
+            print(data, z.temperature(), z.humidity())
+        if z.hasfandata():
+            print(data, z.fannumber(), z.speed(), z.direction())
+    else:
+        print('Failed checksum')
     return data, search_preamble
 
 def search_preamble2(data):
     logging.info('y')
     readbyte = SER.read()
+    if not readbyte:
+        return data, search_preamble
     readdata = struct.unpack("<B", readbyte)[0]
     logging.info(readdata)
     if readdata in (0x4d, 0x00, 0x53):

@@ -19,10 +19,17 @@ class Packet:
         return acc
     def hassensordata(self):
         return self.data[3] == 0x98
+    def hasfandata(self):
+        return self.data[3] in (0x97, 0x96)
     def humidity(self):
         return self.data[7]
     def temperature(self):
         return (self.data[8] * 256 + self.data[9]) / 10
-
+    def speed(self):
+        return self.data[7]
+    def fannumber(self):
+        return self.data[5]
+    def direction(self):
+        return self.data[6]
     def checkcrc(self):
         return self.calculatecrc(self.data) == 0
