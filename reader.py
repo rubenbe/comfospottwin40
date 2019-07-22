@@ -6,6 +6,7 @@ import comfospot40
 
 assert argv[1], "Please provide a serial device e.g. /dev/ttyUSB0"
 SER = serial.Serial(argv[1], 2400, parity=serial.PARITY_NONE, timeout=1)
+state = comfospot40.State()
 def search_length(data):
     logging.info('z')
     readbytes=SER.read(3)
@@ -24,8 +25,10 @@ def search_length(data):
     if z.checkcrc():
         if z.hassensordata():
             print(data, z.temperature(), z.humidity())
-        if z.hasfandata():
-            print(data, z.fannumber(), z.speed(), z.direction())
+            state.addpacket(z)
+            print(state)
+        #if z.hasfandata():
+        #    print(data, z.fannumber(), z.speed(), z.direction())
     else:
         print('Failed checksum')
     return data, search_preamble

@@ -27,6 +27,8 @@ class Packet:
         return (self.data[8] * 256 + self.data[9]) / 10
     def speed(self):
         return self.data[7]
+    def getzone(self):
+        return self.data[5]
     def fannumber(self):
         return self.data[5]
     def direction(self):
