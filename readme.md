@@ -11,3 +11,14 @@ It's available too under these brand names:
 * GetAir SmartFan
 
 These devices has not been tested, but should work as they seem identical.
+
+# Active control
+Currently the software only eavesdrops on the communication
+between the controller and the fans.
+The goal is to have active control too, but unfortunately the protocol
+only supports one master (the controller).
+It's not trivial to have your PC override the fan levels of the controller,
+because the latter continuously repeats its requests.
+As proof of concept, I've been able to control the fans
+using a replayed signal from the oscilloscope.
+I want to keep the controller installed for easy touch screen control.
