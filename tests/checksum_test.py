@@ -14,7 +14,7 @@ packets+=["554D00960301025DBA", "554D009603000163B6",
 packets+=["554D00960301023CDB", "554D00960300014ECB",
         "554D00970301023CDA", "554D00970300014ECA"] # Niveau 3 out
 
-class TestStringMethods(unittest.TestCase):
+class TestChecksum(unittest.TestCase):
     def test_checksum(self):
         for packet in packets:
             with self.subTest(packet=packet):
