@@ -2,12 +2,12 @@ import unittest
 import comfospot40
 
 sensorpackets={
-        "555300980501 02 2F 0119 C4":{"humidity":47},
-        "555300980501 02 11 020C EE":{"humidity":17},
-        "555300980501 02 44 00E1 E8":{"humidity":68},
-        "555300980501 02 3e 00F0 DF":{"humidity":62},
-        "555300980501 01 37 0109 CD":{"humidity":55},
-        "555300980501 01 37 010A CC":{"humidity":55}} # Sensor
+        "555300980501 02 2F 0119 C4":{"humidity":47, "temperature":28.1},
+        "555300980501 02 11 020C EE":{"humidity":17, "temperature":52.4},
+        "555300980501 02 44 00E1 E8":{"humidity":68, "temperature":22.5},
+        "555300980501 02 3e 00F0 DF":{"humidity":62, "temperature":24},
+        "555300980501 01 37 0109 CD":{"humidity":55, "temperature":26.5},
+        "555300980501 01 37 010A CC":{"humidity":55, "temperature":26.6}} # Sensor
 
 fanpackets={
         "554D00960301020017": {}, "554D00960300010019": {},
@@ -62,3 +62,9 @@ class TestParser(unittest.TestCase):
             with self.subTest(packet=packet):
                 z = comfospot40.Packet(packet)
                 self.assertEqual(field, z.humidity())
+
+    def test_temperaturedata(self):
+        for packet, field in self.parsepacket(sensorpackets, "temperature"):
+            with self.subTest(packet=packet):
+                z = comfospot40.Packet(packet)
+                self.assertEqual(field, z.temperature())
