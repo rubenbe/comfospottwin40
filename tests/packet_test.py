@@ -7,7 +7,7 @@ sensorpackets={
         "555300980501 02 44 00E1 E8":{"humidity":68, "temperature":22.5},
         "555300980501 02 3e 00F0 DF":{"humidity":62, "temperature":24},
         "555300980501 01 37 0109 CD":{"humidity":55, "temperature":26.5},
-        "555300980501 01 37 010A CC":{"humidity":55, "temperature":26.6}} # Sensor
+        "555300980501 01 37 010A CC":{"humidity":55, "temperature":26.6}}
 
 fanpackets={
         "554D00960301020017": {}, "554D00960300010019": {},
