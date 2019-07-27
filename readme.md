@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rubenbe/comfospottwin40.svg?branch=master)](https://travis-ci.org/rubenbe/comfospottwin40)
+
 # Zehnder comfospot twin 40
 
 Reads out data from the RS485 line in a comfospot twin 40 setup.
