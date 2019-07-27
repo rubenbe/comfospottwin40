@@ -2,12 +2,12 @@ import unittest
 import comfospot40
 
 sensorpackets={
-        "55530098050102 2F 0119 C4":{"humidity":47},
-        "55530098050102 11 020C EE":{"humidity":17},
-        "55530098050102 44 00E1 E8":{"humidity":68},
-        "55530098050102 3e 00F0 DF":{"humidity":62},
-        "55530098050101 37 0109 CD":{"humidity":55},
-        "55530098050101 37 010A CC":{"humidity":55}} # Sensor
+        "555300980501 02 2F 0119 C4":{"humidity":47},
+        "555300980501 02 11 020C EE":{"humidity":17},
+        "555300980501 02 44 00E1 E8":{"humidity":68},
+        "555300980501 02 3e 00F0 DF":{"humidity":62},
+        "555300980501 01 37 0109 CD":{"humidity":55},
+        "555300980501 01 37 010A CC":{"humidity":55}} # Sensor
 
 fanpackets={
         "554D00960301020017": {}, "554D00960300010019": {},
@@ -21,7 +21,18 @@ fanpackets={
         "554D00960301023CDB": {}, "554D00960300014ECB": {},
         "554D00970301023CDA": {}, "554D00970300014ECA": {}} # Niveau 3 out
 
+
 class TestParser(unittest.TestCase):
+    def parsedata(self, datastring):
+        packet = datastring.replace(" ", "")
+        self.assertEqual(0, len(packet)%2)
+        msb=packet[::2]
+        lsb=packet[1::2]
+        return [int(''.join(x),16) for x in zip(msb, lsb)]
+
+    def parsepacket(self, packets, fieldname):
+        return [(self.parsedata(data), fields[fieldname]) for data, fields in packets.items()]
+
     def test_valid_hassensordata(self):
         for packet, contents in sensorpackets.items():
             with self.subTest(packet=packet):
@@ -47,12 +58,7 @@ class TestParser(unittest.TestCase):
                 self.assertFalse(z.hassensordata())
 
     def test_humiditydata(self):
-        for packet, contents in sensorpackets.items():
+        for packet, field in self.parsepacket(sensorpackets, "humidity"):
             with self.subTest(packet=packet):
-                packet = packet.replace(" ", "")
-                self.assertEqual(0, len(packet)%2)
-                msb=packet[::2]
-                lsb=packet[1::2]
-                packetbytes=[int(''.join(x),16) for x in zip(msb, lsb)]
-                z = comfospot40.Packet(packetbytes)
-                self.assertEqual(contents["humidity"], z.humidity())
+                z = comfospot40.Packet(packet)
+                self.assertEqual(field, z.humidity())
