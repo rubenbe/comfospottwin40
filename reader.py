@@ -27,8 +27,10 @@ def search_length(data):
             print(data, z.temperature(), z.humidity())
             state.addpacket(z)
             print(state)
-        #if z.hasfandata():
-        #    print(data, z.fannumber(), z.speed(), z.direction())
+        if z.hasfandata():
+            print(data, z.fannumber(), z.speed(), z.direction())
+            state.addpacket(z)
+            print(state)
     else:
         print('Failed checksum')
     return data, search_preamble

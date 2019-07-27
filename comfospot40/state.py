@@ -4,11 +4,12 @@ class Zone:
         self.inside_temperature = None
         self.recycled_humidity = None
         self.recycled_temperature = None
-        self.fanspeed = None
+        self.fan_speed = None
         self.efficiency = None
 
     def __str__(self):
-        return "Inside {}C, {}% Recycled {}C, {}%".format(
+        return " ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+                self.fan_speed,
                 self.inside_temperature, self.inside_humidity,
                 self.recycled_temperature, self.recycled_humidity)
 
@@ -18,7 +19,7 @@ class State:
         pass
 
     def addpacket(self, packet):
-        if(packet.hassensordata):
+        if packet.hassensordata():
             zone = self.zones.get(packet.getzone(), Zone())
             print(packet.direction())
             if packet.direction() == 1:
@@ -28,6 +29,12 @@ class State:
                 zone.recycled_humidity=packet.humidity()
                 zone.recycled_temperature=packet.temperature()
 
+            self.zones[packet.getzone()] = zone
+        if packet.hasfandata():
+            zone = self.zones.get(packet.getzone(), Zone())
+            print(packet.direction())
+            if packet.direction() == 1:
+                zone.fan_speed=packet.speed()
             self.zones[packet.getzone()] = zone
     def __str__(self):
         zonestr=["zone " + str(k) +": " + str(z) for k, z in self.zones.items()]
