@@ -30,12 +30,14 @@ class State:
                 zone.recycled_temperature=packet.temperature()
 
             self.zones[packet.getzone()] = zone
+
         if packet.hasfandata():
             zone = self.zones.get(packet.getzone(), Zone())
             print(packet.direction())
             if packet.direction() == 1:
                 zone.fan_speed=packet.speed()
             self.zones[packet.getzone()] = zone
+
     def __str__(self):
         zonestr=["zone " + str(k) +": " + str(z) for k, z in self.zones.items()]
         return "; ".join(zonestr);
