@@ -39,5 +39,7 @@ class State:
             self.zones[packet.getzone()] = zone
 
     def __str__(self):
-        zonestr=["zone " + str(k) +": " + str(z) for k, z in self.zones.items()]
+        keys = list(self.zones.keys())
+        keys.sort()
+        zonestr=["zone " + str(k) +": " + str(self.zones[k]) for k in keys]
         return "; ".join(zonestr);
