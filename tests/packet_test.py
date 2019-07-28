@@ -59,7 +59,7 @@ class TestParser(unittest.TestCase):
         return [int(''.join(x),16) for x in zip(msb, lsb)]
 
     def parsepacket(self, packets, fieldname):
-        return [(self.parsedata(data), fields[fieldname]) for data, fields in packets.items()]
+        return [(self.parsedata(data), fields[fieldname]) for data, fields in packets.items() if fieldname in fields]
 
     def test_valid_hassensordata(self):
         for packet, contents in sensorpackets.items():
