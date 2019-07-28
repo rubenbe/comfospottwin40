@@ -22,15 +22,18 @@ def search_length(data):
     data.extend(readints)
     logging.info(readints)
     z = comfospot40.Packet(data)
+    pdata = [hex(d) for d in data]
     if z.checkcrc():
         if z.hassensordata():
-            print(data, z.temperature(), z.humidity())
+            print(pdata, z.temperature(), z.humidity())
             state.addpacket(z)
             print(state)
-        if z.hasfandata():
-            print(data, z.fannumber(), z.speed(), z.direction())
+        elif z.hasfandata():
+            print(pdata, z.fannumber(), z.speed(), z.direction())
             state.addpacket(z)
             print(state)
+        else:
+            print("UNKNOWN", pdata)
     else:
         print('Failed checksum')
     return data, search_preamble
