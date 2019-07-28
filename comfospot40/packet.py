@@ -35,3 +35,8 @@ class Packet:
         return self.data[6]
     def checkcrc(self):
         return self.calculatecrc(self.data) == 0
+
+    def intake(self):
+        return (self.fannumber()%2 == 0) != (self.direction() == 2)
+    def extract(self):
+        return not self.intake()

@@ -9,11 +9,19 @@ sensorpackets={
         "5553009805 01 02 44 00E1 E8":
         {"humidity":68, "temperature":22.5, "zone": 1, "direction": 2},
         "5553009805 01 02 3e 00F0 DF":
-        {"humidity":62, "temperature":24, "zone": 1, "direction": 2},
+        {"humidity":62, "temperature":24.0, "zone": 1, "direction": 2},
         "5553009805 01 01 37 0109 CD":
         {"humidity":55, "temperature":26.5, "zone": 1, "direction": 1},
         "5553009805 01 01 37 010A CC":
-        {"humidity":55, "temperature":26.6, "zone": 1, "direction": 1}}
+        {"humidity":55, "temperature":26.6, "zone": 1, "direction": 1},
+
+        "5553009805 04 02 3f 00ef dc": {"humidity": 63, "temperature": 23.9, "zone": 3, "direction": 2, "fan": 4},
+        "5553009805 03 01 5d 011a 94": {"humidity": 93, "temperature": 28.2, "zone": 2, "direction": 1, "fan": 3, "intake": False},
+        "5553009805 03 02 5b 0123 8c": {"humidity": 91, "temperature": 29.1, "zone": 2, "direction": 2, "fan": 3, "intake": True},
+        "5553009805 04 01 41 00eb df": {"humidity": 65, "temperature": 23.5, "zone": 3, "direction": 1, "fan": 4},
+
+
+        }
 
 fanpackets={
         # Niveau 0 out?
@@ -108,3 +116,16 @@ class TestParser(unittest.TestCase):
             with self.subTest(packet=packet):
                 z = comfospot40.Packet(packet)
                 self.assertEqual(field, z.direction())
+
+    def test_fannumberdata(self):
+        for packet, field in self.parsepacket(allpackets, "fan"):
+            with self.subTest(packet=packet):
+                z = comfospot40.Packet(packet)
+                self.assertEqual(field, z.fannumber())
+
+    def test_intakedata(self):
+        for packet, field in self.parsepacket(allpackets, "intake"):
+            with self.subTest(packet=packet):
+                z = comfospot40.Packet(packet)
+                self.assertEqual(field, z.intake())
+                self.assertEqual(field, not z.extract())
