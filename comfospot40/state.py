@@ -45,8 +45,14 @@ class State:
                 zone.fan_speed=packet.speed()
             self.zones[packet.getzone()] = zone
 
+    def __tozonestr(self,zone):
+        if zone > 3 or zone < 1:
+            return "Zone " + str(zone)
+        else:
+            return ('⓿','❶','❷','❸','❹','❺','❻','❼','❽','❾','❿')[zone]
+
     def __str__(self):
         keys = list(self.zones.keys())
         keys.sort()
-        zonestr=["zone " + str(k) +": " + str(self.zones[k]) for k in keys]
+        zonestr=[self.__tozonestr(k) +": " + str(self.zones[k]) for k in keys]
         return "; ".join(zonestr);
