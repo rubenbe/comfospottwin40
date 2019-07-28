@@ -6,12 +6,19 @@ class Zone:
         self.recycled_temperature = None
         self.fan_speed = None
         self.efficiency = None
+    def __placeholder(self, var, num):
+        if not var:
+            return '_'*num
+        else:
+            return var
 
     def __str__(self):
         return " ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
-                self.fan_speed,
-                self.inside_temperature, self.inside_humidity,
-                self.recycled_temperature, self.recycled_humidity)
+                self.__placeholder(self.fan_speed, 2),
+                self.__placeholder(self.inside_temperature,4),
+                self.__placeholder(self.inside_humidity,2),
+                self.__placeholder(self.recycled_temperature, 4),
+                self.__placeholder(self.recycled_humidity, 2))
 
 class State:
     zones = {}
