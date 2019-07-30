@@ -27,11 +27,11 @@ def search_length(data):
         if z.hassensordata():
             print(pdata, z.temperature(), z.humidity())
             state.addpacket(z)
-            print(state)
+            #print(state)
         elif z.hasfandata():
-            print(pdata, z.fannumber(), z.speed(), z.direction())
+            #print(pdata, z.fannumber(), z.speed(), z.direction())
             state.addpacket(z)
-            print(state)
+            #print(state)
         else:
             print("UNKNOWN", pdata)
     else:

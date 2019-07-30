@@ -28,7 +28,7 @@ class State:
     def addpacket(self, packet):
         if packet.hassensordata():
             zone = self.zones.get(packet.getzone(), Zone())
-            print(packet.direction())
+            #print(packet.direction())
             if packet.direction() == 1:
                 zone.inside_humidity=packet.humidity()
                 zone.inside_temperature=packet.temperature()
@@ -40,7 +40,7 @@ class State:
 
         if packet.hasfandata():
             zone = self.zones.get(packet.getzone(), Zone())
-            print(packet.direction())
+            #print(packet.direction())
             if packet.direction() == 1:
                 zone.fan_speed=packet.speed()
             self.zones[packet.getzone()] = zone
