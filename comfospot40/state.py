@@ -6,6 +6,16 @@ class Zone:
         self.recycled_temperature = None
         self.fan_speed = None
         self.efficiency = None
+        self.isintake = None
+
+    def __placeintake(self):
+        if self.isintake == True:
+            return "🏠⬅️"
+        elif self.isintake == False:
+            return "🏠➡️"
+        else:
+            return "__"
+
     def __placeholder(self, var, num):
         if not var:
             return '_'*num
@@ -13,7 +23,8 @@ class Zone:
             return var
 
     def __str__(self):
-        return " ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+        return "{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+                self.__placeintake(),
                 self.__placeholder(self.fan_speed, 2),
                 self.__placeholder(self.inside_temperature,4),
                 self.__placeholder(self.inside_humidity,2),
@@ -29,7 +40,7 @@ class State:
         if packet.hassensordata():
             zone = self.zones.get(packet.getzone(), Zone())
             #print(packet.direction())
-            if packet.direction() == 1:
+            if packet.extract():
                 zone.inside_humidity=packet.humidity()
                 zone.inside_temperature=packet.temperature()
             else:
@@ -40,6 +51,8 @@ class State:
 
         if packet.hasfandata():
             zone = self.zones.get(packet.getzone(), Zone())
+            if packet.fannumber()%2 == 0:
+                zone.isintake = packet.intake()
             #print(packet.direction())
             if packet.direction() == 1:
                 zone.fan_speed=packet.speed()
