@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Zone:
     def __init__(self):
         self.inside_humidity = None
@@ -7,6 +9,12 @@ class Zone:
         self.fan_speed = None
         self.efficiency = None
         self.isintake = None
+        self.timer = None
+
+    def __placetimer(self):
+        if self.timer == None:
+            return "   0s"
+        return "{:4}s".format(int((datetime.now()-self.timer).total_seconds()))
 
     def __placeintake(self):
         if self.isintake == True:
@@ -23,8 +31,9 @@ class Zone:
             return var
 
     def __str__(self):
-        return "{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+        return "{}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
                 self.__placeintake(),
+                self.__placetimer(),
                 self.__placeholder(self.fan_speed, 2),
                 self.__placeholder(self.inside_temperature,4),
                 self.__placeholder(self.inside_humidity,2),
@@ -52,7 +61,10 @@ class State:
         if packet.hasfandata():
             zone = self.zones.get(packet.getzone(), Zone())
             if packet.fannumber()%2 == 0:
+                oldintake = zone.isintake
                 zone.isintake = packet.intake()
+                if oldintake != zone.isintake:
+                    zone.timer = datetime.now()
             #print(packet.direction())
             if packet.direction() == 1:
                 zone.fan_speed=packet.speed()
