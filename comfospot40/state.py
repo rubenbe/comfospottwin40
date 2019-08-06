@@ -43,9 +43,8 @@ class Zone:
                 self.__placeholder(self.recycled_humidity, 2))
 
 class State:
-    zones = {}
     def __init__(self):
-        pass
+        self.zones = {}
 
     def addpacket(self, packet):
         if packet.hassensordata():
