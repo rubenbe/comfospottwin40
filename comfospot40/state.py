@@ -30,6 +30,8 @@ class Zone:
         else:
             return var
 
+    def __repr__(self):
+        return self.__str__()
     def __str__(self):
         return "{}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
                 self.__placeintake(),
