@@ -28,8 +28,7 @@ setup(
   packages=PACKAGES,
   python_requires='>=3.4',
   version=VERSION,
-  description='IKEA Trådfri/Tradfri API. Control and observe your '
-              'lights from Python.',
+  description='Read the Zehnder Comfospot Twin 40 status from Python.',
   long_description=long_description,
   author='rubenbe',
   author_email='no@email.com',
