@@ -16,8 +16,6 @@ class Parser(Thread):
     def search_length(self, data):
         logging.info('z')
         readbytes = self._ser.read(3)
-        #print(readbytes)
-        #readints = int.from_bytes(readbytes, "little")
         readints = struct.unpack("<BBB", readbytes)
         data.extend(readints)
         logging.info(readints)
@@ -30,18 +28,15 @@ class Parser(Thread):
         pdata = [hex(d) for d in data]
         if z.checkcrc():
             if z.hassensordata():
-                print(pdata, z.temperature(), z.humidity())
+                logging.debug(pdata, z.temperature(), z.humidity())
                 self._state.addpacket(z)
-                #print(state)
-                print(self._state)
             elif z.hasfandata():
-                print(pdata, z.fannumber(), z.speed(), z.direction())
+                logging.debug(pdata, z.fannumber(), z.speed(), z.direction())
                 self._state.addpacket(z)
-                print(self._state)
             else:
-                print("UNKNOWN", pdata)
+                logging.warning("Unknown packet %s", pdata)
         else:
-            print('Failed checksum')
+            logging.warning('Failed checksum %s', pdata)
         return data, self.search_preamble
 
     def search_preamble(self, data):
