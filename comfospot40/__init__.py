@@ -1,3 +1,4 @@
-from comfospot40.packet import Packet
-from comfospot40.state import State
+from .packet import Packet
+from .state import State
+from .parser import Parser
 name = "comfospot40"
