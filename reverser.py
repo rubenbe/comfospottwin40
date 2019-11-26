@@ -38,4 +38,4 @@ for offset in range(0, 0x100):
         packetdata=packetbytes[0:-1]
         crc=packetbytes[-1]
         if crc == function1(packetdata, offset):
-            print("✔️ ", ' '.join([hex(i) for i in packetbytes]), hex(offset))
+            print("✔️ ", ' '.join(['%02x'%i for i in packetbytes + [offset]]))
