@@ -24,3 +24,6 @@ because the latter continuously repeats its requests.
 As proof of concept, I've been able to control the fans
 using a replayed signal from the oscilloscope.
 I want to keep the controller installed for easy touch screen control.
+
+# Temperature & humidity sensor.
+The sensor is a Sensiron SHT21 i2c based sensor.
