@@ -1,26 +1,28 @@
-from threading import Thread
 import logging
 import struct
 from .packet import Packet
 from .state import State
 
-class Parser(Thread):
+class Parser():
     def __init__(self, serial):
-        Thread.__init__(self)
         self._ser = serial
         self._state = State()
 
     def get_state(self):
         return self._state
 
-    def search_length(self, data):
+    async def search_length(self, data):
         logging.info('z')
-        readbytes = self._ser.read(3)
+        readbytes = b''
+        while len(readbytes) < 3:
+            readbytes += (await self._ser.read(1))
         readints = struct.unpack("<BBB", readbytes)
         data.extend(readints)
         logging.info(readints)
         size = readints[-1]+1
-        readbytes = self._ser.read(size)
+        readbytes = b''
+        while len(readbytes) < size:
+            readbytes += (await self._ser.read(1))
         readints = struct.unpack("<"+"B"*(size), readbytes)
         data.extend(readints)
         logging.info(readints)
@@ -39,9 +41,9 @@ class Parser(Thread):
             logging.warning('Failed checksum %s', pdata)
         return data, self.search_preamble
 
-    def search_preamble(self, data):
+    async def search_preamble(self, data):
         logging.info('x')
-        readbyte = self._ser.read()
+        readbyte = await self._ser.read(1)
         if not readbyte:
             return data, self.search_preamble
         readdata = struct.unpack("<B", readbyte)[0]
@@ -51,9 +53,9 @@ class Parser(Thread):
             return data, self.search_preamble2
         return data, self.search_preamble
 
-    def search_preamble2(self, data):
+    async def search_preamble2(self, data):
         logging.info('y')
-        readbyte = self._ser.read()
+        readbyte = await self._ser.read(1)
         if not readbyte:
             return data, self.search_preamble
         readdata = struct.unpack("<B", readbyte)[0]
@@ -66,8 +68,9 @@ class Parser(Thread):
             return data, self.search_preamble2
         return data, self.search_preamble
 
-    def run(self):
+    async def run(self):
         parserstate = self.search_preamble
         data = []
         while True:
-            data, parserstate = parserstate(data)
+            data, parserstate = await parserstate(data)
+            print(self._state)
