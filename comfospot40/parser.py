@@ -2,6 +2,7 @@ import logging
 import struct
 from .packet import Packet
 from .state import State
+import copy
 
 
 class Parser:
@@ -73,5 +74,7 @@ class Parser:
         return data, self.search_preamble
 
     async def run(self):
-        self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
+        state = copy.copy(self._state)
+        while self._state == state:
+            self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
         return self._state
