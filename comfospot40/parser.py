@@ -8,6 +8,9 @@ class Parser():
         self._ser = serial
         self._state = State()
 
+        self.parserdata = []
+        self.parserstate = self.search_preamble
+
     def get_state(self):
         return self._state
 
@@ -69,8 +72,5 @@ class Parser():
         return data, self.search_preamble
 
     async def run(self):
-        parserstate = self.search_preamble
-        data = []
-        while True:
-            data, parserstate = await parserstate(data)
-            print(self._state)
+            self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
+            return(self._state)

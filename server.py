@@ -7,7 +7,9 @@ import comfospot40
 async def main(devicename):
     reader, _ = await serial_asyncio.open_serial_connection( url=sys.argv[1], baudrate=2400, parity=serial.PARITY_NONE)
     parser = comfospot40.Parser(reader);
-    await parser.run()
+    while True:
+        print(await parser.run())
+
 
 if __name__ == "__main__":
     assert sys.argv[1], "Please provide a serial device e.g. /dev/ttyUSB0"
