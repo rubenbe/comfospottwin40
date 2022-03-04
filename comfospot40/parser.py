@@ -3,7 +3,8 @@ import struct
 from .packet import Packet
 from .state import State
 
-class Parser():
+
+class Parser:
     def __init__(self, serial):
         self._ser = serial
         self._state = State()
@@ -15,18 +16,18 @@ class Parser():
         return self._state
 
     async def search_length(self, data):
-        logging.info('z')
-        readbytes = b''
+        logging.info("z")
+        readbytes = b""
         while len(readbytes) < 3:
-            readbytes += (await self._ser.read(1))
+            readbytes += await self._ser.read(1)
         readints = struct.unpack("<BBB", readbytes)
         data.extend(readints)
         logging.info(readints)
-        size = readints[-1]+1
-        readbytes = b''
+        size = readints[-1] + 1
+        readbytes = b""
         while len(readbytes) < size:
-            readbytes += (await self._ser.read(1))
-        readints = struct.unpack("<"+"B"*(size), readbytes)
+            readbytes += await self._ser.read(1)
+        readints = struct.unpack("<" + "B" * (size), readbytes)
         data.extend(readints)
         logging.info(readints)
         z = Packet(data)
@@ -41,11 +42,11 @@ class Parser():
             else:
                 logging.warning("Unknown packet %s", pdata)
         else:
-            logging.warning('Failed checksum %s', pdata)
+            logging.warning("Failed checksum %s", pdata)
         return data, self.search_preamble
 
     async def search_preamble(self, data):
-        logging.info('x')
+        logging.info("x")
         readbyte = await self._ser.read(1)
         if not readbyte:
             return data, self.search_preamble
@@ -57,13 +58,13 @@ class Parser():
         return data, self.search_preamble
 
     async def search_preamble2(self, data):
-        logging.info('y')
+        logging.info("y")
         readbyte = await self._ser.read(1)
         if not readbyte:
             return data, self.search_preamble
         readdata = struct.unpack("<B", readbyte)[0]
         logging.info(readdata)
-        if readdata in (0x4d, 0x00, 0x53):
+        if readdata in (0x4D, 0x00, 0x53):
             data.append(readdata)
             logging.info(data)
             return data, self.search_length
@@ -72,5 +73,5 @@ class Parser():
         return data, self.search_preamble
 
     async def run(self):
-            self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
-            return(self._state)
+        self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
+        return self._state

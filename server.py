@@ -4,9 +4,12 @@ import serial
 import serial_asyncio
 import comfospot40
 
+
 async def main(devicename):
-    reader, _ = await serial_asyncio.open_serial_connection( url=sys.argv[1], baudrate=2400, parity=serial.PARITY_NONE)
-    parser = comfospot40.Parser(reader);
+    reader, _ = await serial_asyncio.open_serial_connection(
+        url=sys.argv[1], baudrate=2400, parity=serial.PARITY_NONE
+    )
+    parser = comfospot40.Parser(reader)
     while True:
         print(await parser.run())
 
