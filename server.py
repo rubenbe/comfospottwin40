@@ -11,7 +11,7 @@ async def main(devicename):
     )
     parser = comfospot40.Parser(reader)
     while True:
-        print("X" + str(await parser.run()))
+        print(await parser.run())
 
 
 if __name__ == "__main__":

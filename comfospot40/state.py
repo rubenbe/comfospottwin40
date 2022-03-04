@@ -43,5 +43,9 @@ class State:
         return "; ".join(zonestr)
 
     def __eq__(self, other):
-        print("EQ")
-        return False
+        if len(self.zones) != len(other.zones):
+            return False
+        for zone, ozone in zip(self.zones.values(), other.zones.values()):
+            if zone != ozone:
+                return False
+        return True

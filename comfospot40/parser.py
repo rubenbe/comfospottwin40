@@ -74,7 +74,7 @@ class Parser:
         return data, self.search_preamble
 
     async def run(self):
-        state = copy.copy(self._state)
+        state = copy.deepcopy(self._state)
         while self._state == state:
             self.parserdata, self.parserstate = await self.parserstate(self.parserdata)
         return self._state
