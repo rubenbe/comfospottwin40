@@ -17,7 +17,131 @@ async def main(devicename, mqtturi):
             state = await parser.run()
             print(state)
             for zoneid, zonestate in state.zones.items():
-                x = client.publish("comfospot40/zones/zone{}/state".format(zoneid), payload=str(zonestate).encode(), qos=1)
+                x = client.publish(
+                    "comfospot40/state".format(zoneid),
+                    payload="online".format(zoneid).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "homeassistant/fan/comfospot40/comfospot40_zone{}/config".format(
+                        zoneid
+                    ),
+                    payload="""{{
+                        "name": "Comfospot40 Zone {0}",
+                        "device_class": "fan",
+                        "state_topic": "comfospot40/zones/zone{0}/state",
+                        "percentage_state_topic": "comfospot40/zones/zone{0}/fan_speed",
+                        "command_topic": "comfospot40/zones/zone{0}/set_fan_speed"}}
+                    """.format(
+                        zoneid
+                    ).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_in/config".format(
+                        zoneid
+                    ),
+                    payload="""{{
+                        "name": "Comfospot40 Zone {0} Inside temperature",
+                        "device_class": "temperature",
+                        "state_class": "measurement",
+                        "temperature_unit": "celcius",
+                        "state_topic": "comfospot40/zones/zone{0}/inside_temperature",
+                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}
+                    """.format(
+                        zoneid
+                    ).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_recycled/config".format(
+                        zoneid
+                    ),
+                    payload="""{{
+                        "name": "Comfospot40 Zone {0} Recycled temperature",
+                        "device_class": "temperature",
+                        "state_class": "measurement",
+                        "temperature_unit": "celcius",
+                        "state_topic": "comfospot40/zones/zone{0}/recycled_temperature",
+                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}
+                    """.format(
+                        zoneid
+                    ).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_in/config".format(
+                        zoneid
+                    ),
+                    payload="""{{
+                        "name": "Comfospot40 Zone {0} Inside humidity",
+                        "device_class": "humidity",
+                        "state_class": "measurement",
+                        "temperature_unit": "percentage",
+                        "state_topic": "comfospot40/zones/zone{0}/inside_humidity",
+                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}
+                    """.format(
+                        zoneid
+                    ).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_recycled/config".format(
+                        zoneid
+                    ),
+                    payload="""{{
+                        "name": "Comfospot40 Zone {0} Recycled humidity",
+                        "device_class": "humidity",
+                        "state_class": "measurement",
+                        "temperature_unit": "percentage",
+                        "state_topic": "comfospot40/zones/zone{0}/recycled_humidity",
+                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}
+                    """.format(
+                        zoneid
+                    ).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/state".format(zoneid),
+                    payload=str("on").encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/fan_speed".format(zoneid),
+                    payload=str(zonestate.fan_speed).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/inside_temperature".format(zoneid),
+                    payload=str(zonestate.inside_temperature).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/recycled_temperature".format(zoneid),
+                    payload=str(zonestate.recycled_temperature).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/inside_humidity".format(zoneid),
+                    payload=str(zonestate.inside_humidity).encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
+                x = client.publish(
+                    "comfospot40/zones/zone{}/recycled_humidity".format(zoneid),
+                    payload=str(zonestate.recycled_humidity).encode(),
+                    qos=1,
+                )
                 asyncio.create_task(x)
 
 
