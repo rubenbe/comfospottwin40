@@ -32,6 +32,7 @@ async def main(devicename, mqtturi):
                         "device_class": "fan",
                         "state_topic": "comfospot40/zones/zone{0}/state",
                         "percentage_state_topic": "comfospot40/zones/zone{0}/fan_speed",
+                        "percentage_command_topic": "comfospot40/zones/zone{0}/fan_speed_todo",
                         "command_topic": "comfospot40/zones/zone{0}/set_fan_speed"}}
                     """.format(
                         zoneid
