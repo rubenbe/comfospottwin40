@@ -110,37 +110,37 @@ async def main(devicename, mqtturi):
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/state".format(zoneid),
-                    payload=str("on").encode(),
+                    payload=str(getattr(zonestate,'fan_speed')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/fan_speed".format(zoneid),
-                    payload=str(zonestate.fan_speed).encode(),
+                    payload=str(getattr(zonestate,'fan_speed')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/inside_temperature".format(zoneid),
-                    payload=str(zonestate.inside_temperature).encode(),
+                    payload=str(getattr(zonestate,'inside_temperature')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/recycled_temperature".format(zoneid),
-                    payload=str(zonestate.recycled_temperature).encode(),
+                    payload=str(getattr(zonestate,'recycled_temperature')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/inside_humidity".format(zoneid),
-                    payload=str(zonestate.inside_humidity).encode(),
+                    payload=str(getattr(zonestate,'inside_humidity')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/recycled_humidity".format(zoneid),
-                    payload=str(zonestate.recycled_humidity).encode(),
+                    payload=str(getattr(zonestate,'recycled_humidity')).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
