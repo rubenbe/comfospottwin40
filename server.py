@@ -110,40 +110,23 @@ async def main(devicename, mqtturi):
                 asyncio.create_task(x)
                 x = client.publish(
                     "comfospot40/zones/zone{}/state".format(zoneid),
-                    payload=str(getattr(zonestate,'fan_speed')).encode(),
+                    payload=str(getattr(zonestate, "fan_speed")).encode(),
                     qos=1,
                 )
                 asyncio.create_task(x)
-                x = client.publish(
-                    "comfospot40/zones/zone{}/fan_speed".format(zoneid),
-                    payload=str(getattr(zonestate,'fan_speed')).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
-                x = client.publish(
-                    "comfospot40/zones/zone{}/inside_temperature".format(zoneid),
-                    payload=str(getattr(zonestate,'inside_temperature')).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
-                x = client.publish(
-                    "comfospot40/zones/zone{}/recycled_temperature".format(zoneid),
-                    payload=str(getattr(zonestate,'recycled_temperature')).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
-                x = client.publish(
-                    "comfospot40/zones/zone{}/inside_humidity".format(zoneid),
-                    payload=str(getattr(zonestate,'inside_humidity')).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
-                x = client.publish(
-                    "comfospot40/zones/zone{}/recycled_humidity".format(zoneid),
-                    payload=str(getattr(zonestate,'recycled_humidity')).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
+                for attr in (
+                    "fan_speed",
+                    "inside_temperature",
+                    "recycled_temperature",
+                    "inside_humidity",
+                    "recycled_humidity",
+                ):
+                    x = client.publish(
+                        "comfospot40/zones/zone{}/{}".format(zoneid, attr),
+                        payload=str(getattr(zonestate, attr)).encode(),
+                        qos=1,
+                    )
+                    asyncio.create_task(x)
 
 
 if __name__ == "__main__":
