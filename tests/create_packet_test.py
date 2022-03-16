@@ -8,9 +8,10 @@ packets = []
 
 @parameterized_class(
     [
-        {"zone": 1, "intake": True, "speed": 25, "expected": "554D009603 01 02 19 FE"},
-        {"zone": 1, "intake": False, "speed": 27, "expected": "554D009603 00 01 1B FE"},
-        {"zone": 2, "intake": True, "speed": 27, "expected": "554D009603 02 02 1B FB"},
+        #{"zone": 1, "intake": True, "speed": 25, "expected": "554d009603 00 02 19 ff"},
+        {"zone": 1, "intake": False, "speed": 27, "expected": "554d009603 01 01 1b fd"},
+        {"zone": 2, "intake": True, "speed": 25, "expected": "554d009603 02 02 19 fd"},
+        {"zone": 2, "intake": False, "speed": 27, "expected": "554d009603 03 01 1b fb"},
     ]
 )
 class TestParser(unittest.TestCase):

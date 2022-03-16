@@ -1,7 +1,6 @@
 class Packet:
     def __init__(self, data):
         self.data = data
-        print(self)
 
     def __str__(self):
         return " ".join(["0x{:02x}".format(x) for x in self.data])
@@ -54,7 +53,10 @@ class Packet:
         return int(self.data[5] / 2) + 1
 
     def setzone(self, value):
-        self.data[5] = value + self.direction() - 2
+        if self.intake():
+            self.data[5] = (value - 1) * 2
+        else:
+            self.data[5] = (value - 1) * 2 + 1
 
     def fannumber(self):
         return self.data[5]
@@ -72,7 +74,10 @@ class Packet:
         return self.direction() == 2
 
     def setintake(self, isintake):
-        self.data[6] = 2 if isintake else 1
+        if isintake:
+            self.data[6] = 2
+        else:
+            self.data[6] = 1
 
     def extract(self):
         return not self.intake()
