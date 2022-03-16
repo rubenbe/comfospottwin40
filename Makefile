@@ -9,4 +9,7 @@ black:
 	black *.py tests/*.py comfospot40/*.py
 
 requirements.txt:
-	pip freeze --exclude black > requirements.txt
+	pip freeze --exclude black --exclude parameterized > requirements.txt
+
+requirements_dev.txt:
+	pip freeze > requirements_dev.txt
