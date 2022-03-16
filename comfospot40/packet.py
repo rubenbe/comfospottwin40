@@ -1,6 +1,7 @@
 class Packet:
     def __init__(self, data):
         self.data = data
+        print(self)
 
     def __str__(self):
         return " ".join(["0x{:02x}".format(x) for x in self.data])
@@ -24,6 +25,13 @@ class Packet:
         acc %= 0xFF
         return acc
 
+    def setpreamble(self):
+        self.data[0] = 0x55
+        self.data[1] = 0x4D
+        self.data[2] = 0x00
+        self.data[3] = 0x96
+        self.data[4] = len(self.data) - 6
+
     def hassensordata(self):
         return self.data[3] == 0x98
 
@@ -39,8 +47,14 @@ class Packet:
     def speed(self):
         return self.data[7]
 
+    def setspeed(self, speed):
+        self.data[7] = speed
+
     def getzone(self):
         return int(self.data[5] / 2) + 1
+
+    def setzone(self, value):
+        self.data[5] = value + self.direction() - 2
 
     def fannumber(self):
         return self.data[5]
@@ -51,8 +65,14 @@ class Packet:
     def checkcrc(self):
         return self.calculatecrc(self.data) == 0
 
+    def setcrc(self):
+        self.data[-1] = self.calculatecrc(self.data[0:-1])
+
     def intake(self):
         return self.direction() == 2
+
+    def setintake(self, isintake):
+        self.data[6] = 2 if isintake else 1
 
     def extract(self):
         return not self.intake()
