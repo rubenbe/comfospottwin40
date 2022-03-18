@@ -16,13 +16,13 @@ async def main(devicename, mqtturi, packetlog=None):
         while True:
             state = await parser.run()
             print(state)
+            x = client.publish(
+                "comfospot40/state",
+                payload="online".encode(),
+                qos=1,
+            )
+            asyncio.create_task(x)
             for zoneid, zonestate in state.zones.items():
-                x = client.publish(
-                    "comfospot40/state".format(zoneid),
-                    payload="online".format(zoneid).encode(),
-                    qos=1,
-                )
-                asyncio.create_task(x)
                 x = client.publish(
                     "homeassistant/fan/comfospot40/comfospot40_zone{}/config".format(
                         zoneid
