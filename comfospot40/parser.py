@@ -6,9 +6,10 @@ import copy
 
 
 class Parser:
-    def __init__(self, serial):
+    def __init__(self, serial, packetlog = None):
         self._ser = serial
         self._state = State()
+        self._packetlog = packetlog
 
         self.parserdata = []
         self.parserstate = self.search_preamble
@@ -33,6 +34,9 @@ class Parser:
         logging.info(readints)
         z = Packet(data)
         pdata = [hex(d) for d in data]
+        if self._packetlog:
+            with open(self._packetlog, 'a') as logfile:
+                logfile.write(str(z) + '\n')
         if z.checkcrc():
             if z.hassensordata():
                 logging.debug(pdata, z.temperature(), z.humidity())
