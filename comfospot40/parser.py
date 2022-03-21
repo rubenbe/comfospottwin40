@@ -6,7 +6,7 @@ import copy
 
 
 class Parser:
-    def __init__(self, serial, packetlog = None):
+    def __init__(self, serial, packetlog=None):
         self._ser = serial
         self._state = State()
         self._packetlog = packetlog
@@ -35,8 +35,8 @@ class Parser:
         z = Packet(data)
         pdata = [hex(d) for d in data]
         if self._packetlog:
-            with open(self._packetlog, 'a') as logfile:
-                logfile.write(str(z) + '\n')
+            with open(self._packetlog, "a") as logfile:
+                logfile.write(str(z) + "\n")
         if z.checkcrc():
             if z.hassensordata():
                 logging.debug(pdata, z.temperature(), z.humidity())
