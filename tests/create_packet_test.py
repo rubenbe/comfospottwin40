@@ -8,7 +8,7 @@ packets = []
 
 @parameterized_class(
     [
-        #{"zone": 1, "intake": True, "speed": 25, "expected": "554d009603 00 02 19 ff"},
+        # {"zone": 1, "intake": True, "speed": 25, "expected": "554d009603 00 02 19 ff"},
         {"zone": 1, "intake": False, "speed": 27, "expected": "554d009603 01 01 1b fd"},
         {"zone": 2, "intake": True, "speed": 25, "expected": "554d009603 02 02 19 fd"},
         {"zone": 2, "intake": False, "speed": 27, "expected": "554d009603 03 01 1b fb"},
