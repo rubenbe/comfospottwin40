@@ -19,7 +19,6 @@ class TestTemperature(unittest.TestCase):
             c,
             {
                 "name": "Comfospot40 Zone 0 Recycled temperature",
-                "command_topic": "comfospot40/zones/zone0/disabled",
                 "device_class": "temperature",
                 "state_class": "measurement",
                 "state_topic": "comfospot40/zones/zone0/recycled_temperature",
@@ -34,7 +33,6 @@ class TestTemperature(unittest.TestCase):
             c,
             {
                 "name": "Comfospot40 Zone 1 Inside temperature",
-                "command_topic": "comfospot40/zones/zone1/disabled",
                 "device_class": "temperature",
                 "state_class": "measurement",
                 "state_topic": "comfospot40/zones/zone1/inside_temperature",

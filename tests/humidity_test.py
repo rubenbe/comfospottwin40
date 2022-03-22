@@ -19,7 +19,6 @@ class TestHumidity(unittest.TestCase):
             c,
             {
                 "name": "Comfospot40 Zone 0 Recycled humidity",
-                "command_topic": "comfospot40/zones/zone0/disabled",
                 "device_class": "humidity",
                 "state_class": "measurement",
                 "state_topic": "comfospot40/zones/zone0/recycled_humidity",
@@ -34,7 +33,6 @@ class TestHumidity(unittest.TestCase):
             c,
             {
                 "name": "Comfospot40 Zone 1 Inside humidity",
-                "command_topic": "comfospot40/zones/zone1/disabled",
                 "device_class": "humidity",
                 "state_class": "measurement",
                 "state_topic": "comfospot40/zones/zone1/inside_humidity",

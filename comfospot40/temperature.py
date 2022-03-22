@@ -21,7 +21,7 @@ class Temperature:
             "temperature_unit": "celcius",
             "state_topic": "comfospot40/zones/zone{0}/{1}_temperature".format(
                 zoneid, name
-            )
+            ),
         }
 
     def __eq__(self, other):
