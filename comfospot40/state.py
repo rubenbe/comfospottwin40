@@ -12,10 +12,10 @@ class State:
             # print(packet.direction())
             if packet.extract():
                 zone.inside_humidity = packet.humidity()
-                zone.inside_temperature = packet.temperature()
+                zone.inside_temperature.set_temperature(packet.temperature())
             else:
                 zone.recycled_humidity = packet.humidity()
-                zone.recycled_temperature = packet.temperature()
+                zone.recycled_temperature.set_temperature(packet.temperature())
 
             self.zones[packet.getzone()] = zone
 
