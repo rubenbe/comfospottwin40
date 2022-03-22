@@ -1,12 +1,15 @@
 class Humidity:
     def __init__(self):
-        self.value = None
+        self._value = None
 
     def set_humidity(self, temp):
-        self.value = temp
+        self._value = temp
 
     def humidity(self):
-        return self.value
+        return self._value
+
+    def value(self):
+        return self._value
 
     def mqtt_config(self, zoneid, name):
         return {
@@ -23,4 +26,4 @@ class Humidity:
         }
 
     def __eq__(self, other):
-        return self.value == other.value
+        return self._value == other._value

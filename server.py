@@ -45,9 +45,11 @@ async def main(devicename, mqtturi, packetlog=None):
                     "inside_humidity",
                     "recycled_humidity",
                 ):
+                    v = getattr(zonestate, attr)
+                    v = v.value() if v and type(v) != int else None
                     x = client.publish(
                         "comfospot40/zones/zone{}/{}".format(zoneid, attr),
-                        payload=str(getattr(zonestate, attr)).encode(),
+                        payload=str(v).encode(),
                         qos=1,
                     )
                     asyncio.create_task(x)
