@@ -46,7 +46,7 @@ async def main(devicename, mqtturi, packetlog=None):
                     "recycled_humidity",
                 ):
                     v = getattr(zonestate, attr)
-                    v = v.value() if v and type(v) != int else None
+                    v = v.value() if v and type(v) != int else v
                     x = client.publish(
                         "comfospot40/zones/zone{}/{}".format(zoneid, attr),
                         payload=str(v).encode(),
