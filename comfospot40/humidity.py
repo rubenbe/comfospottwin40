@@ -22,7 +22,6 @@ class Humidity:
             "state_topic": "comfospot40/zones/zone{0}/{1}_humidity".format(
                 zoneid, name
             ),
-            "command_topic": "comfospot40/zones/zone{0}/disabled".format(zoneid),
         }
 
     def __eq__(self, other):
