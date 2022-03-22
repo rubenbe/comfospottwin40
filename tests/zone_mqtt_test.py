@@ -106,13 +106,7 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/sensor/comfospot40/comfospot40_zone4_humidity_in/config"]
         self.assertEqual(
             v,
-            """{
-                        "name": "Comfospot40 Zone 4 Inside humidity",
-                        "device_class": "humidity",
-                        "state_class": "measurement",
-                        "temperature_unit": "percentage",
-                        "state_topic": "comfospot40/zones/zone4/inside_humidity",
-                        "command_topic": "comfospot40/zones/zone4/disabled"}""",
+            """{"name": "Comfospot40 Zone 4 Inside humidity", "device_class": "humidity", "state_class": "measurement", "temperature_unit": "percentage", "state_topic": "comfospot40/zones/zone4/inside_humidity", "command_topic": "comfospot40/zones/zone4/disabled"}""",
         )
 
     def test_get_mqttconfig_topic_humidity_recycled(self):
@@ -124,11 +118,5 @@ class TestZoneMqtt(unittest.TestCase):
         ]
         self.assertEqual(
             v,
-            """{
-                        "name": "Comfospot40 Zone 5 Recycled humidity",
-                        "device_class": "humidity",
-                        "state_class": "measurement",
-                        "temperature_unit": "percentage",
-                        "state_topic": "comfospot40/zones/zone5/recycled_humidity",
-                        "command_topic": "comfospot40/zones/zone5/disabled"}""",
+            """{"name": "Comfospot40 Zone 5 Recycled humidity", "device_class": "humidity", "state_class": "measurement", "temperature_unit": "percentage", "state_topic": "comfospot40/zones/zone5/recycled_humidity", "command_topic": "comfospot40/zones/zone5/disabled"}""",
         )

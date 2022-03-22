@@ -1,13 +1,14 @@
 from datetime import datetime
 from .temperature import Temperature
+from .humidity import Humidity
 import json
 
 
 class Zone:
     def __init__(self):
-        self.inside_humidity = None
+        self.inside_humidity = Humidity()
         self.inside_temperature = Temperature()
-        self.recycled_humidity = None
+        self.recycled_humidity = Humidity()
         self.recycled_temperature = Temperature()
         self.fan_speed = None
         self.efficiency = None
@@ -43,25 +44,13 @@ class Zone:
             ),
             "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_in/config".format(
                 zoneid
-            ): """{{
-                        "name": "Comfospot40 Zone {0} Inside humidity",
-                        "device_class": "humidity",
-                        "state_class": "measurement",
-                        "temperature_unit": "percentage",
-                        "state_topic": "comfospot40/zones/zone{0}/inside_humidity",
-                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}""".format(
-                zoneid
+            ): json.dumps(
+                self.inside_humidity.mqtt_config(zoneid, "inside"),
             ),
             "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_recycled/config".format(
                 zoneid
-            ): """{{
-                        "name": "Comfospot40 Zone {0} Recycled humidity",
-                        "device_class": "humidity",
-                        "state_class": "measurement",
-                        "temperature_unit": "percentage",
-                        "state_topic": "comfospot40/zones/zone{0}/recycled_humidity",
-                        "command_topic": "comfospot40/zones/zone{0}/disabled"}}""".format(
-                zoneid
+            ): json.dumps(
+                self.recycled_humidity.mqtt_config(zoneid, "recycled"),
             ),
         }
 
@@ -91,9 +80,9 @@ class Zone:
             self.__placetimer(),
             self.__placeholder(self.fan_speed, 2),
             self.__placeholder(self.inside_temperature.temperature(), 4),
-            self.__placeholder(self.inside_humidity, 2),
+            self.__placeholder(self.inside_humidity.humidity(), 2),
             self.__placeholder(self.recycled_temperature.temperature(), 4),
-            self.__placeholder(self.recycled_humidity, 2),
+            self.__placeholder(self.recycled_humidity.humidity(), 2),
         )
 
     def __eq__(self, other):
