@@ -28,7 +28,7 @@ class State:
                     zone.timer = datetime.now()
             # print(packet.direction())
             if packet.direction() == 1:
-                zone.fan_speed = packet.speed()
+                zone.fan_speed.set_fanspeed(packet.speed())
             self.zones[packet.getzone()] = zone
 
     def __tozonestr(self, zone):

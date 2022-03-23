@@ -20,5 +20,5 @@ class TestState(unittest.TestCase):
         self.assertTrue(1 in state.zones)
         self.assertEqual([1], list(state.zones.keys()))
         zone = state.zones[1]
-        self.assertEqual(27, zone.fan_speed)
+        self.assertEqual(27, zone.fan_speed.value())
         self.assertEqual(False, zone.isintake)

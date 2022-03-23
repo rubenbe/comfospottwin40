@@ -1,6 +1,7 @@
 from datetime import datetime
 from .temperature import Temperature
 from .humidity import Humidity
+from .fanspeed import Fanspeed
 import json
 
 
@@ -10,7 +11,7 @@ class Zone:
         self.inside_temperature = Temperature()
         self.recycled_humidity = Humidity()
         self.recycled_temperature = Temperature()
-        self.fan_speed = None
+        self.fan_speed = Fanspeed()
         self.efficiency = None
         self.isintake = None
         self.timer = None
@@ -78,7 +79,7 @@ class Zone:
         return "{}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
             self.__placeintake(),
             self.__placetimer(),
-            self.__placeholder(self.fan_speed, 2),
+            self.__placeholder(self.fan_speed.fanspeed(), 2),
             self.__placeholder(self.inside_temperature.temperature(), 4),
             self.__placeholder(self.inside_humidity.humidity(), 2),
             self.__placeholder(self.recycled_temperature.temperature(), 4),
