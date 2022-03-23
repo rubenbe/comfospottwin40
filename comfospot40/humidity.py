@@ -1,14 +1,11 @@
-class Humidity:
-    def __init__(self):
-        self._value = None
+from .value import Value
 
+
+class Humidity(Value):
     def set_humidity(self, temp):
         self._value = temp
 
     def humidity(self):
-        return self._value
-
-    def value(self):
         return self._value
 
     def mqtt_config(self, zoneid, name):

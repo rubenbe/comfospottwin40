@@ -1,14 +1,11 @@
-class Temperature:
-    def __init__(self):
-        self._value = None
+from .value import Value
 
+
+class Temperature(Value):
     def set_temperature(self, temp):
         self._value = temp
 
     def temperature(self):
-        return self._value
-
-    def value(self):
         return self._value
 
     def mqtt_config(self, zoneid, name):

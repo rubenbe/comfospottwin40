@@ -1,4 +1,5 @@
 from .packet import Packet
+from .value import Value
 from .temperature import Temperature
 from .humidity import Humidity
 from .zone import Zone

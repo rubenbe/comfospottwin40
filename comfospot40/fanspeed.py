@@ -1,14 +1,11 @@
-class Fanspeed:
-    def __init__(self):
-        self._value = None
+from .value import Value
 
+
+class Fanspeed(Value):
     def set_fanspeed(self, temp):
         self._value = temp
 
     def fanspeed(self):
-        return self._value
-
-    def value(self):
         return self._value
 
     def mqtt_config(self, zoneid):
