@@ -24,14 +24,8 @@ class Zone:
         return {
             "homeassistant/fan/comfospot40/comfospot40_zone{}/config".format(
                 zoneid
-            ): """{{
-                        "name": "Comfospot40 Zone {0}",
-                        "device_class": "fan",
-                        "state_topic": "comfospot40/zones/zone{0}/state",
-                        "percentage_state_topic": "comfospot40/zones/zone{0}/fan_speed",
-                        "percentage_command_topic": "comfospot40/zones/zone{0}/fan_speed_todo",
-                        "command_topic": "comfospot40/zones/zone{0}/set_fan_speed"}}""".format(
-                zoneid
+            ): json.dumps(
+                self.fan_speed.mqtt_config(zoneid),
             ),
             "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_in/config".format(
                 zoneid
