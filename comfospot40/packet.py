@@ -12,13 +12,8 @@ class Packet:
             # Use the simplest theory based on the index.
             # It's currently unclear why other zeros don't adjust the checksum.
             if x == 0:
-                pass
-                # if i==5:
-                #    acc-=1
-                # if i==7:
-                #    acc-=1
-                # if i==8:
-                #    acc+=1
+                if i == 7 and data[3] in (0x97, 0x96):
+                    acc -= 1
             else:
                 acc -= x
         acc %= 0xFF
