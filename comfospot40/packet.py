@@ -19,11 +19,14 @@ class Packet:
         acc %= 0xFF
         return acc
 
-    def setpreamble(self):
+    def setpreamble(self, alt=False):
         self.data[0] = 0x55
         self.data[1] = 0x4D
         self.data[2] = 0x00
-        self.data[3] = 0x96
+        if not alt:
+            self.data[3] = 0x96
+        else:
+            self.data[3] = 0x97
         self.data[4] = len(self.data) - 6
 
     def hassensordata(self):
