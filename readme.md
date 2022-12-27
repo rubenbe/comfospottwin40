@@ -7,12 +7,16 @@ A cheap RS485 reader is sufficient.
 Only tested with python 3
 
 # About the comfospot
-This seems to be a OEM product rebranded by/for Zehnder.
-It's available too under these brand names:
+This seems to be a OEM product by GetAir sold under the Zehnder brand.
+It's available under these brand names:
+* Zehnder ComfoSpot Twin 40
 * Zewotherm Fan
 * GetAir SmartFan
+* Kermi x-well D12
 
-These devices has not been tested, but should work as they seem identical.
+
+Only the Zehnder has been tested,
+but devices from other manufacturers should work as they seem identical.
 
 # Active control
 Currently the software only eavesdrops on the communication
