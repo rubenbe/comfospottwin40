@@ -49,9 +49,9 @@ class Packet:
 
     def setzone(self, value):
         if self.intake():
-            self.data[5] = (value - 1) * 2
-        else:
             self.data[5] = (value - 1) * 2 + 1
+        else:
+            self.data[5] = (value - 1) * 2
 
     def fannumber(self):
         return self.data[5]
