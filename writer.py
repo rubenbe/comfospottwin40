@@ -8,26 +8,28 @@ ser = serial.Serial(argv[1], 2400, parity=serial.PARITY_NONE, timeout=1)
 
 from comfospot40.create_packet import create_speed_packet
 
-intake = argv[2] == "in"
+zone = int(argv[2])
+
+intake = argv[3] == "in"
 
 value = 0
-if argv[3][-1] == "h":
-    value = int(argv[3][0:-1], 16)
+if argv[4][-1] == "h":
+    value = int(argv[4][0:-1], 16)
 else:
-    value = int(argv[3])
+    value = int(argv[4])
 
 print(value)
 
 directiongroup = 0
-if len(argv) == 5:
-    directiongroup = int(argv[4])
+if len(argv) == 6:
+    directiongroup = int(argv[5])
 
 alt = False
-if len(argv) == 6:
+if len(argv) == 7:
     print("alt")
     alt = True
 
-packet = create_speed_packet(1, intake, int(value), directiongroup, alt)
+packet = create_speed_packet(zone, intake, int(value), directiongroup, alt)
 print(packet)
 print(" ".join([hex(i) for i in packet]))
 while True:
