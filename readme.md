@@ -47,8 +47,9 @@ The minimum fan level seems to be 26 0x1a
 
 ## Zones
 There are 3 user zones (DIP switch 1 to 3 on the fans).
-But on protocol level there are 6.
+If none of the DIP 1 to 3 switches is set, the fan joins the first group.
 
+On protocol level there are 6.
 In fact the [protocol level] == [user zone - 1] * 2
 These are the even zones (DIP switch 4 set to OFF on the fans).
 
