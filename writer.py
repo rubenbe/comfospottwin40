@@ -18,12 +18,16 @@ else:
 
 print(value)
 
-alt = False
+directiongroup = 0
 if len(argv) == 5:
+    directiongroup = int(argv[4])
+
+alt = False
+if len(argv) == 6:
     print("alt")
     alt = True
 
-packet = create_speed_packet(1, intake, int(value), alt)
+packet = create_speed_packet(1, intake, int(value), directiongroup, alt)
 print(packet)
 print(" ".join([hex(i) for i in packet]))
 while True:

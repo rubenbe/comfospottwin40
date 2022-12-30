@@ -16,11 +16,11 @@ from parameterized import parameterized_class
         # {"zone": 3, "intake": True, "speed": 0, "expected": "554d009703 04 01 0014"},
         # {"zone": 3, "intake": True, "speed": 0, "expected": "554d009703 05 02 0012"},
         {"zone": 1, "intake": False, "speed": 0, "expected": "554d009603 00 01 0019"},
-        {"zone": 1, "intake": True, "speed": 0, "expected": "554d009603 01 02 0017"},
+        {"zone": 1, "intake": True, "speed": 0, "expected": "554d009603 00 02 0018"},
         {"zone": 2, "intake": False, "speed": 0, "expected": "554d009603 02 01 0017"},
-        {"zone": 2, "intake": True, "speed": 0, "expected": "554d009603 03 02 0015"},
+        {"zone": 2, "intake": True, "speed": 0, "expected": "554d009603 02 02 0016"},
         {"zone": 3, "intake": False, "speed": 0, "expected": "554d009603 04 01 0015"},
-        {"zone": 3, "intake": True, "speed": 0, "expected": "554d009603 05 02 0013"},
+        {"zone": 3, "intake": True, "speed": 0, "expected": "554d009603 04 02 0014"},
     ]
 )
 class TestParser(unittest.TestCase):

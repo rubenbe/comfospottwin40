@@ -51,10 +51,7 @@ class Packet:
         return int(self.data[5] / 2) + 1
 
     def setzone(self, value):
-        if self.intake():
-            self.data[5] = (value - 1) * 2 + 1
-        else:
-            self.data[5] = (value - 1) * 2
+        self.data[5] = (value - 1) * 2
 
     def fannumber(self):
         return self.data[5]
@@ -70,6 +67,9 @@ class Packet:
 
     def intake(self):
         return self.direction() == 2
+
+    def setdirectiongroup(self, group):
+        self.data[5] = self.data[5] + group
 
     def setintake(self, isintake):
         if isintake:

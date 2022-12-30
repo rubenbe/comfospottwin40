@@ -34,12 +34,23 @@ The sensor is a Sensiron SHT21 i2c based sensor.
 
 # Packet specification
 ## Packet header
-00 0x55 Preamble
-01 0x4D Preamble
-02 0x00 Preamble
-03 0x96 Preamble
-04 Data length excluding checksum
+* 00 0x55 Preamble
+* 01 0x4D Preamble
+* 02 0x00 Preamble
+* 03 0x96 Preamble
+* 04 Data length excluding checksum
 
+## Fan level
 The maximum fan level is 100
 Setting a fan level of 101 or higher will stop the fan
 The minimum fan level seems to be 26 0x1a
+
+## Zones
+There are 3 user zones (DIP switch 1 to 3 on the fans).
+But on protocol level there are 6.
+
+In fact the [protocol level] == [user zone - 1] * 2
+These are the even zones (DIP switch 4 set to OFF on the fans).
+
+If DIP switch 4 on the fan is set to ON.
+The fan will listen to the odd zones.
