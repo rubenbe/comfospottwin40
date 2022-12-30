@@ -1,4 +1,4 @@
-.PHONY: test requirements.txt
+.PHONY: test requirements.txt tags
 
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir := $(dir $(mkfile_path))
@@ -13,3 +13,6 @@ requirements.txt:
 
 requirements_dev.txt:
 	pip freeze > requirements_dev.txt
+
+tags:
+	ctags -R --fields=+l --languages=python
