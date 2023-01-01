@@ -54,6 +54,7 @@ if __name__ == "__main__":
     assert sys.argv[1], "Please provide a serial device e.g. /dev/ttyUSB0"
     assert sys.argv[2], "Please provide a MQTT server"
     packetlog = None
+    packetlogname = None
     if len(sys.argv) > 3:
         packetlogname = sys.argv[3]
     asyncio.run(main(sys.argv[1], sys.argv[2], packetlog=packetlogname))
