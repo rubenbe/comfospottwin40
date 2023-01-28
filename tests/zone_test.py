@@ -52,16 +52,16 @@ class TestZone(unittest.TestCase):
 
     def test_zones_Neq_FanSpeed(self):
         z1 = Zone()
-        z1.fan_speed.set_fanspeed(10)
+        z1.fan_speed.set_fan_speed(10)
         z2 = Zone()
-        z2.fan_speed.set_fanspeed(11)
+        z2.fan_speed.set_fan_speed(11)
         self.assertNotEqual(z1, z2)
 
     def test_zones_Eq_FanSpeed(self):
         z1 = Zone()
-        z1.fan_speed.set_fanspeed(10)
+        z1.fan_speed.set_fan_speed(10)
         z2 = Zone()
-        z2.fan_speed.set_fanspeed(10)
+        z2.fan_speed.set_fan_speed(10)
         self.assertEqual(z1, z2)
 
     def test_zones_Neq_IsIntake(self):

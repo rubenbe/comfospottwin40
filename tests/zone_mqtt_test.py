@@ -70,7 +70,8 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/fan/comfospot40/comfospot40_zone1/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 1", "device_class": "fan", "state_topic": "comfospot40/zones/zone1/state", "percentage_state_topic": "comfospot40/zones/zone1/fan_speed", "percentage_command_topic": "comfospot40/zones/zone1/fan_speed_todo", "command_topic": "comfospot40/zones/zone1/set_fan_speed"}""",
+            """{"name": "Comfospot40 Zone 1 Speed", "device_class": "sensor", "state_class": "measurement", "temperature_unit": "percentage", "icon": "mdi:fan", "state_topic": "comfospot40/zones/zone1/fan_speed"}"""
+            # """{"name": "Comfospot40 Zone 1 Speed", "device_class": "sensor", "state_topic": "comfospot40/zones/zone1/state", "percentage_state_topic": "comfospot40/zones/zone1/fan_speed", "percentage_command_topic": "comfospot40/zones/zone1/fan_speed_todo", "command_topic": "comfospot40/zones/zone1/set_fan_speed"}""",
         )
 
     def test_get_mqttconfig_topic_temp_in(self):
