@@ -3,6 +3,7 @@ import struct
 from .packet import Packet
 from .state import State
 import copy
+from datetime import datetime
 
 
 class Parser:
@@ -36,7 +37,9 @@ class Parser:
         pdata = [hex(d) for d in data]
         if self._packetlog:
             with open(self._packetlog, "a") as logfile:
-                logfile.write(str(z) + "\n")
+                logfile.write(
+                    datetime.now().strftime("%H:%M:%S.%f") + "  " + str(z) + "\n"
+                )
         if z.checkcrc():
             if z.hassensordata():
                 logging.debug(pdata, z.temperature(), z.humidity())
