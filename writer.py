@@ -2,6 +2,7 @@
 from sys import argv
 from time import sleep
 import asyncio
+import comfospot40
 import serial_asyncio
 import serial
 
@@ -14,6 +15,7 @@ async def main(argv):
     reader, writer = await serial_asyncio.open_serial_connection(
         url=argv[1], baudrate=2400, parity=serial.PARITY_NONE
     )
+    parser = comfospot40.Parser(reader, None)
 
     from comfospot40.create_packet import create_speed_packet
 
@@ -40,9 +42,13 @@ async def main(argv):
 
     packet = create_speed_packet(zone, intake, int(value), directiongroup, alt)
     print(" ".join([hex(i) for i in packet]))
+    x = asyncio.create_task(parser.run())
     while True:
         writer.write(bytes(packet))
         print("writing")
+        if x.done():
+            print(x.result())
+            x = asyncio.create_task(parser.run())
         await asyncio.sleep(1)
 
 
