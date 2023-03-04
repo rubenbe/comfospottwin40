@@ -13,6 +13,14 @@ async def main(devicename, mqtturi, packetlog=None):
     async with Client(mqtturi) as client:
         parser = comfospot40.Parser(reader, packetlog)
         x = None
+        for zoneid, zonestate in parser.get_state().zones.items():
+            for topic, payloadstr in zonestate.get_mqtt_config(zoneid, True).items():
+                x = client.publish(
+                    topic,
+                    payload=payloadstr.encode(),
+                    qos=1,
+                )
+                asyncio.create_task(x)
         while True:
             state = await parser.run()
             print(state)
@@ -23,16 +31,6 @@ async def main(devicename, mqtturi, packetlog=None):
             )
             asyncio.create_task(x)
             for zoneid, zonestate in state.zones.items():
-                for topic, payloadstr in zonestate.get_mqtt_config(
-                    zoneid, True
-                ).items():
-                    x = client.publish(
-                        topic,
-                        payload=payloadstr.encode(),
-                        qos=1,
-                    )
-                    asyncio.create_task(x)
-
                 for attr in (
                     "fan_speed",
                     "inside_temperature",

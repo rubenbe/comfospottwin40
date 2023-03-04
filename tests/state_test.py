@@ -12,13 +12,21 @@ class TestState(unittest.TestCase):
 
     def test_zones_default(self):
         state = State()
-        self.assertEqual({}, state.zones)
+        self.assertEqual(
+            str(state.zones[1]), "🏠➡️   0s (__)🌡️ ____C, __% ♻️  ____C, __%"
+        )
+        self.assertEqual(
+            str(state.zones[2]), "🏠➡️   0s (__)🌡️ ____C, __% ♻️  ____C, __%"
+        )
+        self.assertEqual(
+            str(state.zones[3]), "🏠➡️   0s (__)🌡️ ____C, __% ♻️  ____C, __%"
+        )
 
     def test_zones_add_zone1_fan(self):
         state = State()
         state.addpacket(Packet(self.parsedata("554D009603 00 01 1B FE")))
         self.assertTrue(1 in state.zones)
-        self.assertEqual([1], list(state.zones.keys()))
+        self.assertEqual([1, 2, 3], list(state.zones.keys()))
         zone = state.zones[1]
         self.assertEqual(27, zone.fan_speed.value())
         self.assertEqual(False, zone.isintake)

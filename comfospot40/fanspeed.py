@@ -3,15 +3,17 @@ from .value import Value
 
 class Fanspeed(Value):
     def set_fan_speed(self, temp):
+        print("set fan", self._value)
         self._value = temp
 
     def fan_speed(self):
+        print(self._value)
         return self._value
 
     def mqtt_config(self, zoneid):
         return {
-            "name": "Comfospot40 Zone {0} Speed".format(zoneid),
-            "device_class": "sensor",
+            "name": "Comfospot40 Zone {0} Fan".format(zoneid),
+            "device_class": "humidity",
             "state_class": "measurement",
             "temperature_unit": "percentage",
             "icon": "mdi:fan",

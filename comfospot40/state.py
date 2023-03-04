@@ -4,7 +4,7 @@ from .zone import Zone
 
 class State:
     def __init__(self):
-        self.zones = {}
+        self.zones = {1: Zone(), 2: Zone(), 3: Zone()}
 
     def addpacket(self, packet):
         if packet.hassensordata():
