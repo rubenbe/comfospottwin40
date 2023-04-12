@@ -22,7 +22,7 @@ class Zone:
             return {}
         self.configpublished = markpublished
         return {
-            "homeassistant/sensor/comfospot40/comfospot40_zone{}_fan/config".format(
+            "homeassistant/fan/comfospot40_zone{}_fan/config".format(
                 zoneid
             ): json.dumps(
                 self.fan_speed.mqtt_config(zoneid),
