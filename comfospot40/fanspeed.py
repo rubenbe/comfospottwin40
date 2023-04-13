@@ -10,12 +10,12 @@ class Fanspeed(Value):
         print(self._value)
         return self._value
 
-    def publish_state(self, client):
+    def publish_state(self):
         print("publishing" + str(self._value))
-        return [ client.publish(self.prefix+ "/speed/percentage_state", payload = str(self._value).encode(), qos=1),
-                client.publish(self.prefix+ "/oscillation/state", payload = str('true').encode(), qos=1),
-                client.publish(self.prefix+ "/on/state", payload = str('true').encode(), qos=1)
-                ]
+        return ( (self.prefix+ "/speed/percentage_state", str(self._value).encode()),
+                (self.prefix+ "/oscillation/state", str('true').encode()),
+                (self.prefix+ "/on/state", str('true').encode())
+                )
 
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid

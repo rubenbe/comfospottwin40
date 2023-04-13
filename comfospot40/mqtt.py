@@ -29,10 +29,10 @@ class Mqtt:
                 "fan_speed",
             ):
                 v = getattr(zonestate, attr)
-                x = v.publish_state(self._client)
+                x = v.publish_state()
                 if not x: continue
                 print("Create tasks", x)
-                for publish_task in x:
-                    task = asyncio.create_task(publish_task)
+                for publish_topic, publish_payload in x:
+                    task = asyncio.create_task(self._client.publish(publish_topic, payload=publish_payload, qos=1))
                     self.background_tasks.add(task)
                     task.add_done_callback(self.background_tasks.discard)
