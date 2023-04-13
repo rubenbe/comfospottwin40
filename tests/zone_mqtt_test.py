@@ -39,7 +39,7 @@ class TestZoneMqtt(unittest.TestCase):
         k = list(c)
         k.sort()
         expected = [
-            "homeassistant/sensor/comfospot40/comfospot40_zone0_fan/config",
+            "homeassistant/fan/comfospot40_zone0_fan/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_temp_in/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_temp_recycled/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_humidity_in/config",
@@ -54,7 +54,7 @@ class TestZoneMqtt(unittest.TestCase):
         k = list(c)
         k.sort()
         expected = [
-            "homeassistant/sensor/comfospot40/comfospot40_zone1_fan/config",
+            "homeassistant/fan/comfospot40_zone1_fan/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_temp_in/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_temp_recycled/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_humidity_in/config",
@@ -67,11 +67,10 @@ class TestZoneMqtt(unittest.TestCase):
         self.maxDiff = None
         z = Zone()
         c = z.get_mqtt_config(1, False)
-        v = c["homeassistant/sensor/comfospot40/comfospot40_zone1_fan/config"]
+        v = c["homeassistant/fan/comfospot40_zone1_fan/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 1 Fan", "device_class": "humidity", "state_class": "measurement", "temperature_unit": "percentage", "icon": "mdi:fan", "state_topic": "comfospot40/zones/zone1/fan_speed"}"""
-            # """{"name": "Comfospot40 Zone 1 Speed", "device_class": "sensor", "state_topic": "comfospot40/zones/zone1/state", "percentage_state_topic": "comfospot40/zones/zone1/fan_speed", "percentage_command_topic": "comfospot40/zones/zone1/fan_speed_todo", "command_topic": "comfospot40/zones/zone1/set_fan_speed"}""",
+            """{"name": "Comfospot40 Zone 1 Fan", "~": "comfospot40_zone1_fan", "state_topic": "~/on/state", "command_topic": "~/on/set", "oscillation_state_topic": "~/oscillation/state", "oscillation_command_topic": "~/oscillation/set", "percentage_state_topic": "~/speed/percentage_state", "percentage_command_topic": "~/speed/percentage", "preset_mode_state_topic": "~/preset/preset_mode_state", "preset_mode_command_topic": "~/preset/preset_mode", "preset_modes": ["in", "out", "in low", "low", "mid", "high", "max"], "qos": 0, "payload_on": "true", "payload_off": "false", "payload_oscillation_on": "true", "payload_oscillation_off": "false", "speed_range_min": 16, "speed_range_max": 128, "unique_id": "comfospot40_zone1_fan"}""",
         )
 
     def test_get_mqttconfig_topic_temp_in(self):
