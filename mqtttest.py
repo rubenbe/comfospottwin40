@@ -9,12 +9,14 @@ async def main(mqtturi):
     async with Client(mqtturi) as client:
         state = comfospot40.State()
         mqtt = comfospot40.Mqtt(client, state)
+        x = 16
         while True:
-            state.zones[1].fan_speed.set_fan_speed(23)
+            state.zones[1].fan_speed.set_fan_speed(x)
+            x=x+5
             state.zones[1].inside_humidity.set_humidity(12)
             print("iets")
             mqtt.sendState(state)
-            await asyncio.sleep(1)
+            await asyncio.sleep(2)
 
 
 if __name__ == "__main__":

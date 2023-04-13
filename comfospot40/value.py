@@ -4,3 +4,7 @@ class Value:
 
     def value(self):
         return self._value
+
+    def publish_state(self, client):
+        print("TODO")
+        return []

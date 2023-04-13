@@ -29,12 +29,10 @@ class Mqtt:
                 "fan_speed",
             ):
                 v = getattr(zonestate, attr)
-                v = v.value() if v else None
-                x = self._client.publish(
-                    "comfospot40/zones/zone{}/{}".format(zoneid, attr),
-                    payload=str(v).encode(),
-                    qos=1,
-                )
-                task = asyncio.create_task(x)
-                self.background_tasks.add(task)
-                task.add_done_callback(self.background_tasks.discard)
+                x = v.publish_state(self._client)
+                if not x: continue
+                print("Create tasks", x)
+                for publish_task in x:
+                    task = asyncio.create_task(publish_task)
+                    self.background_tasks.add(task)
+                    task.add_done_callback(self.background_tasks.discard)
