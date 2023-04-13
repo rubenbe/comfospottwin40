@@ -70,7 +70,7 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/fan/comfospot40_zone1_fan/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 1 Fan", "~": "comfospot40_zone1_fan", "state_topic": "~/on/state", "command_topic": "~/on/set", "oscillation_state_topic": "~/oscillation/state", "oscillation_command_topic": "~/oscillation/set", "percentage_state_topic": "~/speed/percentage_state", "percentage_command_topic": "~/speed/percentage", "preset_mode_state_topic": "~/preset/preset_mode_state", "preset_mode_command_topic": "~/preset/preset_mode", "preset_modes": ["in", "out", "in low", "low", "mid", "high", "max"], "qos": 0, "payload_on": "true", "payload_off": "false", "payload_oscillation_on": "true", "payload_oscillation_off": "false", "speed_range_min": 16, "speed_range_max": 128, "unique_id": "comfospot40_zone1_fan"}""",
+            """{"name": "Comfospot40 Zone 1 Fan", "~": "comfospot40_zone1_fan", "state_topic": "comfospot40_zone1_fan/on/state", "command_topic": "~/on/set", "oscillation_state_topic": "comfospot40_zone1_fan/oscillation/state", "oscillation_command_topic": "~/oscillation/set", "percentage_state_topic": "comfospot40_zone1_fan/speed/percentage_state", "percentage_command_topic": "~/speed/percentage", "preset_mode_state_topic": "comfospot40_zone1_fan/preset/preset_mode_state", "preset_mode_command_topic": "~/preset/preset_mode", "preset_modes": ["in", "out", "in low", "low", "mid", "high", "max"], "qos": 0, "payload_on": "true", "payload_off": "false", "payload_oscillation_on": "true", "payload_oscillation_off": "false", "speed_range_min": 16, "speed_range_max": 128, "unique_id": "comfospot40_zone1_fan"}""",
         )
 
     def test_get_mqttconfig_topic_temp_in(self):

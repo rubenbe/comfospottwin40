@@ -12,24 +12,30 @@ class Fanspeed(Value):
 
     def publish_state(self):
         print("publishing" + str(self._value))
-        return ( (self.prefix+ "/speed/percentage_state", str(self._value).encode()),
-                (self.prefix+ "/oscillation/state", str('true').encode()),
-                (self.prefix+ "/on/state", str('true').encode())
-                )
+        return (
+            (self.topic_percentage_state, str(self._value).encode()),
+            (self.topic_oscillation_state + "/oscillation/state", str("true").encode()),
+            (self.topic_on_state, str("true").encode()),
+            (self.topic_mode_state, str("out").encode()),
+        )
 
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid
         self.prefix = "comfospot40_zone{}_fan".format(zoneid)
+        self.topic_percentage_state = self.prefix + "/speed/percentage_state"
+        self.topic_on_state = self.prefix + "/on/state"
+        self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
+        self.topic_oscillation_state = self.prefix + "/oscillation/state"
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
             "~": self.prefix,
-            "state_topic": "~/on/state",
+            "state_topic": self.topic_on_state,
             "command_topic": "~/on/set",
-            "oscillation_state_topic": "~/oscillation/state",
+            "oscillation_state_topic": self.topic_oscillation_state,
             "oscillation_command_topic": "~/oscillation/set",
-            "percentage_state_topic": self.prefix + "/speed/percentage_state",
+            "percentage_state_topic": self.topic_percentage_state,
             "percentage_command_topic": "~/speed/percentage",
-            "preset_mode_state_topic": "~/preset/preset_mode_state",
+            "preset_mode_state_topic": self.topic_mode_state,
             "preset_mode_command_topic": "~/preset/preset_mode",
             "preset_modes": ["in", "out", "in low", "low", "mid", "high", "max"],
             "qos": 0,
