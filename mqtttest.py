@@ -12,7 +12,9 @@ async def main(mqtturi):
         x = 16
         while True:
             state.zones[1].fan_speed.set_fan_speed(x)
-            x=x+5
+            x = x + 5
+            if x > 128:
+                x = 16
             state.zones[1].inside_humidity.set_humidity(12)
             print("iets")
             mqtt.sendState(state)
