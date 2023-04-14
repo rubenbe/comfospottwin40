@@ -7,8 +7,10 @@ from asyncio_mqtt import Client
 
 async def main(mqtturi):
     async with Client(mqtturi) as client:
+        await client.connect()
         state = comfospot40.State()
         mqtt = comfospot40.Mqtt(client, state)
+        await mqtt.subscribe()
         x = 16
         while True:
             state.zones[1].fan_speed.set_fan_speed(x)
