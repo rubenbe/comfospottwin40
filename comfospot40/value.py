@@ -6,5 +6,9 @@ class Value:
         return self._value
 
     def publish_state(self):
+        # print("TODO")
+        return ()
+
+    def do_subscribes(self):
         print("TODO")
         return ()

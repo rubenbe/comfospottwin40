@@ -5,9 +5,11 @@ import comfospot40
 
 class Mqtt:
     background_tasks = set()
+    topics = []
 
     def __init__(self, client: Client, state: comfospot40.State):
         self._client = client
+        self._state = state
         for zoneid, zonestate in state.zones.items():
             for topic, payloadstr in zonestate.get_mqtt_config(zoneid, True).items():
                 x = client.publish(
@@ -18,6 +20,36 @@ class Mqtt:
                 task = asyncio.create_task(x)
                 self.background_tasks.add(task)
                 task.add_done_callback(self.background_tasks.discard)
+
+    async def listen(self):
+        async with self._client.messages() as messages:
+            async for message in messages:
+                for topic_name, topic_callback in self.topics:
+                    if topic_name == str(message.topic):
+                        topic_callback(message.payload)
+
+    async def subscribe(self):
+        task = asyncio.create_task(self.listen())
+        self.background_tasks.add(task)
+        task.add_done_callback(self.background_tasks.discard)
+        self.topics = []
+        for zoneid, zonestate in self._state.zones.items():
+            for attr in (
+                "inside_temperature",
+                "recycled_temperature",
+                "inside_humidity",
+                "recycled_humidity",
+                "fan_speed",
+            ):
+                v = getattr(zonestate, attr)
+                x = v.do_subscribes()
+                if not x:
+                    continue
+                print("Subscribe", x)
+                for subscribe_topic, subscribe_callback in x:
+                    print("Subscribe", subscribe_topic)
+                    await self._client.subscribe(subscribe_topic)
+                    self.topics.append((subscribe_topic, subscribe_callback))
 
     def sendState(self, state):
         for zoneid, zonestate in state.zones.items():
