@@ -1,3 +1,4 @@
+Requires home assistant 2023.05 or newer
 
 # Zehnder comfospot twin 40
 
