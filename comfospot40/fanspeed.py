@@ -4,7 +4,7 @@ from .value import Value
 class Fanspeed(Value):
     _oscillation = True
     _on = True
-    _mode = b"min"
+    _mode = b"low"
     _direction_forward = True
 
     def set_fan_speed(self, temp):
