@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/rubenbe/comfospottwin40.svg?branch=master)](https://travis-ci.org/rubenbe/comfospottwin40)
 
 # Zehnder comfospot twin 40
 
