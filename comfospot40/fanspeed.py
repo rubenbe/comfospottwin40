@@ -19,7 +19,6 @@ class Fanspeed(Value):
     def publish_state(self):
         # print("publishing" + str(self._value), str(self._oscillation))
         return (
-            (self.topic_percentage_state, str(self._value).encode()),
             (
                 self.topic_on_state,
                 json.dumps(
@@ -28,8 +27,8 @@ class Fanspeed(Value):
                         "direction": (
                             "forward" if self._direction_forward else "reverse"
                         ),
-                        "oscillation": 
-                            str(self._oscillation).lower(),
+                        "oscillation": str(self._oscillation).lower(),
+                        "percentage": str(self._value),
                     }
                 ),
             ),
@@ -63,7 +62,6 @@ class Fanspeed(Value):
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid
         self.prefix = "comfospot40_zone{}_fan".format(zoneid)
-        self.topic_percentage_state = self.prefix + "/speed/percentage_state"
         self.topic_on_state = self.prefix + "/on/state"
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
@@ -81,8 +79,9 @@ class Fanspeed(Value):
             "oscillation_state_topic": self.topic_on_state,
             "oscillation_command_topic": self.topic_oscillation_set,
             "oscillation_value_template": "{{ value_json.oscillation }}",
-            "percentage_state_topic": self.topic_percentage_state,
+            "percentage_state_topic": self.topic_on_state,
             "percentage_command_topic": "~/speed/percentage",
+            "percentage_value_template": "{{ value_json.percentage }}",
             "preset_mode_state_topic": self.topic_mode_state,
             "preset_mode_command_topic": "~/preset/preset_mode",
             "preset_modes": ["low", "mid", "high", "max"],
