@@ -5,7 +5,7 @@ import json
 class Fanspeed(Value):
     _oscillation = True
     _on = True
-    _mode = b"low"
+    _preset = "low"
     _direction_forward = True
 
     def set_fan_speed(self, temp):
@@ -29,10 +29,10 @@ class Fanspeed(Value):
                         ),
                         "oscillation": str(self._oscillation).lower(),
                         "percentage": str(self._value),
+                        "preset": self._preset,
                     }
                 ),
             ),
-            (self.topic_mode_state, self._mode),
         )
 
     def set_oscillation(self, temp):
@@ -47,16 +47,16 @@ class Fanspeed(Value):
         print("Set on ", temp, temp == b"true")
         self._on = temp == b"true"
 
-    def set_mode(self, temp):
-        print("Set mode ", temp)
-        self._mode = temp
+    def set_preset(self, temp):
+        print("Set preset ", temp)
+        self._preset = temp.decode("UTF-8")
 
     def do_subscribes(self):
         return (
             (self.topic_direction_set, lambda x: self.set_direction(x)),
             (self.topic_oscillation_set, lambda x: self.set_oscillation(x)),
             (self.topic_on_set, lambda x: self.set_on(x)),
-            (self.topic_mode_state, lambda x: self.set_mode(x)),
+            (self.topic_preset_set, lambda x: self.set_preset(x)),
         )
 
     def mqtt_config(self, zoneid):
@@ -64,9 +64,9 @@ class Fanspeed(Value):
         self.prefix = "comfospot40_zone{}_fan".format(zoneid)
         self.topic_on_state = self.prefix + "/on/state"
         self.topic_on_set = self.prefix + "/on/set"
-        self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
         self.topic_direction_set = self.prefix + "/direction/set"
+        self.topic_preset_set = self.prefix + "/preset/set"
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
             "~": self.prefix,
@@ -82,8 +82,9 @@ class Fanspeed(Value):
             "percentage_state_topic": self.topic_on_state,
             "percentage_command_topic": "~/speed/percentage",
             "percentage_value_template": "{{ value_json.percentage }}",
-            "preset_mode_state_topic": self.topic_mode_state,
-            "preset_mode_command_topic": "~/preset/preset_mode",
+            "preset_mode_state_topic": self.topic_on_state,
+            "preset_mode_command_topic": self.topic_preset_set,
+            "preset_mode_value_template": "{{ value_json.preset }}",
             "preset_modes": ["low", "mid", "high", "max"],
             "qos": 0,
             "payload_on": "true",
