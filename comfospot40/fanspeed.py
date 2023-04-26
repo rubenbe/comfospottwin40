@@ -24,9 +24,18 @@ class Fanspeed(Value):
                 self.topic_oscillation_state,
                 str(self._oscillation).lower().encode(),
             ),
-            (self.topic_on_state, json.dumps({"state": str(self._on).lower()})),
+            (
+                self.topic_on_state,
+                json.dumps(
+                    {
+                        "state": str(self._on).lower(),
+                        "direction": (
+                            "forward" if self._direction_forward else "reverse"
+                        ),
+                    }
+                ),
+            ),
             (self.topic_mode_state, self._mode),
-            (self.topic_direction_state, "forward" if self._direction_forward else "reverse" ),
         )
 
     def set_oscillation(self, temp):
@@ -62,7 +71,6 @@ class Fanspeed(Value):
         self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
         self.topic_oscillation_state = self.prefix + "/oscillation/state"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
-        self.topic_direction_state = self.prefix + "/direction/state"
         self.topic_direction_set = self.prefix + "/direction/set"
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
@@ -70,8 +78,9 @@ class Fanspeed(Value):
             "state_topic": self.topic_on_state,
             "command_topic": self.topic_on_set,
             "state_value_template": "{{ value_json.state }}",
-            "direction_state_topic": self.topic_direction_state,
+            "direction_state_topic": self.topic_on_state,
             "direction_command_topic": self.topic_direction_set,
+            "direction_value_template": "{{ value_json.direction }}",
             "oscillation_state_topic": self.topic_oscillation_state,
             "oscillation_command_topic": self.topic_oscillation_set,
             "percentage_state_topic": self.topic_percentage_state,
