@@ -48,7 +48,7 @@ class Fanspeed(Value):
         return (
             (self.topic_direction_set, lambda x: self.set_direction(x)),
             (self.topic_oscillation_set, lambda x: self.set_oscillation(x)),
-            (self.topic_on_state, lambda x: self.set_on(x)),
+            (self.topic_on_set, lambda x: self.set_on(x)),
             (self.topic_mode_state, lambda x: self.set_mode(x)),
         )
 
@@ -57,6 +57,7 @@ class Fanspeed(Value):
         self.prefix = "comfospot40_zone{}_fan".format(zoneid)
         self.topic_percentage_state = self.prefix + "/speed/percentage_state"
         self.topic_on_state = self.prefix + "/on/state"
+        self.topic_on_set = self.prefix + "/on/set"
         self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
         self.topic_oscillation_state = self.prefix + "/oscillation/state"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
@@ -66,7 +67,7 @@ class Fanspeed(Value):
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
             "~": self.prefix,
             "state_topic": self.topic_on_state,
-            "command_topic": "~/on/set",
+            "command_topic": self.topic_on_set,
             "direction_state_topic": self.topic_direction_state,
             "direction_command_topic": self.topic_direction_set,
             "oscillation_state_topic": self.topic_oscillation_state,
