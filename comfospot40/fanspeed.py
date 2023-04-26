@@ -1,4 +1,5 @@
 from .value import Value
+import json
 
 
 class Fanspeed(Value):
@@ -23,7 +24,7 @@ class Fanspeed(Value):
                 self.topic_oscillation_state,
                 str(self._oscillation).lower().encode(),
             ),
-            (self.topic_on_state, str(self._on).lower().encode()),
+            (self.topic_on_state, json.dumps({"state": str(self._on).lower()})),
             (self.topic_mode_state, self._mode),
             (self.topic_direction_state, "forward" if self._direction_forward else "reverse" ),
         )
@@ -68,6 +69,7 @@ class Fanspeed(Value):
             "~": self.prefix,
             "state_topic": self.topic_on_state,
             "command_topic": self.topic_on_set,
+            "state_value_template": "{{ value_json.state }}",
             "direction_state_topic": self.topic_direction_state,
             "direction_command_topic": self.topic_direction_set,
             "oscillation_state_topic": self.topic_oscillation_state,
