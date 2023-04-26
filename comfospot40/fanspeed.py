@@ -21,10 +21,6 @@ class Fanspeed(Value):
         return (
             (self.topic_percentage_state, str(self._value).encode()),
             (
-                self.topic_oscillation_state,
-                str(self._oscillation).lower().encode(),
-            ),
-            (
                 self.topic_on_state,
                 json.dumps(
                     {
@@ -32,6 +28,8 @@ class Fanspeed(Value):
                         "direction": (
                             "forward" if self._direction_forward else "reverse"
                         ),
+                        "oscillation": 
+                            str(self._oscillation).lower(),
                     }
                 ),
             ),
@@ -69,7 +67,6 @@ class Fanspeed(Value):
         self.topic_on_state = self.prefix + "/on/state"
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_mode_state = self.prefix + "/preset/preset_mode_state"
-        self.topic_oscillation_state = self.prefix + "/oscillation/state"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
         self.topic_direction_set = self.prefix + "/direction/set"
         return {
@@ -81,8 +78,9 @@ class Fanspeed(Value):
             "direction_state_topic": self.topic_on_state,
             "direction_command_topic": self.topic_direction_set,
             "direction_value_template": "{{ value_json.direction }}",
-            "oscillation_state_topic": self.topic_oscillation_state,
+            "oscillation_state_topic": self.topic_on_state,
             "oscillation_command_topic": self.topic_oscillation_set,
+            "oscillation_value_template": "{{ value_json.oscillation }}",
             "percentage_state_topic": self.topic_percentage_state,
             "percentage_command_topic": "~/speed/percentage",
             "preset_mode_state_topic": self.topic_mode_state,
