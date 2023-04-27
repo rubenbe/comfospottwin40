@@ -20,7 +20,7 @@ class Fanspeed(Value):
         # print("publishing" + str(self._value), str(self._oscillation))
         return (
             (
-                self.topic_on_state,
+                self.topic_state,
                 json.dumps(
                     {
                         "state": str(self._on).lower(),
@@ -62,7 +62,7 @@ class Fanspeed(Value):
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid
         self.prefix = "comfospot40_zone{}_fan".format(zoneid)
-        self.topic_on_state = self.prefix + "/on/state"
+        self.topic_state = self.prefix + "/state"
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
         self.topic_direction_set = self.prefix + "/direction/set"
@@ -70,19 +70,19 @@ class Fanspeed(Value):
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
             "~": self.prefix,
-            "state_topic": self.topic_on_state,
+            "state_topic": self.topic_state,
             "command_topic": self.topic_on_set,
             "state_value_template": "{{ value_json.state }}",
-            "direction_state_topic": self.topic_on_state,
+            "direction_state_topic": self.topic_state,
             "direction_command_topic": self.topic_direction_set,
             "direction_value_template": "{{ value_json.direction }}",
-            "oscillation_state_topic": self.topic_on_state,
+            "oscillation_state_topic": self.topic_state,
             "oscillation_command_topic": self.topic_oscillation_set,
             "oscillation_value_template": "{{ value_json.oscillation }}",
-            "percentage_state_topic": self.topic_on_state,
+            "percentage_state_topic": self.topic_state,
             "percentage_command_topic": "~/speed/percentage",
             "percentage_value_template": "{{ value_json.percentage }}",
-            "preset_mode_state_topic": self.topic_on_state,
+            "preset_mode_state_topic": self.topic_state,
             "preset_mode_command_topic": self.topic_preset_set,
             "preset_mode_value_template": "{{ value_json.preset }}",
             "preset_modes": ["low", "mid", "high", "max"],
