@@ -69,7 +69,6 @@ class Fanspeed(Value):
         self.topic_preset_set = self.prefix + "/preset/set"
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
-            "~": self.prefix,
             "state_topic": self.topic_state,
             "command_topic": self.topic_on_set,
             "state_value_template": "{{ value_json.state }}",
