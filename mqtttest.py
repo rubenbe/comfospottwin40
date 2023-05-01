@@ -11,12 +11,7 @@ async def main(mqtturi):
         state = comfospot40.State()
         mqtt = comfospot40.Mqtt(client, state)
         await mqtt.subscribe()
-        x = 16
         while True:
-            state.zones[1].fan_speed.set_fan_speed(x)
-            x = x + 5
-            if x > 128:
-                x = 16
             state.zones[1].inside_humidity.set_humidity(12)
             print("iets")
             mqtt.sendState(state)
