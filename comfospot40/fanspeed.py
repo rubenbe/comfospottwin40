@@ -5,7 +5,8 @@ import json
 class Fanspeed(Value):
     _oscillation = True
     _on = True
-    _preset = "low"
+    _presets = (("low", 27), ("mid", 47), ("high", 78), ("max", 99))
+    _preset = _presets[0][0]
     _direction_forward = True
 
     def set_fan_speed(self, temp):
@@ -47,9 +48,14 @@ class Fanspeed(Value):
         print("Set on ", temp, temp == b"true")
         self._on = temp == b"true"
 
-    def set_preset(self, temp):
+    def set_preset(self, temp) -> None:
         print("Set preset ", temp)
-        self._preset = temp.decode("UTF-8")
+        new_preset = temp.decode("UTF-8")
+        if self._preset != new_preset:
+            self._preset = new_preset
+            for p_name, p_value in self._presets:
+                if self._preset == p_name:
+                    self.set_fan_speed(p_value)
 
     def do_subscribes(self):
         return (
