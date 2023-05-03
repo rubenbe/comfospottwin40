@@ -21,7 +21,6 @@ class Fanspeed(Value):
         return self._value
 
     def publish_state(self):
-        # print("publishing" + str(self._value), str(self._oscillation))
         return (
             (
                 self.topic_state,
