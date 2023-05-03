@@ -101,8 +101,6 @@ class Fanspeed(Value):
             "payload_off": "false",
             "payload_oscillation_on": "true",
             "payload_oscillation_off": "false",
-            "speed_range_min": 0,
-            "speed_range_max": 100,
             "unique_id": "comfospot40_zone{}_fan".format(zoneid),
         }
 
