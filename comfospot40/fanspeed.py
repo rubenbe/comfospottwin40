@@ -6,12 +6,15 @@ class Fanspeed(Value):
     _oscillation = True
     _on = True
     _presets = (("low", 27), ("mid", 47), ("high", 78), ("max", 99))
-    _preset = _presets[0][0]
+    _preset = None
     _direction_forward = True
+    def __init__(self):
+        super().__init__()
+        self.set_preset(b"low")
 
     def set_fan_speed(self, temp):
+        self._value = int(temp)
         print("set fan", self._value)
-        self._value = temp
 
     def fan_speed(self):
         print(self._value)
@@ -63,6 +66,7 @@ class Fanspeed(Value):
             (self.topic_oscillation_set, lambda x: self.set_oscillation(x)),
             (self.topic_on_set, lambda x: self.set_on(x)),
             (self.topic_preset_set, lambda x: self.set_preset(x)),
+            (self.topic_percentage_set, lambda x: self.set_fan_speed(x)),
         )
 
     def mqtt_config(self, zoneid):
@@ -72,6 +76,7 @@ class Fanspeed(Value):
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
         self.topic_direction_set = self.prefix + "/direction/set"
+        self.topic_percentage_set = self.prefix + "/speed/percentage"
         self.topic_preset_set = self.prefix + "/preset/set"
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
@@ -85,7 +90,7 @@ class Fanspeed(Value):
             "oscillation_command_topic": self.topic_oscillation_set,
             "oscillation_value_template": "{{ value_json.oscillation }}",
             "percentage_state_topic": self.topic_state,
-            "percentage_command_topic": "~/speed/percentage",
+            "percentage_command_topic": self.topic_percentage_set,
             "percentage_value_template": "{{ value_json.percentage }}",
             "preset_mode_state_topic": self.topic_state,
             "preset_mode_command_topic": self.topic_preset_set,
@@ -96,8 +101,8 @@ class Fanspeed(Value):
             "payload_off": "false",
             "payload_oscillation_on": "true",
             "payload_oscillation_off": "false",
-            "speed_range_min": 16,
-            "speed_range_max": 128,
+            "speed_range_min": 0,
+            "speed_range_max": 100,
             "unique_id": "comfospot40_zone{}_fan".format(zoneid),
         }
 
