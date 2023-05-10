@@ -5,16 +5,22 @@ import json
 class Fanspeed(Value):
     _oscillation = True
     _on = True
-    _presets = (("low", 27), ("mid", 47), ("high", 78), ("max", 99))
+    _presets = {"low": 27, "mid": 47, "high": 78, "max": 99}
     _preset = None
     _direction_forward = True
+
     def __init__(self):
         super().__init__()
+        self._rev_presets = dict([reversed(i) for i in self._presets.items()])
         self.set_preset(b"low")
 
     def set_fan_speed(self, temp):
-        self._value = int(temp)
-        print("set fan", self._value)
+        new_value = int(temp)
+        self._value = new_value
+        if new_value in self._rev_presets:
+            self._preset = self._rev_presets[new_value]
+        elif self._value != new_value:
+            self._preset = "custom"
 
     def fan_speed(self):
         print(self._value)
@@ -55,7 +61,7 @@ class Fanspeed(Value):
         new_preset = temp.decode("UTF-8")
         if self._preset != new_preset:
             self._preset = new_preset
-            for p_name, p_value in self._presets:
+            for p_name, p_value in self._presets.items():
                 if self._preset == p_name:
                     self.set_fan_speed(p_value)
 
@@ -77,6 +83,8 @@ class Fanspeed(Value):
         self.topic_direction_set = self.prefix + "/direction/set"
         self.topic_percentage_set = self.prefix + "/speed/percentage"
         self.topic_preset_set = self.prefix + "/preset/set"
+        mqtt_preset_modes = list(self._presets.keys())
+        mqtt_preset_modes.append("custom")
         return {
             "name": "Comfospot40 Zone {0} Fan".format(zoneid),
             "state_topic": self.topic_state,
@@ -94,7 +102,7 @@ class Fanspeed(Value):
             "preset_mode_state_topic": self.topic_state,
             "preset_mode_command_topic": self.topic_preset_set,
             "preset_mode_value_template": "{{ value_json.preset }}",
-            "preset_modes": ["low", "mid", "high", "max"],
+            "preset_modes": mqtt_preset_modes,
             "qos": 0,
             "payload_on": "true",
             "payload_off": "false",
