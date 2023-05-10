@@ -31,3 +31,28 @@ class TestFanspeed(unittest.TestCase):
         f = Fanspeed()
         f.set_preset(b"custom")
         self.assertEqual(f.value(), 27, "Custom should have no effect")
+
+    def test_value_low(self):
+        f = Fanspeed()
+        f.set_fan_speed(27)
+        self.assertEqual(f.preset(), "low")
+
+    def test_value_mid(self):
+        f = Fanspeed()
+        f.set_fan_speed(47)
+        self.assertEqual(f.preset(), "mid")
+
+    def test_value_high(self):
+        f = Fanspeed()
+        f.set_fan_speed(78)
+        self.assertEqual(f.preset(), "high")
+
+    def test_value_max(self):
+        f = Fanspeed()
+        f.set_fan_speed(99)
+        self.assertEqual(f.preset(), "max")
+
+    def test_value_max(self):
+        f = Fanspeed()
+        f.set_fan_speed(42)
+        self.assertEqual(f.preset(), "custom")

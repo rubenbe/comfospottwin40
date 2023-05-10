@@ -19,7 +19,7 @@ class Fanspeed(Value):
         self._value = new_value
         if new_value in self._rev_presets:
             self._preset = self._rev_presets[new_value]
-        elif self._value != new_value:
+        else:
             self._preset = "custom"
 
     def fan_speed(self):
@@ -43,6 +43,9 @@ class Fanspeed(Value):
                 ),
             ),
         )
+
+    def preset(self) -> str:
+        return self._preset
 
     def set_oscillation(self, temp):
         print("Set oscillation ", temp, temp == b"true")
