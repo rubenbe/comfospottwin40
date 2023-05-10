@@ -1,6 +1,7 @@
 import asyncio
 import comfospot40
 import sys
+import argparse
 
 from asyncio_mqtt import Client
 
@@ -19,6 +20,8 @@ async def main(mqtturi):
 
 
 if __name__ == "__main__":
-    assert sys.argv[1], "Please provide a MQTT server"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mqtt", action="store", required=True, help="MQTT address")
+    args = parser.parse_args()
     packetlog = None
-    asyncio.run(main(sys.argv[1]))
+    asyncio.run(main(mqtturi=args.mqtt))
