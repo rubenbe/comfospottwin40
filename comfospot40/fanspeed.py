@@ -22,8 +22,11 @@ class Fanspeed(Value):
         else:
             self._preset = "custom"
 
-    def fan_speed(self):
+    def fan_speed(self) -> int:
         return self._value
+
+    def serial_fan_speed(self) -> int:
+        return self.fan_speed() if self._on else 0
 
     def publish_state(self):
         return (
