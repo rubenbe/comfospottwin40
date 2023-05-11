@@ -5,7 +5,11 @@ mkfile_dir := $(dir $(mkfile_path))
 
 test: black
 	python3 -m unittest discover $(mkfile_dir)/tests "*_test.py"
-black:
+
+ruff:
+	ruff *.py tests/*.py comfospot40/*.py --fix
+
+black: ruff
 	black *.py tests/*.py comfospot40/*.py
 
 requirements.txt:
