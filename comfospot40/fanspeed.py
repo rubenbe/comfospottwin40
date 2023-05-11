@@ -36,6 +36,9 @@ class Fanspeed(Value):
     def on(self) -> bool:
         return self._on
 
+    def direction_forward(self) -> bool:
+        return self._direction_forward
+
     def publish_state(self):
         return (
             (

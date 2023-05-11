@@ -16,5 +16,7 @@ class Hal:
         for zoneid, zonestate in state.zones.items():
             fan_speed = zonestate.fan_speed.serial_fan_speed()
             print(zoneid, fan_speed)
-            packet = create_speed_packet(zoneid, True, fan_speed, 0, 0)
+            packet = create_speed_packet(
+                zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, 0
+            )
             self._writer.write(bytes(packet))
