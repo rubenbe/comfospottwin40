@@ -1,4 +1,4 @@
-from comfospot40 import State
+from comfospot40 import State, Parser
 from comfospot40.create_packet import create_speed_packet
 import serial_asyncio
 import serial
@@ -11,6 +11,7 @@ class Hal:
         self._reader, self._writer = await serial_asyncio.open_serial_connection(
             url=devpath, baudrate=2400, parity=serial.PARITY_NONE
         )
+        parser = Parser(self._reader, None)
 
     async def sendState(self, state: State):
         print("sendState")
