@@ -16,6 +16,11 @@ class Fanspeed(Value):
 
     def set_fan_speed(self, temp):
         new_value = int(temp)
+        if new_value < 10:
+            self._on = False
+            return
+        if 0 < new_value < 27:
+            new_value = 27
         self._value = new_value
         if new_value in self._rev_presets:
             self._preset = self._rev_presets[new_value]
@@ -27,6 +32,9 @@ class Fanspeed(Value):
 
     def serial_fan_speed(self) -> int:
         return self.fan_speed() if self._on else 0
+
+    def on(self) -> bool:
+        return self._on
 
     def publish_state(self):
         return (
