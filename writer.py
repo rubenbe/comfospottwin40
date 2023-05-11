@@ -1,6 +1,5 @@
 #!/bin/env python
 from sys import argv
-from time import sleep
 import asyncio
 import comfospot40
 import serial_asyncio

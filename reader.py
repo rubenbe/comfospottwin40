@@ -1,7 +1,5 @@
 from sys import argv
 from time import sleep
-import logging
-import struct
 import serial
 import comfospot40
 

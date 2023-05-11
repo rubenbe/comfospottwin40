@@ -1,6 +1,5 @@
 import asyncio
 import comfospot40
-import sys
 import argparse
 
 from asyncio_mqtt import Client
