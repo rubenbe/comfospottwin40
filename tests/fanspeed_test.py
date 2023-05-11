@@ -25,7 +25,7 @@ class TestFanspeed(unittest.TestCase):
     def test_preset_max(self):
         f = Fanspeed()
         f.set_preset(b"max")
-        self.assertEqual(f.value(), 99)
+        self.assertEqual(f.value(), 100)
 
     def test_preset_custom(self):
         f = Fanspeed()
@@ -49,10 +49,22 @@ class TestFanspeed(unittest.TestCase):
 
     def test_value_max(self):
         f = Fanspeed()
-        f.set_fan_speed(99)
+        f.set_fan_speed(100)
         self.assertEqual(f.preset(), "max")
 
-    def test_value_max(self):
+    def test_value_custom(self):
         f = Fanspeed()
         f.set_fan_speed(42)
         self.assertEqual(f.preset(), "custom")
+
+    def test_off(self):
+        f = Fanspeed()
+        f.set_fan_speed(42)
+        self.assertEqual(42, f.fan_speed())
+        self.assertEqual(42, f.serial_fan_speed())
+        f.set_on(b"false")
+        self.assertEqual(42, f.fan_speed())
+        self.assertEqual(0, f.serial_fan_speed())
+        f.set_on(b"true")
+        self.assertEqual(42, f.fan_speed())
+        self.assertEqual(42, f.serial_fan_speed())

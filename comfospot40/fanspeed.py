@@ -5,7 +5,7 @@ import json
 class Fanspeed(Value):
     _oscillation = True
     _on = True
-    _presets = {"low": 27, "mid": 47, "high": 78, "max": 99}
+    _presets = {"low": 27, "mid": 47, "high": 78, "max": 100}
     _preset = None
     _direction_forward = True
 
