@@ -23,7 +23,6 @@ class Fanspeed(Value):
             self._preset = "custom"
 
     def fan_speed(self):
-        print(self._value)
         return self._value
 
     def publish_state(self):
