@@ -1,5 +1,5 @@
 import unittest
-from comfospot40 import *
+from comfospot40 import Zone
 
 
 class TestZoneMqtt(unittest.TestCase):
