@@ -40,6 +40,7 @@ class Mqtt:
                 "inside_humidity",
                 "recycled_humidity",
                 "fan_speed",
+                "counter_fan",
             ):
                 v = getattr(zonestate, attr)
                 x = v.do_subscribes()
@@ -59,6 +60,7 @@ class Mqtt:
                 "inside_humidity",
                 "recycled_humidity",
                 "fan_speed",
+                "counter_fan",
             ):
                 v = getattr(zonestate, attr)
                 x = v.publish_state()

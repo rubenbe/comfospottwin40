@@ -2,6 +2,7 @@ from datetime import datetime
 from .temperature import Temperature
 from .humidity import Humidity
 from .fanspeed import Fanspeed
+from .counterfan import Counterfan
 import json
 
 
@@ -12,6 +13,7 @@ class Zone:
         self.recycled_humidity = Humidity()
         self.recycled_temperature = Temperature()
         self.fan_speed = Fanspeed()
+        self.counter_fan = Counterfan()
         self.efficiency = None
         self.isintake = None
         self.timer = None
@@ -22,6 +24,11 @@ class Zone:
             return {}
         self.configpublished = markpublished
         return {
+            "homeassistant/select/comfospot40_zone{}_counter/config".format(
+                zoneid
+            ): json.dumps(
+                self.counter_fan.mqtt_config(zoneid),
+            ),
             "homeassistant/fan/comfospot40_zone{}_fan/config".format(
                 zoneid
             ): json.dumps(

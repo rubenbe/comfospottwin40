@@ -40,6 +40,7 @@ class TestZoneMqtt(unittest.TestCase):
         k.sort()
         expected = [
             "homeassistant/fan/comfospot40_zone0_fan/config",
+            "homeassistant/select/comfospot40_zone0_counter/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_temp_in/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_temp_recycled/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone0_humidity_in/config",
@@ -55,6 +56,7 @@ class TestZoneMqtt(unittest.TestCase):
         k.sort()
         expected = [
             "homeassistant/fan/comfospot40_zone1_fan/config",
+            "homeassistant/select/comfospot40_zone1_counter/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_temp_in/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_temp_recycled/config",
             "homeassistant/sensor/comfospot40/comfospot40_zone1_humidity_in/config",
