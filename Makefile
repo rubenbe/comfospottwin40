@@ -9,7 +9,7 @@ test: black
 ruff:
 	ruff *.py tests/*.py comfospot40/*.py
 
-black: #ruff
+black: ruff
 	black *.py tests/*.py comfospot40/*.py
 
 requirements.txt:
