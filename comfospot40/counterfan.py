@@ -1,8 +1,18 @@
 from .value import Value
-import json
+from comfospot40 import Fanspeed
 
 
 class Counterfan(Value):
+    _options = [
+        "Off",
+        "Always same direction",
+        "Always counter direction",
+        "Counter when oscillating",
+    ]
+
+    def __init__(self):
+        self._value = self._options[0]
+
     def set_state(self, temp):
         self._value = temp
 
@@ -11,6 +21,12 @@ class Counterfan(Value):
 
     def publish_state(self):
         return ((self.topic_state, self._value),)
+
+    def on(self):
+        return self._value != self._options[0]
+
+    def direction(self, mainfan: Fanspeed):
+        return self._value != self._options[0]
 
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid
@@ -21,10 +37,5 @@ class Counterfan(Value):
             "name": "Comfospot40 Zone {0} Counter Fan Setting".format(zoneid),
             "state_topic": self.topic_state,
             "command_topic": self.topic_set,
-            "options": [
-                "Off",
-                "Always same direction",
-                "Always counter direction",
-                "Counter when oscillating",
-            ],
+            "options": self._options,
         }
