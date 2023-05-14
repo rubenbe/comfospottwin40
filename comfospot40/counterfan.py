@@ -26,7 +26,13 @@ class Counterfan(Value):
         return self._value != self._options[0]
 
     def direction(self, mainfan: Fanspeed):
-        return self._value != self._options[0]
+        forward = mainfan.direction_forward()
+        if self._value == self._options[2]:
+            return not forward
+        elif self._value == self._options[3]:
+            return not forward if mainfan.oscillating() else forward
+        else:
+            return forward
 
     def mqtt_config(self, zoneid):
         self.zoneid = zoneid
@@ -40,5 +46,8 @@ class Counterfan(Value):
             "options": self._options,
         }
 
-    def get_fan_data(self, zonestate):
-        return {"speed": zonestate.fan_speed.serial_fan_speed() if self.on() else 0}
+    def get_fan_data(self, fan_speed):
+        return {
+            "speed": fan_speed.serial_fan_speed() if self.on() else 0,
+            "direction": self.direction(fan_speed),
+        }

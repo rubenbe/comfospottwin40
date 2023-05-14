@@ -1,9 +1,10 @@
 import unittest
 from comfospot40 import Counterfan
-from comfospot40 import Zone
+from comfospot40 import Fanspeed
+from parameterized import parameterized_class
 
 
-class TestFanspeed(unittest.TestCase):
+class TestCounterfan(unittest.TestCase):
     def test_default(self):
         f = Counterfan()
         self.assertEqual(f.value(), "Off")
@@ -36,13 +37,77 @@ class TestFanspeed(unittest.TestCase):
     def test_get_fan_speed_data_off(self):
         f = Counterfan()
         f.set_state("Off")
-        z = Zone()
+        z = Fanspeed()
         x = f.get_fan_data(z)
         self.assertEqual(x["speed"], 0)
 
     def test_get_fan_speed_data_on(self):
         f = Counterfan()
         f.set_state("Always same direction")
-        z = Zone()
+        z = Fanspeed()
         x = f.get_fan_data(z)
         self.assertEqual(x["speed"], 27)
+
+
+@parameterized_class(
+    [
+        {
+            "config": "Always same direction",
+            "mainfanfwd": True,
+            "mainfanosc": False,
+            "expected": True,
+        },
+        {
+            "config": "Always same direction",
+            "mainfanfwd": False,
+            "mainfanosc": False,
+            "expected": False,
+        },
+        {
+            "config": "Always counter direction",
+            "mainfanfwd": True,
+            "mainfanosc": False,
+            "expected": False,
+        },
+        {
+            "config": "Always counter direction",
+            "mainfanfwd": False,
+            "mainfanosc": False,
+            "expected": True,
+        },
+        {
+            "config": "Counter when oscillating",
+            "mainfanfwd": True,
+            "mainfanosc": True,
+            "expected": False,
+        },
+        {
+            "config": "Counter when oscillating",
+            "mainfanfwd": False,
+            "mainfanosc": True,
+            "expected": True,
+        },
+        {
+            "config": "Counter when oscillating",
+            "mainfanfwd": True,
+            "mainfanosc": False,
+            "expected": True,
+        },
+        {
+            "config": "Counter when oscillating",
+            "mainfanfwd": False,
+            "mainfanosc": False,
+            "expected": False,
+        },
+    ]
+)
+class TestCounterfanDirection(unittest.TestCase):
+    def test_get_fan_speed_direction(self):
+        f = Counterfan()
+        f.set_state(self.config)
+        z = Fanspeed()
+        z._direction_forward = self.mainfanfwd
+        self.assertEqual(z.direction_forward(), self.mainfanfwd)
+        z.set_oscillation(b"true" if self.mainfanosc else b"false")
+        x = f.get_fan_data(z)
+        self.assertEqual(x["direction"], self.expected)

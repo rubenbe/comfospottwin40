@@ -60,6 +60,9 @@ class Fanspeed(Value):
     def preset(self) -> str:
         return self._preset
 
+    def oscillating(self):
+        return self._oscillation
+
     def set_oscillation(self, temp):
         self._oscillation = temp == b"true"
 
