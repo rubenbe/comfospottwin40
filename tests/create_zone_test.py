@@ -5,10 +5,10 @@ from parameterized import parameterized_class
 
 @parameterized_class(
     [
-        # {"zone": 1, "intake": True, "speed": 25, "expected": "554d009603 00 02 19 ff"},
-        # {"zone": 1, "intake": False, "speed": 27, "expected": "554d009603 01 01 1b fd"},
-        # {"zone": 2, "intake": True, "speed": 25, "expected": "554d009603 02 02 19 fd"},
-        # {"zone": 2, "intake": False, "speed": 27, "expected": "554d009603 03 01 1b fb"},
+        # {"zone": 1, "intake": True, "speed": 25, "expected": "554d009603 00 0219ff"},
+        # {"zone": 1, "intake": False, "speed": 27, "expected": "554d009603 01 011bfd"},
+        # {"zone": 2, "intake": True, "speed": 25, "expected": "554d009603 02 0219fd"},
+        # {"zone": 2, "intake": False, "speed": 27, "expected": "554d009603 03 011bfb"},
         # {"zone": 1, "intake": True, "speed": 0, "expected": "554d009703 00 01 0018"},
         # {"zone": 1, "intake": True, "speed": 0, "expected": "554d009703 01 02 0016"},
         # {"zone": 2, "intake": True, "speed": 0, "expected": "554d009703 02 01 0016"},
