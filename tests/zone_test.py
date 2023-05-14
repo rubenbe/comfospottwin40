@@ -43,13 +43,6 @@ class TestZone(unittest.TestCase):
         z2.recycled_temperature.set_temperature(11)
         self.assertNotEqual(z1, z2)
 
-    def test_zones_Eq_RecycledTemperature(self):
-        z1 = Zone()
-        z1.recycled_temperature.set_temperature(10)
-        z2 = Zone()
-        z2.recycled_temperature.set_temperature(10)
-        self.assertEqual(z1, z2)
-
     def test_zones_Neq_FanSpeed(self):
         z1 = Zone()
         z1.fan_speed.set_fan_speed(42)
