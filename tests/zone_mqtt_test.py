@@ -72,7 +72,26 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/fan/comfospot40_zone1_fan/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 1 Fan", "state_topic": "comfospot40_zone1_fan/state", "command_topic": "comfospot40_zone1_fan/on/set", "state_value_template": "{{ value_json.state }}", "direction_state_topic": "comfospot40_zone1_fan/state", "direction_command_topic": "comfospot40_zone1_fan/direction/set", "direction_value_template": "{{ value_json.direction }}", "oscillation_state_topic": "comfospot40_zone1_fan/state", "oscillation_command_topic": "comfospot40_zone1_fan/oscillation/set", "oscillation_value_template": "{{ value_json.oscillation }}", "percentage_state_topic": "comfospot40_zone1_fan/state", "percentage_command_topic": "comfospot40_zone1_fan/speed/percentage", "percentage_value_template": "{{ value_json.percentage }}", "preset_mode_state_topic": "comfospot40_zone1_fan/state", "preset_mode_command_topic": "comfospot40_zone1_fan/preset/set", "preset_mode_value_template": "{{ value_json.preset }}", "preset_modes": ["low", "mid", "high", "max", "custom"], "qos": 0, "payload_on": "true", "payload_off": "false", "payload_oscillation_on": "true", "payload_oscillation_off": "false", "unique_id": "comfospot40_zone1_fan"}""",
+            """{"name": "Comfospot40 Zone 1 Fan", """
+            """"state_topic": "comfospot40_zone1_fan/state", """
+            """"command_topic": "comfospot40_zone1_fan/on/set", """
+            """"state_value_template": "{{ value_json.state }}", """
+            """"direction_state_topic": "comfospot40_zone1_fan/state", """
+            """"direction_command_topic": "comfospot40_zone1_fan/direction/set", """
+            """"direction_value_template": "{{ value_json.direction }}", """
+            """"oscillation_state_topic": "comfospot40_zone1_fan/state", """
+            """"oscillation_command_topic": "comfospot40_zone1_fan/oscillation/set", """
+            """"oscillation_value_template": "{{ value_json.oscillation }}", """
+            """"percentage_state_topic": "comfospot40_zone1_fan/state", """
+            """"percentage_command_topic": "comfospot40_zone1_fan/speed/percentage", """
+            """"percentage_value_template": "{{ value_json.percentage }}", """
+            """"preset_mode_state_topic": "comfospot40_zone1_fan/state", """
+            """"preset_mode_command_topic": "comfospot40_zone1_fan/preset/set", """
+            """"preset_mode_value_template": "{{ value_json.preset }}", """
+            """"preset_modes": ["low", "mid", "high", "max", "custom"], """
+            """"qos": 0, "payload_on": "true", "payload_off": "false", """
+            """"payload_oscillation_on": "true", "payload_oscillation_off": "false", """
+            """"unique_id": "comfospot40_zone1_fan"}""",
         )
 
     def test_get_mqttconfig_topic_temp_in(self):
@@ -82,7 +101,10 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/sensor/comfospot40/comfospot40_zone2_temp_in/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 2 Inside temperature", "device_class": "temperature", "state_class": "measurement", "temperature_unit": "celcius", "state_topic": "comfospot40/zones/zone2/inside_temperature"}""",
+            """{"name": "Comfospot40 Zone 2 Inside temperature", """
+            """"device_class": "temperature", "state_class": "measurement", """
+            """"temperature_unit": "celcius", """
+            """"state_topic": "comfospot40/zones/zone2/inside_temperature"}""",
         )
 
     def test_get_mqttconfig_topic_temp_recycled(self):
@@ -92,7 +114,10 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/sensor/comfospot40/comfospot40_zone3_temp_recycled/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 3 Recycled temperature", "device_class": "temperature", "state_class": "measurement", "temperature_unit": "celcius", "state_topic": "comfospot40/zones/zone3/recycled_temperature"}""",
+            """{"name": "Comfospot40 Zone 3 Recycled temperature", """
+            """"device_class": "temperature", "state_class": "measurement", """
+            """"temperature_unit": "celcius", """
+            """"state_topic": "comfospot40/zones/zone3/recycled_temperature"}""",
         )
 
     def test_get_mqttconfig_topic_humidity_in(self):
@@ -102,7 +127,10 @@ class TestZoneMqtt(unittest.TestCase):
         v = c["homeassistant/sensor/comfospot40/comfospot40_zone4_humidity_in/config"]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 4 Inside humidity", "device_class": "humidity", "state_class": "measurement", "temperature_unit": "percentage", "state_topic": "comfospot40/zones/zone4/inside_humidity"}""",
+            """{"name": "Comfospot40 Zone 4 Inside humidity", """
+            """"device_class": "humidity", "state_class": "measurement", """
+            """"temperature_unit": "percentage", """
+            """"state_topic": "comfospot40/zones/zone4/inside_humidity"}""",
         )
 
     def test_get_mqttconfig_topic_humidity_recycled(self):
@@ -114,5 +142,8 @@ class TestZoneMqtt(unittest.TestCase):
         ]
         self.assertEqual(
             v,
-            """{"name": "Comfospot40 Zone 5 Recycled humidity", "device_class": "humidity", "state_class": "measurement", "temperature_unit": "percentage", "state_topic": "comfospot40/zones/zone5/recycled_humidity"}""",
+            """{"name": "Comfospot40 Zone 5 Recycled humidity", """
+            """"device_class": "humidity", "state_class": "measurement","""
+            """"temperature_unit": "percentage", """
+            """"state_topic": "comfospot40/zones/zone5/recycled_humidity"}""",
         )
