@@ -143,7 +143,7 @@ class TestZoneMqtt(unittest.TestCase):
         self.assertEqual(
             v,
             """{"name": "Comfospot40 Zone 5 Recycled humidity", """
-            """"device_class": "humidity", "state_class": "measurement","""
+            """"device_class": "humidity", "state_class": "measurement", """
             """"temperature_unit": "percentage", """
             """"state_topic": "comfospot40/zones/zone5/recycled_humidity"}""",
         )

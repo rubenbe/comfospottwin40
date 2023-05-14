@@ -33,7 +33,7 @@ class TestZone(unittest.TestCase):
         z1 = Zone()
         z1.recycled_temperature.set_temperature(10)
         z2 = Zone()
-        z2.recycled_temperature.set_temparature(10)
+        z2.recycled_temperature.set_temperature(10)
         self.assertEqual(z1, z2)
 
     def test_zones_Neq_RecycledTemperature(self):
