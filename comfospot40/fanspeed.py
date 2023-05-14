@@ -61,19 +61,15 @@ class Fanspeed(Value):
         return self._preset
 
     def set_oscillation(self, temp):
-        print("Set oscillation ", temp, temp == b"true")
         self._oscillation = temp == b"true"
 
     def set_direction(self, temp):
-        print("Set direction ", temp, temp == b"true")
         self._direction_forward = temp == b"forward"
 
     def set_on(self, temp):
-        print("Set on ", temp, temp == b"true")
         self._on = temp == b"true"
 
     def set_preset(self, temp) -> None:
-        print("Set preset ", temp)
         new_preset = temp.decode("UTF-8")
         if self._preset != new_preset:
             self._preset = new_preset
