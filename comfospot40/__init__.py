@@ -1,14 +1,28 @@
-from .packet import Packet
-from .value import Value
-from .temperature import Temperature
-from .humidity import Humidity
-from .fanspeed import Fanspeed
-from .zone import Zone
-from .state import State
-from .parser import Parser
-from .create_packet import create_speed_packet
-from .mqtt import Mqtt
-from .hal import Hal
-from .counterfan import Counterfan
+from comfospot40.packet import Packet
+from comfospot40.value import Value
+from comfospot40.temperature import Temperature
+from comfospot40.humidity import Humidity
+from comfospot40.fanspeed import Fanspeed
+from comfospot40.zone import Zone
+from comfospot40.state import State
+from comfospot40.parser import Parser
+from comfospot40.create_packet import create_speed_packet
+from comfospot40.mqtt import Mqtt
+from comfospot40.hal import Hal
+from comfospot40.counterfan import Counterfan
+
+# Keep ruff happy
+Packet
+Value
+Temperature
+Humidity
+Fanspeed
+Zone
+State
+Parser
+create_speed_packet
+Mqtt
+Hal
+Counterfan
 
 name = "comfospot40"
