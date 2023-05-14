@@ -1,5 +1,6 @@
 import unittest
 from comfospot40 import Counterfan
+from comfospot40 import Zone
 
 
 class TestFanspeed(unittest.TestCase):
@@ -31,3 +32,17 @@ class TestFanspeed(unittest.TestCase):
         f.set_state("Counter when oscillating")
         self.assertEqual(f.value(), "Counter when oscillating")
         self.assertTrue(f.on())
+
+    def test_get_fan_speed_data_off(self):
+        f = Counterfan()
+        f.set_state("Off")
+        z = Zone()
+        x = f.get_fan_data(z)
+        self.assertEqual(x["speed"], 0)
+
+    def test_get_fan_speed_data_on(self):
+        f = Counterfan()
+        f.set_state("Always same direction")
+        z = Zone()
+        x = f.get_fan_data(z)
+        self.assertEqual(x["speed"], 27)

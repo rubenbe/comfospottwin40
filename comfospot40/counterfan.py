@@ -39,3 +39,6 @@ class Counterfan(Value):
             "command_topic": self.topic_set,
             "options": self._options,
         }
+
+    def get_fan_data(self, zonestate):
+        return {"speed": zonestate.fan_speed.serial_fan_speed() if self.on() else 0}
