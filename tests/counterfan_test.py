@@ -7,43 +7,43 @@ from parameterized import parameterized_class
 class TestCounterfan(unittest.TestCase):
     def test_default(self):
         f = Counterfan()
-        self.assertEqual(f.value(), "Off")
+        self.assertEqual(f.value(), b"Off")
         self.assertFalse(f.on())
 
     def test_is_on_off(self):
         f = Counterfan()
-        f.set_state("Off")
-        self.assertEqual(f.value(), "Off")
+        f.set_state(b"Off")
+        self.assertEqual(f.value(), b"Off")
         self.assertFalse(f.on())
 
     def test_is_on_same(self):
         f = Counterfan()
-        f.set_state("Always same direction")
-        self.assertEqual(f.value(), "Always same direction")
+        f.set_state(b"Always same direction")
+        self.assertEqual(f.value(), b"Always same direction")
         self.assertTrue(f.on())
 
     def test_is_on_counter(self):
         f = Counterfan()
-        f.set_state("Always counter direction")
-        self.assertEqual(f.value(), "Always counter direction")
+        f.set_state(b"Always counter direction")
+        self.assertEqual(f.value(), b"Always counter direction")
         self.assertTrue(f.on())
 
     def test_is_on_oscillating(self):
         f = Counterfan()
-        f.set_state("Counter when oscillating")
-        self.assertEqual(f.value(), "Counter when oscillating")
+        f.set_state(b"Counter when oscillating")
+        self.assertEqual(f.value(), b"Counter when oscillating")
         self.assertTrue(f.on())
 
     def test_get_fan_speed_data_off(self):
         f = Counterfan()
-        f.set_state("Off")
+        f.set_state(b"Off")
         z = Fanspeed()
         x = f.get_fan_data(z)
         self.assertEqual(x["speed"], 0)
 
     def test_get_fan_speed_data_on(self):
         f = Counterfan()
-        f.set_state("Always same direction")
+        f.set_state(b"Always same direction")
         z = Fanspeed()
         x = f.get_fan_data(z)
         self.assertEqual(x["speed"], 27)
@@ -52,49 +52,49 @@ class TestCounterfan(unittest.TestCase):
 @parameterized_class(
     [
         {
-            "config": "Always same direction",
+            "config": b"Always same direction",
             "mainfanfwd": True,
             "mainfanosc": False,
             "expected": True,
         },
         {
-            "config": "Always same direction",
+            "config": b"Always same direction",
             "mainfanfwd": False,
             "mainfanosc": False,
             "expected": False,
         },
         {
-            "config": "Always counter direction",
+            "config": b"Always counter direction",
             "mainfanfwd": True,
             "mainfanosc": False,
             "expected": False,
         },
         {
-            "config": "Always counter direction",
+            "config": b"Always counter direction",
             "mainfanfwd": False,
             "mainfanosc": False,
             "expected": True,
         },
         {
-            "config": "Counter when oscillating",
+            "config": b"Counter when oscillating",
             "mainfanfwd": True,
             "mainfanosc": True,
             "expected": False,
         },
         {
-            "config": "Counter when oscillating",
+            "config": b"Counter when oscillating",
             "mainfanfwd": False,
             "mainfanosc": True,
             "expected": True,
         },
         {
-            "config": "Counter when oscillating",
+            "config": b"Counter when oscillating",
             "mainfanfwd": True,
             "mainfanosc": False,
             "expected": True,
         },
         {
-            "config": "Counter when oscillating",
+            "config": b"Counter when oscillating",
             "mainfanfwd": False,
             "mainfanosc": False,
             "expected": False,

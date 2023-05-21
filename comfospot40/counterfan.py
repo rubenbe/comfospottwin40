@@ -4,10 +4,10 @@ from comfospot40 import Fanspeed
 
 class Counterfan(Value):
     _options = [
-        "Off",
-        "Always same direction",
-        "Always counter direction",
-        "Counter when oscillating",
+        b"Off",
+        b"Always same direction",
+        b"Always counter direction",
+        b"Counter when oscillating",
     ]
 
     def __init__(self):
@@ -43,7 +43,7 @@ class Counterfan(Value):
             "name": "Comfospot40 Zone {0} Counter Fan Setting".format(zoneid),
             "state_topic": self.topic_state,
             "command_topic": self.topic_set,
-            "options": self._options,
+            "options": [x.decode("UTF-8") for x in self._options],
         }
 
     def get_fan_data(self, fan_speed):
