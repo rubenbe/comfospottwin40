@@ -2,6 +2,7 @@ from comfospot40 import State, Parser
 from comfospot40.create_packet import create_speed_packet
 import serial_asyncio
 import serial
+import asyncio
 
 
 class Hal:
@@ -20,3 +21,9 @@ class Hal:
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, 0
             )
             self._writer.write(bytes(packet))
+            counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
+            packet = create_speed_packet(
+                zoneid, counter["direction"], counter["speed"], 1, 0
+            )
+            self._writer.write(bytes(packet))
+            await asyncio.sleep(1)

@@ -18,7 +18,7 @@ async def main(mqtturi, dev):
             print("iets")
             mqtt.sendState(state)
             await hal.sendState(state) if dev else None
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
