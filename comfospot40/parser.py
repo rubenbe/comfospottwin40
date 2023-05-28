@@ -40,7 +40,7 @@ class Parser:
                 logfile.write(
                     datetime.now().strftime("%H:%M:%S.%f") + "  " + str(z) + "\n"
                 )
-        if z.checkcrc():
+        if True:  # z.checkcrc():
             if z.hassensordata():
                 logging.debug(pdata, z.temperature(), z.humidity())
                 self._state.addpacket(z)
