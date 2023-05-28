@@ -10,7 +10,7 @@ class Hal:
         self._reader, self._writer = await serial_asyncio.open_serial_connection(
             url=devpath, baudrate=2400, parity=serial.PARITY_NONE
         )
-        Parser(self._reader, None)
+        self.parser = Parser(self._reader, None)
 
     async def sendState(self, state: State):
         print("sendState")
@@ -18,12 +18,15 @@ class Hal:
             fan_speed = zonestate.fan_speed.serial_fan_speed()
             print(zoneid, fan_speed)
             packet = create_speed_packet(
-                zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, 0
+                zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )
             self._writer.write(bytes(packet))
+            await asyncio.sleep(0.5)
             counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
+            print(counter["direction"], counter["speed"])
             packet = create_speed_packet(
-                zoneid, counter["direction"], counter["speed"], 1, 0
+                zoneid, counter["direction"], counter["speed"], 1, True
             )
+            print("Writing")
             self._writer.write(bytes(packet))
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.5)

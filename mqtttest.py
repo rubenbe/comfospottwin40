@@ -12,13 +12,19 @@ async def main(mqtturi, dev):
         mqtt = comfospot40.Mqtt(client, state)
         hal = comfospot40.Hal()
         await hal.setup(dev) if dev else None
+        parser = hal.parser
         await mqtt.subscribe()
+        x = asyncio.create_task(parser.run())
         while True:
-            state.zones[1].inside_humidity.set_humidity(12)
+            # state.zones[1].inside_humidity.set_humidity(12)
             print("iets")
             mqtt.sendState(state)
             await hal.sendState(state) if dev else None
-            await asyncio.sleep(1)
+            if x.done():
+                print("DONE!")
+                print(x.result())
+                x = asyncio.create_task(parser.run())
+            # await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
