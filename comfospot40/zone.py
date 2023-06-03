@@ -42,7 +42,7 @@ class Zone:
             "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_recycled/config".format(
                 zoneid
             ): json.dumps(
-                self.inside_temperature.mqtt_config(zoneid, "recycled"),
+                self.recycled_temperature.mqtt_config(zoneid, "recycled"),
             ),
             "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_in/config".format(
                 zoneid
