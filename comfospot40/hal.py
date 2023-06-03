@@ -6,11 +6,14 @@ import asyncio
 
 
 class Hal:
+    def __init__(self, state):
+        self._state = state
+
     async def setup(self, devpath: str):
         self._reader, self._writer = await serial_asyncio.open_serial_connection(
             url=devpath, baudrate=2400, parity=serial.PARITY_NONE
         )
-        self.parser = Parser(self._reader, None)
+        self.parser = Parser(self._reader, None, self._state)
 
     async def sendState(self, state: State):
         print("sendState")

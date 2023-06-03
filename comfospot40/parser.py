@@ -7,9 +7,9 @@ from datetime import datetime
 
 
 class Parser:
-    def __init__(self, serial, packetlog=None):
+    def __init__(self, serial, packetlog=None, state=State()):
         self._ser = serial
-        self._state = State()
+        self._state = state
         self._packetlog = packetlog
 
         self.parserdata = []

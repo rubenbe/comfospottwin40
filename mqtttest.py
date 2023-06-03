@@ -9,8 +9,8 @@ async def main(mqtturi, dev):
     async with Client(mqtturi) as client:
         await client.connect()
         state = comfospot40.State()
+        hal = comfospot40.Hal(state)
         mqtt = comfospot40.Mqtt(client, state)
-        hal = comfospot40.Hal()
         await hal.setup(dev) if dev else None
         parser = hal.parser
         await mqtt.subscribe()
@@ -22,9 +22,9 @@ async def main(mqtturi, dev):
             await hal.sendState(state) if dev else None
             if x.done():
                 print("DONE!")
-                print(x.result())
+                state = x.result()
+                print(state)
                 x = asyncio.create_task(parser.run())
-            # await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
