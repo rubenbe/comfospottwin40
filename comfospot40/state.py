@@ -56,4 +56,4 @@ class State:
         return True
 
     def toJSON(self):
-        return json.dumps({"v1": dict([(zoneid, zonestate.toJSON()) for zoneid, zonestate in self.zones.items()])})
+        return {"v1": dict([(zoneid, zonestate.toJSON()) for zoneid, zonestate in self.zones.items()])}

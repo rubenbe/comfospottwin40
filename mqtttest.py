@@ -5,7 +5,7 @@ import argparse
 from asyncio_mqtt import Client
 
 
-async def main(mqtturi, dev, oscillation_time: int):
+async def main(mqtturi, dev, oscillation_time: int, storestate):
     async with Client(mqtturi) as client:
         await client.connect()
         state = comfospot40.State()
@@ -20,6 +20,9 @@ async def main(mqtturi, dev, oscillation_time: int):
             print("iets")
             mqtt.sendState(state)
             await hal.sendState(state) if dev else None
+            if storestate:
+                with open(storestate, 'w') as storefile:
+                    hal.storeState(storefile, state)
             if x.done():
                 print("DONE!")
                 state = x.result()
@@ -39,8 +42,14 @@ if __name__ == "__main__":
         default=60,
         type=int,
     )
+    parser.add_argument(
+        "--storestate",
+        action="store",
+        required=False,
+        help="JSON file to store state",
+            )
     args = parser.parse_args()
     packetlog = None
     asyncio.run(
-        main(mqtturi=args.mqtt, dev=args.dev, oscillation_time=args.oscillation)
+        main(mqtturi=args.mqtt, dev=args.dev, oscillation_time=args.oscillation, storestate=args.storestate)
     )

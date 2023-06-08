@@ -44,5 +44,7 @@ class Hal:
             self._writer.write(bytes(packet))
             await asyncio.sleep(0.5)
         #todo add versioning
-        print(state.toJSON())
+
+    def storeState(self, storefile, state):
+        print(json.dump(state.toJSON(), storefile, indent=2))
 
