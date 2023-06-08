@@ -1,5 +1,6 @@
 from datetime import datetime
 from .zone import Zone
+import json
 
 
 class State:
@@ -53,3 +54,6 @@ class State:
             if zone != ozone:
                 return False
         return True
+
+    def toJSON(self):
+        return json.dumps({"v1": dict([(zoneid, zonestate.toJSON()) for zoneid, zonestate in self.zones.items()])})

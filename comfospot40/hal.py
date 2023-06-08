@@ -4,6 +4,7 @@ import serial_asyncio
 import serial
 import asyncio
 import time
+import json
 
 
 class Hal:
@@ -42,3 +43,6 @@ class Hal:
             print("Writing")
             self._writer.write(bytes(packet))
             await asyncio.sleep(0.5)
+        #todo add versioning
+        print(state.toJSON())
+

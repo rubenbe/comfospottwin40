@@ -100,3 +100,6 @@ class Zone:
             and self.fan_speed == other.fan_speed
             and self.isintake == other.isintake
         )
+
+    def toJSON(self):
+        return {"fan": self.fan_speed.toJSON(), "counterfan": self.counter_fan.toJSON()}
