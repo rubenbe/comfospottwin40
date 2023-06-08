@@ -5,11 +5,11 @@ import argparse
 from asyncio_mqtt import Client
 
 
-async def main(mqtturi, dev):
+async def main(mqtturi, dev, oscillation_time: int):
     async with Client(mqtturi) as client:
         await client.connect()
         state = comfospot40.State()
-        hal = comfospot40.Hal(state)
+        hal = comfospot40.Hal(state, oscillation_time)
         mqtt = comfospot40.Mqtt(client, state)
         await hal.setup(dev) if dev else None
         parser = hal.parser
@@ -31,6 +31,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mqtt", action="store", required=True, help="MQTT address")
     parser.add_argument("--dev", action="store", required=False, help="Serial device")
+    parser.add_argument(
+        "--oscillation",
+        action="store",
+        required=False,
+        help="Oscillation time in seconds",
+        default=60,
+        type=int,
+    )
     args = parser.parse_args()
     packetlog = None
-    asyncio.run(main(mqtturi=args.mqtt, dev=args.dev))
+    asyncio.run(
+        main(mqtturi=args.mqtt, dev=args.dev, oscillation_time=args.oscillation)
+    )

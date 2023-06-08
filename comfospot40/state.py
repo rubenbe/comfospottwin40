@@ -31,6 +31,10 @@ class State:
                 zone.fan_speed.set_fan_speed(packet.speed())
             self.zones[packet.getzone()] = zone
 
+    def set_time(self, timer: float):
+        for _, zone in self.zones.items:
+            zone.set_time(timer)
+
     def __tozonestr(self, zone):
         if zone > 3 or zone < 1:
             return "Zone " + str(zone)

@@ -3,11 +3,14 @@ from comfospot40.create_packet import create_speed_packet
 import serial_asyncio
 import serial
 import asyncio
+import time
 
 
 class Hal:
-    def __init__(self, state):
+    def __init__(self, state, oscillation_time):
         self._state = state
+        self._oscillation_time = oscillation_time
+        self._oscillation_switch = time.monotonic()
 
     async def setup(self, devpath: str):
         self._reader, self._writer = await serial_asyncio.open_serial_connection(
@@ -16,10 +19,16 @@ class Hal:
         self.parser = Parser(self._reader, None, self._state)
 
     async def sendState(self, state: State):
-        print("sendState")
+        timer = time.monotonic()
+        switch_dir = (timer - self._oscillation_switch) > self._oscillation_time
+        print("sendState", timer, switch_dir)
+        if switch_dir:
+            self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():
             fan_speed = zonestate.fan_speed.serial_fan_speed()
             print(zoneid, fan_speed)
+            if switch_dir:
+                zonestate.fan_speed.maybe_switch_direction()
             packet = create_speed_packet(
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )

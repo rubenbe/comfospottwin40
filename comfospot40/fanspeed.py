@@ -39,6 +39,10 @@ class Fanspeed(Value):
     def direction_forward(self) -> bool:
         return self._direction_forward
 
+    def maybe_switch_direction(self):
+        if self._oscillation:
+            self._direction_forward = not self._direction_forward
+
     def publish_state(self):
         return (
             (

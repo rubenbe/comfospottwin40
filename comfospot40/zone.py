@@ -19,6 +19,9 @@ class Zone:
         self.timer = None
         self.configpublished = False
 
+    def set_time(self, timer):
+        self.timer = timer
+
     def get_mqtt_config(self, zoneid, markpublished):
         if self.configpublished:
             return {}
