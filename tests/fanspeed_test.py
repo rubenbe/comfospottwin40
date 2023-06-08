@@ -97,3 +97,37 @@ class TestFanspeed(unittest.TestCase):
         self.assertEqual(True, f.on())
         self.assertEqual(27, f.fan_speed())
         self.assertEqual(27, f.serial_fan_speed())
+
+    def test_set_direction_forward(self):
+        f = Fanspeed()
+        f.set_direction(b"forward")
+        self.assertTrue(f.direction_forward())
+
+    def test_set_direction_reverse(self):
+        f = Fanspeed()
+        f.set_direction(b"reverse")
+        self.assertFalse(f.direction_forward())
+
+    def test_set_oscillation_true(self):
+        f = Fanspeed()
+        f.set_oscillation(b"true")
+        self.assertTrue(f.oscillating())
+
+    def test_set_oscillation_false(self):
+        f = Fanspeed()
+        f.set_oscillation(b"false")
+        self.assertFalse(f.oscillating())
+
+    def test_switch_not_oscillation(self):
+        f = Fanspeed()
+        f.set_direction(b"forward")
+        f.set_oscillation(b"false")
+        f.maybe_switch_direction()
+        self.assertTrue(f.direction_forward())
+
+    def test_switch_when_oscillation(self):
+        f = Fanspeed()
+        f.set_direction(b"forward")
+        f.set_oscillation(b"true")
+        f.maybe_switch_direction()
+        self.assertFalse(f.direction_forward())
