@@ -45,7 +45,7 @@ if __name__ == "__main__":
         type=int,
     )
     parser.add_argument(
-        "--storestate",
+        "--state",
         action="store",
         required=False,
         help="JSON file to store state",
@@ -57,6 +57,6 @@ if __name__ == "__main__":
             mqtturi=args.mqtt,
             dev=args.dev,
             oscillation_time=args.oscillation,
-            storestate=args.storestate,
+            storestate=args.state,
         )
     )
