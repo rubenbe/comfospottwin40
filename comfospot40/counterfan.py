@@ -51,5 +51,6 @@ class Counterfan(Value):
             "speed": fan_speed.serial_fan_speed() if self.on() else 0,
             "direction": self.direction(fan_speed),
         }
+
     def toJSON(self):
         return {"state": self._value.decode("utf-8")}

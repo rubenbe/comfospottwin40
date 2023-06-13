@@ -134,4 +134,9 @@ class Fanspeed(Value):
         return self._value == other._value
 
     def toJSON(self):
-        return {"on": self.on(), "speed": self.fan_speed(), "forward": self.direction_forward(), "oscillation": self.oscillating()}
+        return {
+            "on": self.on(),
+            "speed": self.fan_speed(),
+            "forward": self.direction_forward(),
+            "oscillation": self.oscillating(),
+        }
