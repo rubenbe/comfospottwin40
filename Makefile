@@ -3,13 +3,13 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir := $(dir $(mkfile_path))
 
-test: black
+test: ruff
 	python3 -m unittest discover $(mkfile_dir)/tests "*_test.py"
 
-ruff:
+ruff: black
 	ruff *.py tests/*.py comfospot40/*.py
 
-black: ruff
+black:
 	black *.py tests/*.py comfospot40/*.py
 
 requirements.txt:
