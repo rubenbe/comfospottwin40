@@ -23,7 +23,7 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
         else:
             await mqtt.subscribe()
         while True:
-            print("iets")
+            mqtt.sendState(state)
             await hal.sendState(state)
             if storestate:
                 with open(storestate, "w") as storefile:
