@@ -2,7 +2,7 @@ import asyncio
 import comfospot40
 import argparse
 
-from asyncio_mqtt import Client
+from aiomqtt import Client
 
 
 async def main(mqtturi, dev, oscillation_time: int, storestate):

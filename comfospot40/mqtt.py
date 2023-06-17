@@ -1,4 +1,4 @@
-from asyncio_mqtt import Client
+from aiomqtt import Client
 import asyncio
 import comfospot40
 
