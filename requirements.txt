@@ -1,4 +1,4 @@
-asyncio-mqtt==0.16.1
+aiomqtt==1.0.0
 click==8.0.4
 mypy-extensions==0.4.3
 paho-mqtt==1.6.1

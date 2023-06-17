@@ -1,5 +1,5 @@
+aiomqtt==1.0.0
 astroid==2.15.4
-asyncio-mqtt==0.16.1
 black==22.1.0
 click==8.0.4
 dill==0.3.6
