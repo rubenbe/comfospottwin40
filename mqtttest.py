@@ -14,21 +14,19 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
             with open(storestate, "r") as storefile:
                 hal.loadState(storefile, state)
         mqtt = comfospot40.Mqtt(client, state)
-        x = None
-        if dev:
-            await hal.setup(dev) if dev else None
-            parser = hal.parser
-            await mqtt.subscribe()
-            x = asyncio.create_task(parser.run())
-        else:
-            await mqtt.subscribe()
+        await hal.setup(dev) if dev else None
+        parser = hal.parser
+        await mqtt.subscribe()
+        x = asyncio.create_task(parser.run())
         while True:
+            # state.zones[1].inside_humidity.set_humidity(12)
             print("iets")
-            await hal.sendState(state)
+            mqtt.sendState(state)
+            await hal.sendState(state) if dev else None
             if storestate:
                 with open(storestate, "w") as storefile:
                     hal.storeState(storefile, state)
-            if x and x.done():
+            if x.done():
                 print("DONE!")
                 state = x.result()
                 print(state)
