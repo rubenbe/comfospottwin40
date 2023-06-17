@@ -10,6 +10,9 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
         await client.connect()
         state = comfospot40.State()
         hal = comfospot40.Hal(state, oscillation_time)
+        if storestate:
+            with open(storestate, "r") as storefile:
+                hal.loadState(storefile, state)
         mqtt = comfospot40.Mqtt(client, state)
         x = None
         if dev:

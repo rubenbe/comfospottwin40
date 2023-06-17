@@ -47,3 +47,8 @@ class Hal:
 
     def storeState(self, storefile, state):
         print(json.dump(state.toJSON(), storefile, indent=2))
+
+    def loadState(self, storefile, state):
+        loadedjson = json.load(storefile)
+        print(loadedjson)
+        state.fromJSON(loadedjson)

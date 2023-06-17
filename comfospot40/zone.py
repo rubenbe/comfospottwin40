@@ -103,3 +103,7 @@ class Zone:
 
     def toJSON(self):
         return {"fan": self.fan_speed.toJSON(), "counterfan": self.counter_fan.toJSON()}
+
+    def loadJSON(self, loadedzone):
+        self.fan_speed.loadJSON(loadedzone["fan"])
+        self.counter_fan.loadJSON(loadedzone["counterfan"])

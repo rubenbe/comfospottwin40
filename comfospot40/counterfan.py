@@ -20,6 +20,7 @@ class Counterfan(Value):
         return ((self.topic_set, lambda x: self.set_state(x)),)
 
     def publish_state(self):
+        print(self._value)
         return ((self.topic_state, self._value),)
 
     def on(self):
@@ -54,3 +55,7 @@ class Counterfan(Value):
 
     def toJSON(self):
         return {"state": self._value.decode("utf-8")}
+
+    def loadJSON(self, loadedfan):
+        print(loadedfan["state"])
+        self.set_state(loadedfan["state"].encode("UTF-8"))
