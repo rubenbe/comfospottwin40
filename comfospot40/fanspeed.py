@@ -142,6 +142,7 @@ class Fanspeed(Value):
         }
 
     def loadJSON(self, loadedfan):
-        # todo hier nog wat
-        print(loadedfan["on"])
-        # self.set_on()
+        self._on = loadedfan["on"]
+        self._oscillation = loadedfan["oscillation"]
+        self._direction_forward = loadedfan["forward"]
+        self.set_fan_speed(loadedfan["speed"])

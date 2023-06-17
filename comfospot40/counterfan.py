@@ -57,5 +57,4 @@ class Counterfan(Value):
         return {"state": self._value.decode("utf-8")}
 
     def loadJSON(self, loadedfan):
-        print(loadedfan["state"])
         self.set_state(loadedfan["state"].encode("UTF-8"))
