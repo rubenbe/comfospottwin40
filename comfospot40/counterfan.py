@@ -20,7 +20,6 @@ class Counterfan(Value):
         return ((self.topic_set, lambda x: self.set_state(x)),)
 
     def publish_state(self):
-        print(self._value)
         return ((self.topic_state, self._value),)
 
     def on(self):
