@@ -31,8 +31,8 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
             if x and x.done():
                 print("DONE!")
                 state = x.result()
-                print(state)
                 x = asyncio.create_task(parser.run())
+            print(state)
 
 
 if __name__ == "__main__":
