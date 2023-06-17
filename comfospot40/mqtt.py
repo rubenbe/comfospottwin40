@@ -9,6 +9,7 @@ class Mqtt:
 
     def __init__(self, client: Client, state: comfospot40.State):
         self._client = client
+        client.pending_calls_threshold = 20
         self._state = state
         for zoneid, zonestate in state.zones.items():
             for topic, payloadstr in zonestate.get_mqtt_config(zoneid, True).items():
