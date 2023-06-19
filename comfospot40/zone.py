@@ -89,18 +89,22 @@ class Zone:
     def __placeholder(self, var, num):
         if not var:
             return "_" * num
-        return var
+        if type(var) == str:
+            return var[0:num]
+        else:
+            return var
 
     def __repr__(self):
         return self.__str__()
 
     def __str__(self):
-        return "{}{} {}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+        return "{}{} {}{} ({} {})🌡️ {}C, {}% ♻️  {}C, {}%".format(
             self.__place_oscillation(),
             self.__placeintake(),
             self.__placecounterintake(),
             self.__placetimer(),
             self.__placeholder(self.fan_speed.fan_speed(), 2),
+            self.__placeholder(self.fan_speed.preset(), 2),
             self.__placeholder(self.inside_temperature.temperature(), 4),
             self.__placeholder(self.inside_humidity.humidity(), 2),
             self.__placeholder(self.recycled_temperature.temperature(), 4),
