@@ -28,7 +28,7 @@ class Hal:
             self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():
             fan_speed = zonestate.fan_speed.serial_fan_speed()
-            print(zoneid, fan_speed)
+            # print(zoneid, fan_speed)
             if switch_dir:
                 zonestate.fan_speed.maybe_switch_direction()
             packet = create_speed_packet(
@@ -37,16 +37,16 @@ class Hal:
             self._writer.write(bytes(packet)) if self._writer else None
             await asyncio.sleep(0.5)
             counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
-            print(counter["direction"], counter["speed"])
+            # print(counter["direction"], counter["speed"])
             packet = create_speed_packet(
                 zoneid, counter["direction"], counter["speed"], 1, True
             )
-            print("Writing")
+            # print("Writing")
             self._writer.write(bytes(packet)) if self._writer else None
             await asyncio.sleep(0.5)
 
     def storeState(self, storefile, state):
-        print(json.dump(state.toJSON(), storefile, indent=2))
+        json.dump(state.toJSON(), storefile, indent=2)
 
     def loadState(self, storefile, state):
         loadedjson = json.load(storefile)

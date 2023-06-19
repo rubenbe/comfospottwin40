@@ -56,10 +56,10 @@ class State:
 
     def fromJSON(self, loadedjson):
         if "v1" in loadedjson:
-            print("ok")
+            # print("ok")
             loadedzones = loadedjson["v1"]
             for zoneid, loadedzone in loadedzones.items():
-                print("todo", zoneid, loadedzone)
+                # print("todo", zoneid, loadedzone)
                 self.zones[int(zoneid)].loadJSON(loadedzone)
 
     def toJSON(self):

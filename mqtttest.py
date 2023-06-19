@@ -29,7 +29,6 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
                 with open(storestate, "w") as storefile:
                     hal.storeState(storefile, state)
             if x and x.done():
-                print("DONE!")
                 state = x.result()
                 x = asyncio.create_task(parser.run())
             print(state)
