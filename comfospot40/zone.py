@@ -65,13 +65,16 @@ class Zone:
         return "{:4}s".format(int((datetime.now() - self.timer).total_seconds()))
 
     def __placeintake(self):
-        if self.isintake:
-            return "🏠⬅️"
-        if not self.isintake:
+        if not self.fan_speed.on():
+            return "🏠⏸️"
+        if self.fan_speed.direction_forward():
             return "🏠➡️"
-        return "__"
+        else:
+            return "🏠⬅️"
 
     def __placecounterintake(self):
+        if not self.counter_fan.on() or not self.fan_speed.on():
+            return "⏸️"
         if self.counter_fan.direction(self.fan_speed):
             return "➡️"
         else:

@@ -22,8 +22,9 @@ class Hal:
 
     async def sendState(self, state: State):
         timer = time.monotonic()
-        switch_dir = (timer - self._oscillation_switch) > self._oscillation_time
-        print("sendState", timer, switch_dir)
+        dirtimer = timer - self._oscillation_switch
+        switch_dir = dirtimer > self._oscillation_time
+        # print("sendState", timer, switch_dir)
         if switch_dir:
             self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():
