@@ -67,7 +67,7 @@ class Mqtt:
                 x = v.publish_state()
                 if not x:
                     continue
-                #print("Create tasks", x)
+                # print("Create tasks", x)
                 for publish_topic, publish_payload in x:
                     task = asyncio.create_task(
                         self._client.publish(

@@ -1,4 +1,3 @@
-from datetime import datetime
 from .temperature import Temperature
 from .humidity import Humidity
 from .fanspeed import Fanspeed
@@ -62,7 +61,7 @@ class Zone:
     def __placetimer(self):
         if self.timer is None:
             return "   0s"
-        return "{:4}s".format(int((datetime.now() - self.timer).total_seconds()))
+        return "{:4}s".format(int(self.timer))
 
     def __place_oscillation(self):
         if self.fan_speed.oscillating():

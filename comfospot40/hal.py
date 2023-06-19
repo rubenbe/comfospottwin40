@@ -29,6 +29,7 @@ class Hal:
             self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():
             fan_speed = zonestate.fan_speed.serial_fan_speed()
+            zonestate.set_time(dirtimer)
             # print(zoneid, fan_speed)
             if switch_dir:
                 zonestate.fan_speed.maybe_switch_direction()
