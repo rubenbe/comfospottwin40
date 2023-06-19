@@ -13,13 +13,13 @@ class TestState(unittest.TestCase):
     def test_zones_default(self):
         state = State()
         self.assertEqual(
-            str(state.zones[1]), "🏠➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[1]), "🏠➡️ ➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[2]), "🏠➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[2]), "🏠➡️ ➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[3]), "🏠➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[3]), "🏠➡️ ➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
 
     def test_zones_add_zone1_fan(self):

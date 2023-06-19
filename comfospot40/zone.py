@@ -71,6 +71,12 @@ class Zone:
             return "🏠➡️"
         return "__"
 
+    def __placecounterintake(self):
+        if self.counter_fan.direction(self.fan_speed):
+            return "➡️"
+        else:
+            return "⬅️"
+
     def __placeholder(self, var, num):
         if not var:
             return "_" * num
@@ -80,8 +86,9 @@ class Zone:
         return self.__str__()
 
     def __str__(self):
-        return "{}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+        return "{} {}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
             self.__placeintake(),
+            self.__placecounterintake(),
             self.__placetimer(),
             self.__placeholder(self.fan_speed.fan_speed(), 2),
             self.__placeholder(self.inside_temperature.temperature(), 4),
