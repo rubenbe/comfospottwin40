@@ -64,6 +64,12 @@ class Zone:
             return "   0s"
         return "{:4}s".format(int((datetime.now() - self.timer).total_seconds()))
 
+    def __place_oscillation(self):
+        if self.fan_speed.oscillating():
+            return "🔀"
+        else:
+            return "  "
+
     def __placeintake(self):
         if not self.fan_speed.on():
             return "🏠⏸️"
@@ -89,7 +95,8 @@ class Zone:
         return self.__str__()
 
     def __str__(self):
-        return "{} {}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+        return "{}{} {}{} ({})🌡️ {}C, {}% ♻️  {}C, {}%".format(
+            self.__place_oscillation(),
             self.__placeintake(),
             self.__placecounterintake(),
             self.__placetimer(),

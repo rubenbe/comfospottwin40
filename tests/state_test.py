@@ -13,13 +13,13 @@ class TestState(unittest.TestCase):
     def test_zones_default(self):
         state = State()
         self.assertEqual(
-            str(state.zones[1]), "🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[1]), "🔀🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[2]), "🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[2]), "🔀🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[3]), "🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[3]), "🔀🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
 
     def test_zones_add_zone1_fan(self):
@@ -34,30 +34,37 @@ class TestState(unittest.TestCase):
     def test_zones_counter_fan_1(self):
         state = State()
         self.assertEqual(
-            str(state.zones[1]), "🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[1]), "🔀🏠➡️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%"
         )
 
     def test_zones_counter_fan_2(self):
         state = State()
         zone = state.zones[1]
         zone.counter_fan.set_state(b"Always same direction")
-        self.assertEqual(str(zone), "🏠➡️ ➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
+        self.assertEqual(str(zone), "🔀🏠➡️ ➡️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
 
     def test_zones_counter_fan_3(self):
         state = State()
         zone = state.zones[1]
         zone.counter_fan.set_state(b"Always counter direction")
-        self.assertEqual(str(zone), "🏠➡️ ⬅️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
+        self.assertEqual(str(zone), "🔀🏠➡️ ⬅️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
 
     def test_zones_counter_fan_4(self):
         state = State()
         zone = state.zones[1]
         zone.counter_fan.set_state(b"Counter when oscillating")
-        self.assertEqual(str(zone), "🏠➡️ ⬅️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
+        self.assertEqual(str(zone), "🔀🏠➡️ ⬅️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
 
     def test_zones_counter_fan_5(self):
         state = State()
         zone = state.zones[1]
         zone.fan_speed.set_on(b"false")
         zone.counter_fan.set_state(b"Always same direction")
-        self.assertEqual(str(zone), "🏠⏸️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
+        self.assertEqual(str(zone), "🔀🏠⏸️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
+
+    def test_zones_not_oscillating(self):
+        state = State()
+        zone = state.zones[1]
+        zone.fan_speed.set_oscillation(b"false")
+        zone.fan_speed.set_on(b"false")
+        self.assertEqual(str(zone), "  🏠⏸️ ⏸️   0s (27)🌡️ ____C, __% ♻️  ____C, __%")
