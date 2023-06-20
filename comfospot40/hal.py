@@ -3,8 +3,8 @@ from comfospot40.create_packet import create_speed_packet
 import serial_asyncio
 import serial
 import asyncio
-import time
 import json
+import time
 
 
 class Hal:
@@ -20,8 +20,7 @@ class Hal:
         )
         self.parser = Parser(self._reader, None, self._state)
 
-    async def sendState(self, state: State):
-        timer = time.monotonic()
+    async def sendState(self, state: State, timer):
         dirtimer = timer - self._oscillation_switch
         switch_dir = dirtimer > self._oscillation_time
         # print("sendState", timer, switch_dir)
@@ -29,10 +28,10 @@ class Hal:
             self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():
             fan_speed = zonestate.fan_speed.serial_fan_speed()
-            zonestate.set_time(dirtimer)
+            zonestate.set_time(timer)
             # print(zoneid, fan_speed)
             if switch_dir:
-                zonestate.fan_speed.maybe_switch_direction()
+                zonestate.maybe_switch_direction()
             packet = create_speed_packet(
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )

@@ -1,5 +1,6 @@
 from .value import Value
 import json
+import time
 
 
 class Fanspeed(Value):
@@ -13,6 +14,7 @@ class Fanspeed(Value):
         super().__init__()
         self._rev_presets = dict([reversed(i) for i in self._presets.items()])
         self.set_preset(b"low")
+        self._last_switched = time.monotonic()
 
     def set_fan_speed(self, temp):
         new_value = int(temp)
@@ -42,6 +44,7 @@ class Fanspeed(Value):
     def maybe_switch_direction(self):
         if self._oscillation:
             self._direction_forward = not self._direction_forward
+            self._last_switched = time.monotonic()
 
     def publish_state(self):
         return (
@@ -71,7 +74,13 @@ class Fanspeed(Value):
         self._oscillation = temp == b"true"
 
     def set_direction(self, temp):
+        old_direction = self._direction_forward
         self._direction_forward = temp == b"forward"
+        if old_direction != self._direction_forward:
+            self._last_switched = time.monotonic()
+
+    def last_switched(self):
+        return self._last_switched
 
     def set_on(self, temp):
         self._on = temp == b"true"

@@ -6,20 +6,28 @@ import json
 
 
 class Zone:
-    def __init__(self):
-        self.inside_humidity = Humidity()
-        self.inside_temperature = Temperature()
-        self.recycled_humidity = Humidity()
-        self.recycled_temperature = Temperature()
+    def __init__(self, sensorvalidity=None):
+        self.inside_humidity = Humidity(sensorvalidity)
+        self.inside_temperature = Temperature(sensorvalidity)
+        self.recycled_humidity = Humidity(sensorvalidity)
+        self.recycled_temperature = Temperature(sensorvalidity)
         self.fan_speed = Fanspeed()
         self.counter_fan = Counterfan()
         self.efficiency = None
         self.isintake = None
         self.timer = None
         self.configpublished = False
+        self._sensorvalidity = sensorvalidity
 
     def set_time(self, timer):
-        self.timer = timer
+        self.timer = timer - self.fan_speed.last_switched()
+        self.inside_humidity.set_time(timer)
+        self.inside_temperature.set_time(timer)
+        self.recycled_humidity.set_time(timer)
+        self.recycled_temperature.set_time(timer)
+
+    def maybe_switch_direction(self):
+        self.fan_speed.maybe_switch_direction()
 
     def get_mqtt_config(self, zoneid, markpublished):
         if self.configpublished:

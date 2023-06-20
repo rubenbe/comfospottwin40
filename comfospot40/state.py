@@ -3,8 +3,12 @@ from .zone import Zone
 
 
 class State:
-    def __init__(self):
-        self.zones = {1: Zone(), 2: Zone(), 3: Zone()}
+    def __init__(self, sensorvalidity: int = None):
+        self.zones = {
+            1: Zone(sensorvalidity),
+            2: Zone(sensorvalidity),
+            3: Zone(sensorvalidity),
+        }
 
     def addpacket(self, packet):
         if packet.hassensordata():

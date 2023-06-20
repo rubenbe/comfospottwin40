@@ -3,7 +3,7 @@ from .value import Value
 
 class Humidity(Value):
     def set_humidity(self, temp):
-        self._value = temp
+        self.set_value(temp)
 
     def humidity(self):
         return self._value

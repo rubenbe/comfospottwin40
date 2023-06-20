@@ -1,14 +1,15 @@
 import asyncio
 import comfospot40
 import argparse
+import time
 
 from aiomqtt import Client
 
 
-async def main(mqtturi, dev, oscillation_time: int, storestate):
+async def main(mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: int):
     async with Client(mqtturi) as client:
         await client.connect()
-        state = comfospot40.State()
+        state = comfospot40.State(sensorvalidity)
         hal = comfospot40.Hal(state, oscillation_time)
         if storestate:
             with open(storestate, "r") as storefile:
@@ -24,7 +25,8 @@ async def main(mqtturi, dev, oscillation_time: int, storestate):
             await mqtt.subscribe()
         while True:
             mqtt.sendState(state)
-            await hal.sendState(state)
+            new_print = time.monotonic()
+            await hal.sendState(state, new_print)
             if storestate:
                 with open(storestate, "w") as storefile:
                     hal.storeState(storefile, state)
@@ -47,6 +49,14 @@ if __name__ == "__main__":
         type=int,
     )
     parser.add_argument(
+        "--sensorvalidity",
+        action="store",
+        required=False,
+        help="Sensor data validity in seconds",
+        default=70,
+        type=int,
+    )
+    parser.add_argument(
         "--state",
         action="store",
         required=False,
@@ -60,5 +70,6 @@ if __name__ == "__main__":
             dev=args.dev,
             oscillation_time=args.oscillation,
             storestate=args.state,
+            sensorvalidity=args.sensorvalidity,
         )
     )

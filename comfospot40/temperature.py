@@ -3,7 +3,7 @@ from .value import Value
 
 class Temperature(Value):
     def set_temperature(self, temp):
-        self._value = temp
+        self.set_value(temp)
 
     def temperature(self):
         return self._value
