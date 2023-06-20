@@ -23,6 +23,7 @@ async def main(mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: 
             x = asyncio.create_task(parser.run())
         else:
             await mqtt.subscribe()
+        last_print = 0
         while True:
             mqtt.sendState(state)
             new_print = time.monotonic()
@@ -33,7 +34,9 @@ async def main(mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: 
             if x and x.done():
                 state = x.result()
                 x = asyncio.create_task(parser.run())
-            print(state)
+            if new_print - last_print > 1:
+                last_print = new_print
+                print(state)
 
 
 if __name__ == "__main__":

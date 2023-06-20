@@ -36,7 +36,7 @@ class Hal:
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )
             self._writer.write(bytes(packet)) if self._writer else None
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.1)
             counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
             # print(counter["direction"], counter["speed"])
             packet = create_speed_packet(
@@ -44,7 +44,7 @@ class Hal:
             )
             # print("Writing")
             self._writer.write(bytes(packet)) if self._writer else None
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.1)
 
     def storeState(self, storefile, state):
         json.dump(state.toJSON(), storefile, indent=2)
