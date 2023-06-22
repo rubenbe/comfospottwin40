@@ -2,9 +2,12 @@ Requires home assistant 2023.05 or newer
 
 # Zehnder comfospot twin 40
 
-Reads out data from the RS485 line in a comfospot twin 40 setup.
-A cheap RS485 reader is sufficient.
-Only tested with python 3
+To read/write on the bus, use a waveshare adapter. 
+[https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817](Find it on the waveshare website)
+Others don't seem to function properly
+I've set the internal jumper to NC.
+
+To only read from the bus, a cheap RS485 reader is sufficient.
 
 # About the comfospot
 This seems to be a OEM product by GetAir sold under the Zehnder brand.
