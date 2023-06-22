@@ -3,6 +3,7 @@ import asyncio
 import comfospot40
 import argparse
 import time
+from os import path
 
 from aiomqtt import Client
 
@@ -12,7 +13,7 @@ async def main(mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: 
         await client.connect()
         state = comfospot40.State(sensorvalidity)
         hal = comfospot40.Hal(state, oscillation_time)
-        if storestate:
+        if storestate and path.isfile(storestate):
             with open(storestate, "r") as storefile:
                 hal.loadState(storefile, state)
         mqtt = comfospot40.Mqtt(client, state)
