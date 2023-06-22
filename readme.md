@@ -5,7 +5,10 @@ Requires home assistant 2023.05 or newer
 To read/write on the bus, use a waveshare adapter. 
 [https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817](Find it on the waveshare website)
 Others don't seem to function properly
-I've set the internal jumper to NC.
+Setup:
+* Set the internal jumper to NC.
+* Set the voltage to 5V
+* Only A+ and B- need to be connected. GND is not connected.
 
 To only read from the bus, a cheap RS485 reader is sufficient.
 
