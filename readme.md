@@ -3,12 +3,14 @@ Requires home assistant 2023.05 or newer
 # Zehnder comfospot twin 40
 
 To read/write on the bus, use a waveshare adapter. 
-[https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817](Find it on the waveshare website)
+[Find it on the waveshare website](https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817)
 Others don't seem to function properly
+
 Setup:
 * Set the internal jumper to NC.
 * Set the voltage to 5V
 * Only A+ and B- need to be connected. GND is not connected.
+* Disconnect the original touchscreen, as the protocol only supports one master on the bus.
 
 To only read from the bus, a cheap RS485 reader is sufficient.
 
@@ -23,17 +25,6 @@ It's available under these brand names:
 
 Only the Zehnder has been tested,
 but devices from other manufacturers should work as they seem identical.
-
-# Active control
-Currently the software only eavesdrops on the communication
-between the controller and the fans.
-The goal is to have active control too, but unfortunately the protocol
-only supports one master (the controller).
-It's not trivial to have your PC override the fan levels of the controller,
-because the latter continuously repeats its requests.
-As proof of concept, I've been able to control the fans
-using a replayed signal from the oscilloscope.
-I want to keep the controller installed for easy touch screen control.
 
 # Temperature & humidity sensor.
 The sensor is a Sensiron SHT21 i2c based sensor.
