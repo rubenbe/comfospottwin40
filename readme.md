@@ -14,6 +14,22 @@ Setup:
 
 To only read from the bus, a cheap RS485 reader is sufficient.
 
+```
+python server.py --help
+usage: server.py [-h] --mqtt MQTT [--dev DEV] [--oscillation OSCILLATION] [--sensorvalidity SENSORVALIDITY] [--state STATE] [--reverse]
+
+options:
+  -h, --help            show this help message and exit
+  --mqtt MQTT           MQTT address
+  --dev DEV             Serial device
+  --oscillation OSCILLATION
+                        Oscillation time in seconds
+  --sensorvalidity SENSORVALIDITY
+                        Sensor data validity in seconds
+  --state STATE         JSON file to store state
+  --reverse             Fans are installed reversed
+```
+
 # About the comfospot
 This seems to be a OEM product by GetAir sold under the Zehnder brand.
 It's available under these brand names:
