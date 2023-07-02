@@ -8,10 +8,12 @@ from os import path
 from aiomqtt import Client
 
 
-async def main(mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: int):
+async def main(
+    mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: int, reverse: bool
+):
     async with Client(mqtturi) as client:
         await client.connect()
-        state = comfospot40.State(sensorvalidity)
+        state = comfospot40.State(sensorvalidity, reverse)
         hal = comfospot40.Hal(state, oscillation_time)
         if storestate and path.isfile(storestate):
             with open(storestate, "r") as storefile:
@@ -67,6 +69,13 @@ if __name__ == "__main__":
         required=False,
         help="JSON file to store state",
     )
+    parser.add_argument(
+        "--reverse",
+        action="store_true",
+        required=False,
+        help="Fans are installed reversed",
+        default=False,
+    )
     args = parser.parse_args()
     packetlog = None
     asyncio.run(
@@ -76,5 +85,6 @@ if __name__ == "__main__":
             oscillation_time=args.oscillation,
             storestate=args.state,
             sensorvalidity=args.sensorvalidity,
+            reverse=args.reverse,
         )
     )

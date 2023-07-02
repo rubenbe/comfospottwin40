@@ -3,18 +3,19 @@ from .zone import Zone
 
 
 class State:
-    def __init__(self, sensorvalidity: int = None):
+    def __init__(self, sensorvalidity: int = None, reverse: bool = False):
         self.zones = {
             1: Zone(sensorvalidity),
             2: Zone(sensorvalidity),
             3: Zone(sensorvalidity),
         }
+        self.reverse = reverse
 
     def addpacket(self, packet):
         if packet.hassensordata():
             zone = self.zones.get(packet.getzone(), Zone())
             # print(packet.direction())
-            if packet.extract():
+            if packet.extract() != self.reverse:
                 zone.inside_humidity.set_humidity(packet.humidity())
                 zone.inside_temperature.set_temperature(packet.temperature())
             else:

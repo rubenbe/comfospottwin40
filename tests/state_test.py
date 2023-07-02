@@ -31,6 +31,24 @@ class TestState(unittest.TestCase):
         self.assertEqual(27, zone.fan_speed.value())
         self.assertEqual(False, zone.isintake)
 
+    def test_zones_add_sensor_1(self):
+        state = State()
+        state.addpacket(Packet(self.parsedata("5553009805 01 02 44 00E1 E8")))
+        zone = state.zones[1]
+        self.assertEqual(22.5, zone.recycled_temperature.value())
+        self.assertEqual(68, zone.recycled_humidity.value())
+        self.assertEqual(None, zone.inside_temperature.value())
+        self.assertEqual(None, zone.inside_humidity.value())
+
+    def test_zones_add_sensor_2(self):
+        state = State(reverse=True)
+        state.addpacket(Packet(self.parsedata("5553009805 01 02 44 00E1 E8")))
+        zone = state.zones[1]
+        self.assertEqual(None, zone.recycled_temperature.value())
+        self.assertEqual(None, zone.recycled_humidity.value())
+        self.assertEqual(22.5, zone.inside_temperature.value())
+        self.assertEqual(68, zone.inside_humidity.value())
+
     def test_zones_counter_fan_1(self):
         state = State()
         self.assertEqual(
