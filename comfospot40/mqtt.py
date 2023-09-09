@@ -11,9 +11,12 @@ class Mqtt:
         self._client = client
         client.pending_calls_threshold = 20
         self._state = state
-        for zoneid, zonestate in state.zones.items():
+        self.send_config()
+
+    def send_config(self):
+        for zoneid, zonestate in self._state.zones.items():
             for topic, payloadstr in zonestate.get_mqtt_config(zoneid, True).items():
-                x = client.publish(
+                x = self._client.publish(
                     topic,
                     payload=payloadstr.encode(),
                     qos=1,
