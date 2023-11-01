@@ -1,16 +1,20 @@
-Requires home assistant 2023.05 or newer
+Supports home assistant 2023.05 or newer
 
 # Zehnder comfospot twin 40
 
-To read/write on the bus, use a waveshare adapter. 
+To read/write on the bus, use this waveshare adapter. 
 [Find it on the waveshare website](https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817)
 Others don't seem to function properly
 
 Setup:
+* Buy the waveshare adapter
+* Setup you MQTT server
+* In case you want to use home assistant, ensure you run 2023.05 or newer.
 * Set the internal jumper to NC.
 * Set the voltage to 5V
 * Only A+ and B- need to be connected. GND is not connected.
 * Disconnect the original touchscreen, as the protocol only supports one master on the bus.
+* After cloning this repo, run `pip install -r requirements.txt`
 
 To only read from the bus, a cheap RS485 reader is sufficient.
 
@@ -36,7 +40,7 @@ It's available under these brand names:
 * Zehnder ComfoSpot Twin 40
 * Zewotherm Fan
 * GetAir SmartFan
-* Kermi x-well D12
+* Kermi x-well D12 (in case you don't get a signal, try switching the A and B wires)
 
 
 Only the Zehnder has been tested,
