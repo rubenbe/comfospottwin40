@@ -41,6 +41,7 @@ It's available under these brand names:
 * Zewotherm Fan
 * GetAir SmartFan
 * Kermi x-well D12 (in case you don't get a signal, try switching the A and B wires)
+* Viessmann Vitovent 100-D
 
 
 Only the Zehnder has been tested,
