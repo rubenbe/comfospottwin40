@@ -25,6 +25,8 @@ usage: server.py [-h] --mqtt MQTT [--dev DEV] [--oscillation OSCILLATION] [--sen
 options:
   -h, --help            show this help message and exit
   --mqtt MQTT           MQTT address
+  --mqtt-port MQTT_PORT
+                        MQTT port
   --dev DEV             Serial device
   --oscillation OSCILLATION
                         Oscillation time in seconds

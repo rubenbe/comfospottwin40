@@ -9,9 +9,15 @@ from aiomqtt import Client
 
 
 async def main(
-    mqtturi, dev, oscillation_time: int, storestate, sensorvalidity: int, reverse: bool
+    mqtturi,
+    mqttport,
+    dev,
+    oscillation_time: int,
+    storestate,
+    sensorvalidity: int,
+    reverse: bool,
 ):
-    async with Client(mqtturi) as client:
+    async with Client(mqtturi, port=mqttport) as client:
         await client.connect()
         state = comfospot40.State(sensorvalidity, reverse)
         hal = comfospot40.Hal(state, oscillation_time)
@@ -46,6 +52,14 @@ async def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--mqtt", action="store", required=True, help="MQTT address")
+    parser.add_argument(
+        "--mqtt-port",
+        action="store",
+        required=False,
+        help="MQTT port",
+        default=1883,
+        type=int,
+    )
     parser.add_argument("--dev", action="store", required=False, help="Serial device")
     parser.add_argument(
         "--oscillation",
@@ -81,6 +95,7 @@ if __name__ == "__main__":
     asyncio.run(
         main(
             mqtturi=args.mqtt,
+            mqttport=args.mqtt_port,
             dev=args.dev,
             oscillation_time=args.oscillation,
             storestate=args.state,
