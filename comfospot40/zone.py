@@ -29,40 +29,40 @@ class Zone:
     def maybe_switch_direction(self):
         self.fan_speed.maybe_switch_direction()
 
-    def get_mqtt_config(self, zoneid, markpublished):
+    def get_mqtt_config(self, mqttprefix, zoneid, markpublished):
         if self.configpublished:
             return {}
         self.configpublished = markpublished
         return {
-            "homeassistant/select/comfospot40_zone{}_counter/config".format(
-                zoneid
+            "homeassistant/select/{0}_zone{1}_counter/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.counter_fan.mqtt_config(zoneid),
+                self.counter_fan.mqtt_config(mqttprefix, zoneid),
             ),
-            "homeassistant/fan/comfospot40_zone{}_fan/config".format(
-                zoneid
+            "homeassistant/fan/{0}_zone{1}_fan/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.fan_speed.mqtt_config(zoneid),
+                self.fan_speed.mqtt_config(mqttprefix, zoneid),
             ),
-            "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_in/config".format(
-                zoneid
+            "homeassistant/sensor/{0}/{0}_zone{1}_temp_in/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.inside_temperature.mqtt_config(zoneid, "inside"),
+                self.inside_temperature.mqtt_config(mqttprefix, zoneid, "inside"),
             ),
-            "homeassistant/sensor/comfospot40/comfospot40_zone{}_temp_recycled/config".format(
-                zoneid
+            "homeassistant/sensor/{0}/{0}_zone{1}_temp_recycled/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.recycled_temperature.mqtt_config(zoneid, "recycled"),
+                self.recycled_temperature.mqtt_config(mqttprefix, zoneid, "recycled"),
             ),
-            "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_in/config".format(
-                zoneid
+            "homeassistant/sensor/{0}/{0}_zone{1}_humidity_in/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.inside_humidity.mqtt_config(zoneid, "inside"),
+                self.inside_humidity.mqtt_config(mqttprefix, zoneid, "inside"),
             ),
-            "homeassistant/sensor/comfospot40/comfospot40_zone{}_humidity_recycled/config".format(
-                zoneid
+            "homeassistant/sensor/{0}/{0}_zone{1}_humidity_recycled/config".format(
+                mqttprefix, zoneid
             ): json.dumps(
-                self.recycled_humidity.mqtt_config(zoneid, "recycled"),
+                self.recycled_humidity.mqtt_config(mqttprefix, zoneid, "recycled"),
             ),
         }
 

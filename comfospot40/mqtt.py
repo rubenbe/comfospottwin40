@@ -7,15 +7,17 @@ class Mqtt:
     background_tasks = set()
     topics = []
 
-    def __init__(self, client: Client, state: comfospot40.State):
+    def __init__(self, client: Client, state: comfospot40.State, mqttprefix: str):
         self._client = client
         client.pending_calls_threshold = 20
         self._state = state
-        self.send_config()
+        self.send_config(mqttprefix)
 
-    def send_config(self):
+    def send_config(self, mqttprefix):
         for zoneid, zonestate in self._state.zones.items():
-            for topic, payloadstr in zonestate.get_mqtt_config(zoneid, True).items():
+            for topic, payloadstr in zonestate.get_mqtt_config(
+                mqttprefix, zoneid, True
+            ).items():
                 x = self._client.publish(
                     topic,
                     payload=payloadstr.encode(),

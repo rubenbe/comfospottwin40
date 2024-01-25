@@ -102,9 +102,9 @@ class Fanspeed(Value):
             (self.topic_percentage_set, lambda x: self.set_fan_speed(x)),
         )
 
-    def mqtt_config(self, zoneid):
+    def mqtt_config(self, mqttprefix, zoneid):
         self.zoneid = zoneid
-        self.prefix = "comfospot40_zone{}_fan".format(zoneid)
+        self.prefix = "{0}_zone{1}_fan".format(mqttprefix, zoneid)
         self.topic_state = self.prefix + "/state"
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
@@ -136,7 +136,7 @@ class Fanspeed(Value):
             "payload_off": "false",
             "payload_oscillation_on": "true",
             "payload_oscillation_off": "false",
-            "unique_id": "comfospot40_zone{}_fan".format(zoneid),
+            "unique_id": "{0}_zone{1}_fan".format(mqttprefix, zoneid),
         }
 
     def __eq__(self, other):

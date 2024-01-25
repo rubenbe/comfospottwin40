@@ -34,9 +34,9 @@ class Counterfan(Value):
         else:
             return forward
 
-    def mqtt_config(self, zoneid):
+    def mqtt_config(self, mqttprefix, zoneid):
         self.zoneid = zoneid
-        self.prefix = "comfospot40_zone{}_counter".format(zoneid)
+        self.prefix = "{0}_zone{1}_counter".format(mqttprefix, zoneid)
         self.topic_state = self.prefix + "/state"
         self.topic_set = self.prefix + "/set"
         return {

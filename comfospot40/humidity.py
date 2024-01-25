@@ -8,8 +8,10 @@ class Humidity(Value):
     def humidity(self):
         return self._value
 
-    def mqtt_config(self, zoneid, name):
-        self.topic_state = "comfospot40/zones/zone{0}/{1}_humidity".format(zoneid, name)
+    def mqtt_config(self, mqttprefix, zoneid, name):
+        self.topic_state = "{0}/zones/zone{1}/{2}_humidity".format(
+            mqttprefix, zoneid, name
+        )
         return {
             "name": "Comfospot40 Zone {0} {1} humidity".format(
                 zoneid, name.capitalize()

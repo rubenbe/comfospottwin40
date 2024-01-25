@@ -20,13 +20,15 @@ To only read from the bus, a cheap RS485 reader is sufficient.
 
 ```
 python server.py --help
-usage: server.py [-h] --mqtt MQTT [--dev DEV] [--oscillation OSCILLATION] [--sensorvalidity SENSORVALIDITY] [--state STATE] [--reverse]
+usage: server.py [-h] --mqtt MQTT [--mqtt-port MQTT_PORT] [--mqtt-prefix MQTT_PREFIX] [--dev DEV] [--oscillation OSCILLATION] [--sensorvalidity SENSORVALIDITY] [--state STATE] [--reverse]
 
 options:
   -h, --help            show this help message and exit
   --mqtt MQTT           MQTT address
   --mqtt-port MQTT_PORT
                         MQTT port
+  --mqtt-prefix MQTT_PREFIX
+                        MQTT prefix
   --dev DEV             Serial device
   --oscillation OSCILLATION
                         Oscillation time in seconds

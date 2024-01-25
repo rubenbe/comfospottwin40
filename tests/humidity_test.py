@@ -14,28 +14,28 @@ class TestHumidity(unittest.TestCase):
 
     def test_mqtt_config1(self):
         t = Humidity()
-        c = t.mqtt_config(0, "recycled")
+        c = t.mqtt_config("mqttprefix11", 0, "recycled")
         self.assertEqual(
             c,
             {
                 "name": "Comfospot40 Zone 0 Recycled humidity",
                 "device_class": "humidity",
                 "state_class": "measurement",
-                "state_topic": "comfospot40/zones/zone0/recycled_humidity",
+                "state_topic": "mqttprefix11/zones/zone0/recycled_humidity",
                 "temperature_unit": "percentage",
             },
         )
 
     def test_mqtt_config2(self):
         t = Humidity()
-        c = t.mqtt_config(1, "inside")
+        c = t.mqtt_config("mqttprefix12", 1, "inside")
         self.assertEqual(
             c,
             {
                 "name": "Comfospot40 Zone 1 Inside humidity",
                 "device_class": "humidity",
                 "state_class": "measurement",
-                "state_topic": "comfospot40/zones/zone1/inside_humidity",
+                "state_topic": "mqttprefix12/zones/zone1/inside_humidity",
                 "temperature_unit": "percentage",
             },
         )

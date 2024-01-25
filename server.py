@@ -11,6 +11,7 @@ from aiomqtt import Client
 async def main(
     mqtturi,
     mqttport,
+    mqttprefix,
     dev,
     oscillation_time: int,
     storestate,
@@ -24,7 +25,7 @@ async def main(
         if storestate and path.isfile(storestate):
             with open(storestate, "r") as storefile:
                 hal.loadState(storefile, state)
-        mqtt = comfospot40.Mqtt(client, state)
+        mqtt = comfospot40.Mqtt(client, state, mqttprefix)
         x = None
         if dev:
             await hal.setup(dev) if dev else None
@@ -59,6 +60,13 @@ if __name__ == "__main__":
         help="MQTT port",
         default=1883,
         type=int,
+    )
+    parser.add_argument(
+        "--mqtt-prefix",
+        action="store",
+        required=False,
+        help="MQTT prefix",
+        default="comfospot40",
     )
     parser.add_argument("--dev", action="store", required=False, help="Serial device")
     parser.add_argument(
@@ -96,6 +104,7 @@ if __name__ == "__main__":
         main(
             mqtturi=args.mqtt,
             mqttport=args.mqtt_port,
+            mqttprefix=args.mqtt_prefix,
             dev=args.dev,
             oscillation_time=args.oscillation,
             storestate=args.state,
