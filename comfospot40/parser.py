@@ -4,6 +4,7 @@ from .packet import Packet
 from .state import State
 import copy
 from datetime import datetime
+from serial import SerialException
 
 
 class Parser:
@@ -18,18 +19,25 @@ class Parser:
     def get_state(self):
         return self._state
 
+    async def read_byte(self):
+        while True:
+            try:
+                return await self._ser.read(1)
+            except SerialException as e:
+                logging.warn("Failed to read serial", e)
+
     async def search_length(self, data):
         logging.info("z")
         readbytes = b""
         while len(readbytes) < 3:
-            readbytes += await self._ser.read(1)
+            readbytes += await self.read_byte()
         readints = struct.unpack("<BBB", readbytes)
         data.extend(readints)
         logging.info(readints)
         size = readints[-1] + 1
         readbytes = b""
         while len(readbytes) < size:
-            readbytes += await self._ser.read(1)
+            readbytes += await self.read_byte()
         readints = struct.unpack("<" + "B" * (size), readbytes)
         data.extend(readints)
         logging.info(readints)
@@ -55,7 +63,7 @@ class Parser:
 
     async def search_preamble(self, data):
         logging.info("x")
-        readbyte = await self._ser.read(1)
+        readbyte = await self.read_byte()
         if not readbyte:
             return data, self.search_preamble
         readdata = struct.unpack("<B", readbyte)[0]
@@ -67,7 +75,7 @@ class Parser:
 
     async def search_preamble2(self, data):
         logging.info("y")
-        readbyte = await self._ser.read(1)
+        readbyte = await self.read_byte()
         if not readbyte:
             return data, self.search_preamble
         readdata = struct.unpack("<B", readbyte)[0]
