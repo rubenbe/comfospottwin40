@@ -5,6 +5,7 @@ from .state import State
 import copy
 from datetime import datetime
 from serial import SerialException
+import asyncio
 
 
 class Parser:
@@ -19,12 +20,17 @@ class Parser:
     def get_state(self):
         return self._state
 
-    async def read_byte(self):
+    async def read_byte(self, retries=5):
         while True:
             try:
                 return await self._ser.read(1)
             except SerialException as e:
-                logging.warn("Failed to read serial", e)
+                logging.warning("Failed to read serial: {}".format(e))
+                if retries > 0:
+                    await asyncio.sleep(0.1 * retries)
+                    retries -= 1
+                else:
+                    raise e
 
     async def search_length(self, data):
         logging.info("z")
