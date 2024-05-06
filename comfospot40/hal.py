@@ -5,6 +5,7 @@ import serial
 import asyncio
 import json
 import time
+import logging
 
 
 class Hal:
@@ -50,6 +51,10 @@ class Hal:
         json.dump(state.toJSON(), storefile, indent=2)
 
     def loadState(self, storefile, state):
-        loadedjson = json.load(storefile)
-        print(loadedjson)
+        try:
+            loadedjson = json.load(storefile)
+        except json.decoder.JSONDecodeError as e:
+            logging.info("Failed to decode json {}".format(e))
+            return
+        logging.info(loadedjson)
         state.fromJSON(loadedjson)
