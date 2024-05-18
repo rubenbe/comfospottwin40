@@ -1,0 +1,37 @@
+{
+  "v2": {
+    "1": {
+      "fan": {
+        "on": true,
+        "speed": 27,
+        "forward": true,
+        "oscillation": true
+      },
+      "counterfan": {
+        "state": "Off"
+      }
+    },
+    "2": {
+      "fan": {
+        "on": true,
+        "speed": 27,
+        "forward": true,
+        "oscillation": true
+      },
+      "counterfan": {
+        "state": "Off"
+      }
+    },
+    "3": {
+      "fan": {
+        "on": true,
+        "speed": 27,
+        "forward": true,
+        "oscillation": true
+      },
+      "counterfan": {
+        "state": "Off"
+      }
+    }
+  }
+}
