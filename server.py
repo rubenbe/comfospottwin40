@@ -1,12 +1,14 @@
 #!/usr/bin/python
 import asyncio
-import comfospot40
 import argparse
 import time
 import ssl
 from os import path
-
 from aiomqtt import Client
+import comfospot40
+
+
+# pylint: disable=too-many-arguments,too-many-locals
 
 
 async def main(
@@ -40,15 +42,15 @@ async def main(
         state = comfospot40.State(sensorvalidity, reverse)
         hal = comfospot40.Hal(state, oscillation_time)
         if storestate and path.isfile(storestate):
-            with open(storestate, "r") as storefile:
+            with open(storestate, "r", encoding="utf-8") as storefile:
                 hal.load_state(storefile, state)
         mqtt = comfospot40.Mqtt(client, state, mqttprefix)
         x = None
         if dev:
-            await hal.setup(dev) if dev else None
-            parser = hal.parser
+            await hal.setup(dev)
+            dataparser = hal.parser
             await mqtt.subscribe()
-            x = asyncio.create_task(parser.run())
+            x = asyncio.create_task(dataparser.run())
         else:
             await mqtt.subscribe()
         last_print = 0
@@ -57,11 +59,11 @@ async def main(
             new_print = time.monotonic()
             await hal.send_state(state, new_print)
             if storestate:
-                with open(storestate, "w") as storefile:
+                with open(storestate, "w", encoding="utf-8") as storefile:
                     hal.store_state(storefile, state)
             if x and x.done():
                 state = x.result()
-                x = asyncio.create_task(parser.run())
+                x = asyncio.create_task(dataparser.run())
             if new_print - last_print > 1:
                 last_print = new_print
                 print(state)
@@ -153,18 +155,17 @@ if __name__ == "__main__":
         help="Fans are installed reversed",
         default=False,
     )
-    args = parser.parse_args()
-    packetlog = None
+    parsed_args = parser.parse_args()
     asyncio.run(
         main(
-            mqtturi=args.mqtt,
-            mqttport=args.mqtt_port,
-            mqttprefix=args.mqtt_prefix,
-            args=args,
-            dev=args.dev,
-            oscillation_time=args.oscillation,
-            storestate=args.state,
-            sensorvalidity=args.sensorvalidity,
-            reverse=args.reverse,
+            mqtturi=parsed_args.mqtt,
+            mqttport=parsed_args.mqtt_port,
+            mqttprefix=parsed_args.mqtt_prefix,
+            args=parsed_args,
+            dev=parsed_args.dev,
+            oscillation_time=parsed_args.oscillation,
+            storestate=parsed_args.state,
+            sensorvalidity=parsed_args.sensorvalidity,
+            reverse=parsed_args.reverse,
         )
     )
