@@ -39,7 +39,7 @@ class Mqtt:
         self.background_tasks.add(task)
         task.add_done_callback(self.background_tasks.discard)
         self.topics = []
-        for zoneid, zonestate in self._state.zones.items():
+        for _, zonestate in self._state.zones.items():
             for attr in (
                 "inside_temperature",
                 "recycled_temperature",
@@ -59,7 +59,7 @@ class Mqtt:
                     self.topics.append((subscribe_topic, subscribe_callback))
 
     def sendState(self, state):
-        for zoneid, zonestate in state.zones.items():
+        for _, zonestate in state.zones.items():
             for attr in (
                 "inside_temperature",
                 "recycled_temperature",
