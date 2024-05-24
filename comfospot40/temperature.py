@@ -9,13 +9,9 @@ class Temperature(Value):
         return self._value
 
     def mqtt_config(self, mqttprefix, zoneid, name):
-        self.topic_state = "{0}/zones/zone{1}/{2}_temperature".format(
-            mqttprefix, zoneid, name
-        )
+        self.topic_state = f"{mqttprefix}/zones/zone{zoneid}/{name}_temperature"
         return {
-            "name": "Comfospot40 Zone {0} {1} temperature".format(
-                zoneid, name.capitalize()
-            ),
+            "name": f"Comfospot40 Zone {zoneid} {name.capitalize()} temperature",
             "device_class": "temperature",
             "state_class": "measurement",
             "temperature_unit": "celcius",

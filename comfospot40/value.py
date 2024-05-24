@@ -6,6 +6,7 @@ class Value:
         self._value = None
         self._sensorvalidity = sensorvalidity
         self._last_set = time.monotonic()
+        self.topic_state = None
 
     def set_value(self, temp):
         self._last_set = time.monotonic()
