@@ -3,7 +3,7 @@ class Packet:
         self.data = data
 
     def __str__(self):
-        return " ".join(["0x{:02x}".format(x) for x in self.data])
+        return " ".join([f"0x{data:02x}" for data in self.data])
 
     def calculatecrc(self, data, offset=0x57):
         acc = offset
