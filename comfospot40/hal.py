@@ -1,11 +1,10 @@
-from comfospot40 import State, Parser
-from comfospot40.create_packet import create_speed_packet
 import serial_asyncio
 import serial
 import asyncio
 import json
 import time
 import logging
+from comfospot40 import State, Parser, create_packet
 
 
 class Hal:
@@ -33,14 +32,14 @@ class Hal:
             # print(zoneid, fan_speed)
             if switch_dir:
                 zonestate.maybe_switch_direction()
-            packet = create_speed_packet(
+            packet = create_packet.create_speed_packet(
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )
             self._writer.write(bytes(packet)) if self._writer else None
             await asyncio.sleep(0.1)
             counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
             # print(counter["direction"], counter["speed"])
-            packet = create_speed_packet(
+            packet = create_packet.create_speed_packet(
                 zoneid, counter["direction"], counter["speed"], 1, True
             )
             # print("Writing")

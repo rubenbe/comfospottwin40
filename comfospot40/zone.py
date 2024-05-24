@@ -1,8 +1,8 @@
+import json
 from .temperature import Temperature
 from .humidity import Humidity
 from .fanspeed import Fanspeed
 from .counterfan import Counterfan
-import json
 
 
 class Zone:

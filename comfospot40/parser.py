@@ -1,11 +1,11 @@
 import logging
 import struct
-from .packet import Packet
-from .state import State
 import copy
+import asyncio
 from datetime import datetime
 from serial import SerialException
-import asyncio
+from .packet import Packet
+from .state import State
 
 
 class Parser:

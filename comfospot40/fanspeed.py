@@ -1,6 +1,6 @@
-from .value import Value
 import json
 import time
+from .value import Value
 
 
 class Fanspeed(Value):
