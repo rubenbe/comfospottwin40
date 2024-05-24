@@ -9,6 +9,13 @@ class Fanspeed(Value):
     _presets = {"low": 27, "mid": 47, "high": 78, "max": 100}
     _preset = None
     _direction_forward = True
+    zoneid = None
+    prefix = None
+    topic_on_set = None
+    topic_oscillation_set = None
+    topic_direction_set = None
+    topic_percentage_set = None
+    topic_preset_set = None
 
     def __init__(self):
         super().__init__()
