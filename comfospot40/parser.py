@@ -54,17 +54,14 @@ class Parser:
                 logfile.write(
                     datetime.now().strftime("%H:%M:%S.%f") + "  " + str(z) + "\n"
                 )
-        if True:  # z.checkcrc():
-            if z.hassensordata():
-                logging.debug(pdata, z.temperature(), z.humidity())
-                self._state.addpacket(z)
-            elif z.hasfandata():
-                logging.debug(pdata, z.fannumber(), z.speed(), z.direction())
-                self._state.addpacket(z)
-            else:
-                logging.warning("Unknown packet %s", pdata)
+        if z.hassensordata():
+            logging.debug(pdata, z.temperature(), z.humidity())
+            self._state.addpacket(z)
+        elif z.hasfandata():
+            logging.debug(pdata, z.fannumber(), z.speed(), z.direction())
+            self._state.addpacket(z)
         else:
-            logging.warning("Failed checksum %s", pdata)
+            logging.warning("Unknown packet %s", pdata)
         return data, self.search_preamble
 
     async def search_preamble(self, data):
