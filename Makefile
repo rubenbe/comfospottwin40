@@ -3,10 +3,10 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir := $(dir $(mkfile_path))
 
-test: ruff
+test: pylint
 	python3 -m unittest discover $(mkfile_dir)/tests "*_test.py"
 
-pylint:
+pylint: ruff
 	pylint --disable=C0114,C0115,C0116,R0902,R0401 server.py comfospot40/*.py
 
 ruff: black
