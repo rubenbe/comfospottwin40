@@ -20,10 +20,9 @@ class Hal:
         )
         self.parser = Parser(self._reader, None, self._state)
 
-    async def sendState(self, state: State, timer):
+    async def send_state(self, state: State, timer):
         dirtimer = timer - self._oscillation_switch
         switch_dir = dirtimer > self._oscillation_time
-        # print("sendState", timer, switch_dir)
         if switch_dir:
             self._oscillation_switch = timer
         for zoneid, zonestate in state.zones.items():

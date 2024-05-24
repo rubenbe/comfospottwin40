@@ -58,7 +58,7 @@ class Mqtt:
                     await self._client.subscribe(subscribe_topic)
                     self.topics.append((subscribe_topic, subscribe_callback))
 
-    def sendState(self, state):
+    def send_state(self, state):
         for _, zonestate in state.zones.items():
             for attr in (
                 "inside_temperature",

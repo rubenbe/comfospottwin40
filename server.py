@@ -53,9 +53,9 @@ async def main(
             await mqtt.subscribe()
         last_print = 0
         while True:
-            mqtt.sendState(state)
+            mqtt.send_state(state)
             new_print = time.monotonic()
-            await hal.sendState(state, new_print)
+            await hal.send_state(state, new_print)
             if storestate:
                 with open(storestate, "w") as storefile:
                     hal.storeState(storefile, state)
