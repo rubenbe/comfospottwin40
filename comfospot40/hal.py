@@ -1,6 +1,6 @@
-import serial_asyncio
+from asyncio import sleep
+from serial_asyncio import open_serial_connection
 import serial
-import asyncio
 import json
 import time
 import logging
@@ -15,7 +15,7 @@ class Hal:
         self._writer = None
 
     async def setup(self, devpath: str):
-        self._reader, self._writer = await serial_asyncio.open_serial_connection(
+        self._reader, self._writer = await open_serial_connection(
             url=devpath, baudrate=2400, parity=serial.PARITY_NONE
         )
         self.parser = Parser(self._reader, None, self._state)
@@ -36,7 +36,7 @@ class Hal:
                 zoneid, zonestate.fan_speed.direction_forward(), fan_speed, 0, True
             )
             self._writer.write(bytes(packet)) if self._writer else None
-            await asyncio.sleep(0.1)
+            await sleep(0.1)
             counter = zonestate.counter_fan.get_fan_data(zonestate.fan_speed)
             # print(counter["direction"], counter["speed"])
             packet = create_packet.create_speed_packet(
@@ -44,7 +44,7 @@ class Hal:
             )
             # print("Writing")
             self._writer.write(bytes(packet)) if self._writer else None
-            await asyncio.sleep(0.1)
+            await sleep(0.1)
 
     def storeState(self, storefile, state):
         json.dump(state.toJSON(), storefile, indent=2)
