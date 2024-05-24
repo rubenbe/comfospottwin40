@@ -7,7 +7,7 @@ test: ruff
 	python3 -m unittest discover $(mkfile_dir)/tests "*_test.py"
 
 pylint:
-	pylint --disable=C0114,C0115,C0116,R0902,R0401 *.py comfospot40/*.py
+	pylint --disable=C0114,C0115,C0116,R0902,R0401 server.py comfospot40/*.py
 
 ruff: black
 	ruff *.py tests/*.py comfospot40/*.py
