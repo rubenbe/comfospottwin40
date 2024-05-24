@@ -13,12 +13,15 @@ class Counterfan(Value):
     def __init__(self):
         super().__init__()
         self._value = self._options[0]
+        self.zoneid = None
+        self.prefix = None
+        self.topic_set = None
 
     def set_state(self, temp):
         self._value = temp
 
     def do_subscribes(self):
-        return ((self.topic_set, lambda x: self.set_state(x)),)
+        return ((self.topic_set, self.set_state),)
 
     def publish_state(self):
         return ((self.topic_state, self._value),)
@@ -36,11 +39,11 @@ class Counterfan(Value):
 
     def mqtt_config(self, mqttprefix, zoneid):
         self.zoneid = zoneid
-        self.prefix = "{0}_zone{1}_counter".format(mqttprefix, zoneid)
+        self.prefix = f"{mqttprefix}_zone{zoneid}_counter"
         self.topic_state = self.prefix + "/state"
         self.topic_set = self.prefix + "/set"
         return {
-            "name": "Comfospot40 Zone {0} Counter Fan Setting".format(zoneid),
+            "name": f"Comfospot40 Zone {zoneid} Counter Fan Setting",
             "state_topic": self.topic_state,
             "command_topic": self.topic_set,
             "options": [x.decode("UTF-8") for x in self._options],
