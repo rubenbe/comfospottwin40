@@ -59,19 +59,19 @@ class State:
                 return False
         return True
 
-    def fromJSON(self, loadedjson):
+    def from_json(self, loadedjson):
         if "v1" in loadedjson:
             # print("ok")
             loadedzones = loadedjson["v1"]
             for zoneid, loadedzone in loadedzones.items():
                 # print("todo", zoneid, loadedzone)
-                self.zones[int(zoneid)].loadJSON(loadedzone)
+                self.zones[int(zoneid)].load_json(loadedzone)
 
-    def toJSON(self):
+    def to_json(self):
         return {
             "v1": dict(
                 [
-                    (zoneid, zonestate.toJSON())
+                    (zoneid, zonestate.to_json())
                     for zoneid, zonestate in self.zones.items()
                 ]
             )

@@ -52,8 +52,8 @@ class Counterfan(Value):
             "direction": self.direction(fan_speed),
         }
 
-    def toJSON(self):
+    def to_json(self):
         return {"state": self._value.decode("utf-8")}
 
-    def loadJSON(self, loadedfan):
+    def load_json(self, loadedfan):
         self.set_state(loadedfan["state"].encode("UTF-8"))

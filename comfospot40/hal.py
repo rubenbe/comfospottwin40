@@ -46,7 +46,7 @@ class Hal:
             await sleep(0.1)
 
     def storeState(self, storefile, state):
-        json.dump(state.toJSON(), storefile, indent=2)
+        json.dump(state.to_json(), storefile, indent=2)
 
     def loadState(self, storefile, state):
         try:
@@ -55,4 +55,4 @@ class Hal:
             logging.info("Failed to decode json {}".format(e))
             return
         logging.info(loadedjson)
-        state.fromJSON(loadedjson)
+        state.from_json(loadedjson)

@@ -142,7 +142,7 @@ class Fanspeed(Value):
     def __eq__(self, other):
         return self._value == other._value
 
-    def toJSON(self):
+    def to_json(self):
         return {
             "on": self.on(),
             "speed": self.fan_speed(),
@@ -150,7 +150,7 @@ class Fanspeed(Value):
             "oscillation": self.oscillating(),
         }
 
-    def loadJSON(self, loadedfan):
+    def load_json(self, loadedfan):
         self._on = loadedfan["on"]
         self._oscillation = loadedfan["oscillation"]
         self._direction_forward = loadedfan["forward"]

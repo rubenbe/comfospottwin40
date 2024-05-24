@@ -119,9 +119,12 @@ class Zone:
             and self.isintake == other.isintake
         )
 
-    def toJSON(self):
-        return {"fan": self.fan_speed.toJSON(), "counterfan": self.counter_fan.toJSON()}
+    def to_json(self):
+        return {
+            "fan": self.fan_speed.to_json(),
+            "counterfan": self.counter_fan.to_json(),
+        }
 
-    def loadJSON(self, loadedzone):
-        self.fan_speed.loadJSON(loadedzone["fan"])
-        self.counter_fan.loadJSON(loadedzone["counterfan"])
+    def load_json(self, loadedzone):
+        self.fan_speed.load_json(loadedzone["fan"])
+        self.counter_fan.load_json(loadedzone["counterfan"])
