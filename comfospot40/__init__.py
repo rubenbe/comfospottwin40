@@ -12,17 +12,15 @@ from comfospot40.hal import Hal
 from comfospot40.counterfan import Counterfan
 
 # Keep ruff happy
-Packet
-Value
-Temperature
-Humidity
-Fanspeed
-Zone
-State
-Parser
-create_speed_packet
-Mqtt
-Hal
-Counterfan
-
-name = "comfospot40"
+assert Packet
+assert Value
+assert Temperature
+assert Humidity
+assert Fanspeed
+assert Zone
+assert State
+assert Parser
+assert create_speed_packet
+assert Mqtt
+assert Hal
+assert Counterfan
