@@ -11,8 +11,8 @@ class Value:
         self._last_set = time.monotonic()
         self._value = temp
 
-    def set_time(self, time):
-        if time - self._last_set > self._sensorvalidity:
+    def set_time(self, time_value):
+        if time_value - self._last_set > self._sensorvalidity:
             self._value = None
 
     def value(self):

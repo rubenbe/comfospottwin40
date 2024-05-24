@@ -74,32 +74,28 @@ class Zone:
     def __place_oscillation(self):
         if self.fan_speed.oscillating():
             return "🔀"
-        else:
-            return "  "
+        return "  "
 
     def __placeintake(self):
         if not self.fan_speed.on():
             return "🏠⏸️"
         if self.fan_speed.direction_forward():
             return "🏠➡️"
-        else:
-            return "🏠⬅️"
+        return "🏠⬅️"
 
     def __placecounterintake(self):
         if not self.counter_fan.on() or not self.fan_speed.on():
             return "⏸️"
         if self.counter_fan.direction(self.fan_speed):
             return "➡️"
-        else:
-            return "⬅️"
+        return "⬅️"
 
     def __placeholder(self, var, num):
         if not var:
             return "_" * num
         if type(var) == str:
             return var[0:num]
-        else:
-            return var
+        return var
 
     def __repr__(self):
         return self.__str__()

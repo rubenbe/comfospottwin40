@@ -1,5 +1,5 @@
-from .value import Value
 from comfospot40 import Fanspeed
+from .value import Value
 
 
 class Counterfan(Value):
@@ -11,6 +11,7 @@ class Counterfan(Value):
     ]
 
     def __init__(self):
+        super().__init__()
         self._value = self._options[0]
 
     def set_state(self, temp):
@@ -29,10 +30,9 @@ class Counterfan(Value):
         forward = mainfan.direction_forward()
         if self._value == self._options[2]:
             return not forward
-        elif self._value == self._options[3]:
+        if self._value == self._options[3]:
             return not forward if mainfan.oscillating() else forward
-        else:
-            return forward
+        return forward
 
     def mqtt_config(self, mqttprefix, zoneid):
         self.zoneid = zoneid
