@@ -95,16 +95,16 @@ class Fanspeed(Value):
 
     def do_subscribes(self):
         return (
-            (self.topic_direction_set, lambda x: self.set_direction(x)),
-            (self.topic_oscillation_set, lambda x: self.set_oscillation(x)),
-            (self.topic_on_set, lambda x: self.set_on(x)),
-            (self.topic_preset_set, lambda x: self.set_preset(x)),
-            (self.topic_percentage_set, lambda x: self.set_fan_speed(x)),
+            (self.topic_direction_set, self.set_direction),
+            (self.topic_oscillation_set, self.set_oscillation),
+            (self.topic_on_set, self.set_on),
+            (self.topic_preset_set, self.set_preset),
+            (self.topic_percentage_set, self.set_fan_speed),
         )
 
     def mqtt_config(self, mqttprefix, zoneid):
         self.zoneid = zoneid
-        self.prefix = "{0}_zone{1}_fan".format(mqttprefix, zoneid)
+        self.prefix = f"{mqttprefix}_zone{zoneid}_fan"
         self.topic_state = self.prefix + "/state"
         self.topic_on_set = self.prefix + "/on/set"
         self.topic_oscillation_set = self.prefix + "/oscillation/set"
@@ -114,7 +114,7 @@ class Fanspeed(Value):
         mqtt_preset_modes = list(self._presets.keys())
         mqtt_preset_modes.append("custom")
         return {
-            "name": "Comfospot40 Zone {0} Fan".format(zoneid),
+            "name": f"Comfospot40 Zone {zoneid} Fan",
             "state_topic": self.topic_state,
             "command_topic": self.topic_on_set,
             "state_value_template": "{{ value_json.state }}",
@@ -136,7 +136,7 @@ class Fanspeed(Value):
             "payload_off": "false",
             "payload_oscillation_on": "true",
             "payload_oscillation_off": "false",
-            "unique_id": "{0}_zone{1}_fan".format(mqttprefix, zoneid),
+            "unique_id": f"{mqttprefix}_zone{zoneid}_fan",
         }
 
     def __eq__(self, other):
