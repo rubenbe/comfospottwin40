@@ -34,34 +34,22 @@ class Zone:
             return {}
         self.configpublished = markpublished
         return {
-            "homeassistant/select/{0}_zone{1}_counter/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/select/{mqttprefix}_zone{zoneid}_counter/config": json.dumps(  # noqa: E501  # pylint: disable=line-too-long
                 self.counter_fan.mqtt_config(mqttprefix, zoneid),
             ),
-            "homeassistant/fan/{0}_zone{1}_fan/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/fan/{mqttprefix}_zone{zoneid}_fan/config": json.dumps(
                 self.fan_speed.mqtt_config(mqttprefix, zoneid),
             ),
-            "homeassistant/sensor/{0}/{0}_zone{1}_temp_in/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/sensor/{mqttprefix}/{mqttprefix}_zone{zoneid}_temp_in/config": json.dumps(  # noqa: E501  # pylint: disable=line-too-long
                 self.inside_temperature.mqtt_config(mqttprefix, zoneid, "inside"),
             ),
-            "homeassistant/sensor/{0}/{0}_zone{1}_temp_recycled/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/sensor/{mqttprefix}/{mqttprefix}_zone{zoneid}_temp_recycled/config": json.dumps(  # noqa: E501  # pylint: disable=line-too-long
                 self.recycled_temperature.mqtt_config(mqttprefix, zoneid, "recycled"),
             ),
-            "homeassistant/sensor/{0}/{0}_zone{1}_humidity_in/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/sensor/{mqttprefix}/{mqttprefix}_zone{zoneid}_humidity_in/config": json.dumps(  # noqa: E501  # pylint: disable=line-too-long
                 self.inside_humidity.mqtt_config(mqttprefix, zoneid, "inside"),
             ),
-            "homeassistant/sensor/{0}/{0}_zone{1}_humidity_recycled/config".format(
-                mqttprefix, zoneid
-            ): json.dumps(
+            f"homeassistant/sensor/{mqttprefix}/{mqttprefix}_zone{zoneid}_humidity_recycled/config": json.dumps(  # noqa: E501  # pylint: disable=line-too-long
                 self.recycled_humidity.mqtt_config(mqttprefix, zoneid, "recycled"),
             ),
         }
@@ -69,7 +57,7 @@ class Zone:
     def __placetimer(self):
         if self.timer is None:
             return "   0s"
-        return "{:4}s".format(int(self.timer))
+        return f"{int(self.timer):4}s"
 
     def __place_oscillation(self):
         if self.fan_speed.oscillating():
@@ -101,17 +89,23 @@ class Zone:
         return self.__str__()
 
     def __str__(self):
-        return "{}{} {}{} ({} {})🌡️ {}C, {}% ♻️  {}C, {}%".format(
-            self.__place_oscillation(),
-            self.__placeintake(),
-            self.__placecounterintake(),
-            self.__placetimer(),
-            self.__placeholder(self.fan_speed.fan_speed(), 2),
-            self.__placeholder(self.fan_speed.preset(), 2),
-            self.__placeholder(self.inside_temperature.temperature(), 4),
-            self.__placeholder(self.inside_humidity.humidity(), 2),
-            self.__placeholder(self.recycled_temperature.temperature(), 4),
-            self.__placeholder(self.recycled_humidity.humidity(), 2),
+        return (
+            f"{self.__place_oscillation()}{self.__placeintake()}"
+            " "
+            f"{self.__placecounterintake()}{self.__placetimer()}"
+            " ("
+            f"{self.__placeholder(self.fan_speed.fan_speed(), 2)}"
+            " "
+            f"{self.__placeholder(self.fan_speed.preset(), 2)}"
+            ")🌡️ "
+            f"{self.__placeholder(self.inside_temperature.temperature(), 4)}"
+            "C, "
+            f"{self.__placeholder(self.inside_humidity.humidity(), 2)}"
+            "% ♻️  "
+            f"{self.__placeholder(self.recycled_temperature.temperature(), 4)}"
+            "C, "
+            f"{self.__placeholder(self.recycled_humidity.humidity(), 2)}"
+            "%"
         )
 
     def __eq__(self, other):
