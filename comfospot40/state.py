@@ -37,7 +37,7 @@ class State:
             self.zones[packet.getzone()] = zone
 
     def set_time(self, timer: float):
-        for _, zone in self.zones.items:
+        for _, zone in self.zones.items():
             zone.set_time(timer)
 
     def __tozonestr(self, zone):
@@ -69,10 +69,8 @@ class State:
 
     def to_json(self):
         return {
-            "v1": dict(
-                [
-                    (zoneid, zonestate.to_json())
-                    for zoneid, zonestate in self.zones.items()
-                ]
-            )
+            "v1": {
+                zoneid: zonestate.to_json()
+                for (zoneid, zonestate) in self.zones.items()
+            }
         }
