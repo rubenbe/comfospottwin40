@@ -25,7 +25,7 @@ class Parser:
             try:
                 return await self._ser.read(1)
             except SerialException as e:
-                logging.warning("Failed to read serial: {}".format(e))
+                logging.warning("Failed to read serial: %s", e)
                 if retries > 0:
                     await asyncio.sleep(0.1 * retries)
                     retries -= 1
@@ -50,7 +50,7 @@ class Parser:
         z = Packet(data)
         pdata = [hex(d) for d in data]
         if self._packetlog:
-            with open(self._packetlog, "a") as logfile:
+            with open(self._packetlog, "a", encoding="utf-8") as logfile:
                 logfile.write(
                     datetime.now().strftime("%H:%M:%S.%f") + "  " + str(z) + "\n"
                 )
