@@ -81,7 +81,7 @@ class Zone:
     def __placeholder(self, var, num):
         if not var:
             return "_" * num
-        if type(var) == str:
+        if isinstance(var, str):
             return var[0:num]
         return var
 
