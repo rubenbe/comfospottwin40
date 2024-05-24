@@ -1,6 +1,6 @@
 aiomqtt==1.0.0
 astroid==3.2.2
-black==22.1.0
+black==24.3.0
 click==8.0.4
 dill==0.3.8
 isort==5.12.0
