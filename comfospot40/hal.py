@@ -49,10 +49,10 @@ class Hal:
                 self._writer.write(bytes(packet))
             await sleep(0.1)
 
-    def storeState(self, storefile, state):
+    def store_state(self, storefile, state):
         json.dump(state.to_json(), storefile, indent=2)
 
-    def loadState(self, storefile, state):
+    def load_state(self, storefile, state):
         try:
             loadedjson = json.load(storefile)
         except json.decoder.JSONDecodeError as e:

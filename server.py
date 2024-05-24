@@ -41,7 +41,7 @@ async def main(
         hal = comfospot40.Hal(state, oscillation_time)
         if storestate and path.isfile(storestate):
             with open(storestate, "r") as storefile:
-                hal.loadState(storefile, state)
+                hal.load_state(storefile, state)
         mqtt = comfospot40.Mqtt(client, state, mqttprefix)
         x = None
         if dev:
@@ -58,7 +58,7 @@ async def main(
             await hal.send_state(state, new_print)
             if storestate:
                 with open(storestate, "w") as storefile:
-                    hal.storeState(storefile, state)
+                    hal.store_state(storefile, state)
             if x and x.done():
                 state = x.result()
                 x = asyncio.create_task(parser.run())
