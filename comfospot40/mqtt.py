@@ -22,6 +22,7 @@ class Mqtt:
                     topic,
                     payload=payloadstr.encode(),
                     qos=1,
+                    retain=True,
                 )
                 task = asyncio.create_task(x)
                 self.background_tasks.add(task)
