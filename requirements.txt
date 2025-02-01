@@ -1,4 +1,4 @@
-aiomqtt==1.0.0
+aiomqtt==1.2.1
 click==8.0.4
 mypy-extensions==0.4.3
 paho-mqtt==1.6.1
