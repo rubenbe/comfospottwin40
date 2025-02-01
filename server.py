@@ -22,10 +22,9 @@ async def main(
     sensorvalidity: int,
     reverse: bool,
 ):
-    async with Client(mqtturi, port=mqttport) as client:
-        if args.mqtt_username:
-            client.username_pw_set(args.mqtt_username, args.mqtt_password)
-
+    async with Client(
+        mqtturi, port=mqttport, username=args.mqtt_username, password=args.mqtt_password
+    ) as client:
         if args.mqtt_ssl:
             tls_version = ssl.PROTOCOL_TLS
             if args.mqtt_cafile:
