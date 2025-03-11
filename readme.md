@@ -2,9 +2,11 @@ Supports home assistant 2023.05 or newer
 
 # Zehnder comfospot twin 40
 
+<a href="https://www.buymeacoffee.com/rubenbe" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 To read/write on the bus, use this waveshare adapter. 
 [Find it on the waveshare website](https://www.waveshare.com/usb-to-rs232-485-ttl.htm?sku=15817)
-Others don't seem to function properly
+Others don't seem to function properly.
 
 Setup:
 * Buy the waveshare adapter
