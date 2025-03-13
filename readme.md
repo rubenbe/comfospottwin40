@@ -10,15 +10,14 @@ Others don't seem to function properly.
 
 Setup:
 * Buy the waveshare adapter
-* Setup you MQTT server
+* Setup your MQTT server
 * In case you want to use home assistant, ensure you run 2023.05 or newer.
-* Set the internal jumper to NC.
+* Open the adapter and set the internal jumper to NC.
 * Set the voltage to 5V
 * Only A+ and B- need to be connected. GND is not connected.
 * Disconnect the original touchscreen, as the protocol only supports one master on the bus.
 * After cloning this repo, run `pip install -r requirements.txt`
-
-To only read from the bus, a cheap RS485 reader is sufficient.
+* Start the server `python server.py --mqtt MQTTIP --dev=/dev/ttySomething --oscillation=60 --sensorvalidity=65 --state=./state.json`
 
 ```
 python server.py --help
