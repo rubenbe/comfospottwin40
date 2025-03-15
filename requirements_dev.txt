@@ -1,12 +1,13 @@
 aiomqtt==1.0.0
 astroid==3.2.2
-black==24.3.0
+black==25.1.0
 click==8.0.4
 dill==0.3.8
 isort==5.12.0
 lazy-object-proxy==1.9.0
 mccabe==0.7.0
 mypy-extensions==0.4.3
+packaging==24.2
 paho-mqtt==1.6.1
 parameterized==0.8.1
 pathspec==0.9.0
