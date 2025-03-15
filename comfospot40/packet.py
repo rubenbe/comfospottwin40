@@ -5,19 +5,10 @@ class Packet:
     def __str__(self):
         return " ".join([f"0x{data:02x}" for data in self.data])
 
-    def calculatecrc(self, data, offset=0x57):
-        acc = offset
-        for i, x in enumerate(data):
-            # Some zeros seem to adjust the checksum,
-            # Use the simplest theory based on the index.
-            # It's currently unclear why other zeros don't adjust the checksum.
-            if x == 0:
-                if i == 7 and data[3] in (0x97, 0x96):
-                    acc -= 1
-            else:
-                acc -= x
-        acc %= 0xFF
-        return acc
+    def calculatecrc(self, data):
+        total = sum(data)
+        total = ~total + 0x56
+        return total & 0xFF
 
     def setpreamble(self, alt=False):
         self.data[0] = 0x55
