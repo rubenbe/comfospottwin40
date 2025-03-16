@@ -94,6 +94,13 @@ sensorpackets = {
         "fan": 5,
         "intake": True,
     },
+    "555300980500022f00ac33": {
+        "temperature": 17.2,
+        "humidity": 47,
+        "direction": 2,
+        "fan": 0,
+        "intake": True,
+    },
 }
 
 fanpackets = {
