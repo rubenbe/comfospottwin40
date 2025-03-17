@@ -52,6 +52,29 @@ It's available under these brand names:
 Only the Zehnder has been tested,
 but devices from other manufacturers should work as they seem identical.
 
+
+# Home Assistant
+A number of entities will be exposed via MQTT in Home Assistant.
+
+## Fans
+For each zone, a fan entity is exposed named `fan.comfospot40_zone_X_fan`. Where `X` ranges from 1 to 3, for each zone.
+
+## Sensors
+The sensors are similarly named:
+- `fan.comfospot40_zone_X_inside_temperature`
+- `fan.comfospot40_zone_X_inside_humidity`
+- `fan.comfospot40_zone_1_recycled_temperature`
+- `fan.comfospot40_zone_X_recycled_humidity`
+
+## Counter fan setting (advanced)
+Also for each zone, a selection entity called `select.comfospot40_zone_X_counter_fan_setting` is exposed.
+This is an advanced setting not available on the default controller and allows to modify the settings of the fans with the fourth DIP switch set to 1.
+There are four settings:
+- **Off**: disable the fans.
+- **Always same direction**: always run them in the same direction as the main fan. (effectively disabling the DIP switch behaviour)
+- **Always counter direction**: emulate the default behaviour (default).
+- **Counter when oscillating**: emulate the default behaviour when the fans are in oscilating mode only.
+
 # Temperature & humidity sensor.
 The sensor is a Sensiron SHT21 i2c based sensor.
 
