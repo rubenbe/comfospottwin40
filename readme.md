@@ -1,5 +1,3 @@
-Supports home assistant 2023.05 or newer
-
 # Zehnder comfospot twin 40
 
 <a href="https://www.buymeacoffee.com/rubenbe" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
@@ -57,7 +55,8 @@ but devices from other manufacturers should work as they seem identical.
 
 
 # Home Assistant
-A number of entities will be exposed via MQTT in Home Assistant.
+A number of entities will be exposed via MQTT in Home Assistant (2023.05 or newer).
+Please not that there is no hard requirement to run home assistant, other MQTT setups should be compatible.
 
 ## Fans
 For each zone, a fan entity is exposed named `fan.comfospot40_zone_X_fan`. Where `X` ranges from 1 to 3, for each zone.
