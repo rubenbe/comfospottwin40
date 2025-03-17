@@ -7,8 +7,8 @@ from parameterized import parameterized_class
 class TestCounterfan(unittest.TestCase):
     def test_default(self):
         f = Counterfan()
-        self.assertEqual(f.value(), b"Off")
-        self.assertFalse(f.on())
+        self.assertEqual(f.value(), b"Always counter direction")
+        self.assertTrue(f.on())
 
     def test_is_on_off(self):
         f = Counterfan()

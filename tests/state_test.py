@@ -13,13 +13,13 @@ class TestState(unittest.TestCase):
     def test_zones_default(self):
         state = State()
         self.assertEqual(
-            str(state.zones[1]), "🔀🏠➡️ ⏸️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[1]), "🔀🏠➡️ ⬅️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[2]), "🔀🏠➡️ ⏸️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[2]), "🔀🏠➡️ ⬅️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
         )
         self.assertEqual(
-            str(state.zones[3]), "🔀🏠➡️ ⏸️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[3]), "🔀🏠➡️ ⬅️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
         )
 
     def test_zones_add_zone1_fan(self):
@@ -52,7 +52,7 @@ class TestState(unittest.TestCase):
     def test_zones_counter_fan_1(self):
         state = State()
         self.assertEqual(
-            str(state.zones[1]), "🔀🏠➡️ ⏸️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
+            str(state.zones[1]), "🔀🏠➡️ ⬅️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%"
         )
 
     def test_zones_counter_fan_2(self):
@@ -74,6 +74,12 @@ class TestState(unittest.TestCase):
         self.assertEqual(str(zone), "🔀🏠➡️ ⬅️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%")
 
     def test_zones_counter_fan_5(self):
+        state = State()
+        zone = state.zones[1]
+        zone.counter_fan.set_state(b"Off")
+        self.assertEqual(str(zone), "🔀🏠➡️ ⏸️   0s (27 lo)🌡️ ____C, __% ♻️  ____C, __%")
+
+    def test_zones_counter_fan_6(self):
         state = State()
         zone = state.zones[1]
         zone.fan_speed.set_on(b"false")

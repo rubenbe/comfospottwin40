@@ -12,7 +12,7 @@ class Counterfan(Value):
 
     def __init__(self):
         super().__init__()
-        self._value = self._options[0]
+        self._value = self._options[2]
         self.zoneid = None
         self.prefix = None
         self.topic_set = None
