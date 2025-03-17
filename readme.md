@@ -15,9 +15,12 @@ Setup:
 * Open the adapter and set the internal jumper to NC.
 * Set the voltage to 5V
 * Only A+ and B- need to be connected. GND is not connected.
-* Disconnect the original touchscreen, as the protocol only supports one master on the bus.
-* After cloning this repo, run `pip install -r requirements.txt`
+* Disconnect the original touchscreen (switching off is not sufficient). The protocol only supports one master on the bus.
+* Connect the adapter via USB and get its name with `ls /dev/tty*` (this might be different depending on system). Usually this will be /dev/ttyUSB0 or similar.
+* Clone or download this repo.
+* Go to the project folder run `pip install -r requirements.txt`
 * Start the server `python server.py --mqtt MQTTIP --dev=/dev/ttySomething --oscillation=60 --sensorvalidity=65 --state=./state.json`
+* Run the server as a service or container in order to launch directly after a reboot.Ensure it starts after the MQTT server.
 
 ```
 python server.py --help
