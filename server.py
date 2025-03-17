@@ -21,6 +21,7 @@ async def main(
     storestate,
     sensorvalidity: int,
     reverse: bool,
+    delay: int,
 ):
     async with Client(
         mqtturi, port=mqttport, username=args.mqtt_username, password=args.mqtt_password
@@ -66,6 +67,7 @@ async def main(
             if new_print - last_print > 1:
                 last_print = new_print
                 print(state)
+            await asyncio.sleep(delay)
 
 
 if __name__ == "__main__":
@@ -142,6 +144,15 @@ if __name__ == "__main__":
         type=int,
     )
     parser.add_argument(
+        "--delay",
+        action="store",
+        required=False,
+        choices=range(0, 31),
+        help="Delay the operations on the bus (in seconds)",
+        default=1,
+        type=int,
+    )
+    parser.add_argument(
         "--state",
         action="store",
         required=False,
@@ -166,5 +177,6 @@ if __name__ == "__main__":
             storestate=parsed_args.state,
             sensorvalidity=parsed_args.sensorvalidity,
             reverse=parsed_args.reverse,
+            delay=parsed_args.delay,
         )
     )
